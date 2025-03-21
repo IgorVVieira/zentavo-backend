@@ -1,4 +1,4 @@
-import { BaseEntity } from "@domain/entities/base-entity";
+import { BaseEntity } from "shared/domain/entities/base-entity";
 
 export enum TransactionType {
   CASH_IN = "CASH_IN",
