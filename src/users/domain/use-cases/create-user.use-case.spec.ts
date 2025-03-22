@@ -18,7 +18,7 @@ describe('CreateUserUseCase', () => {
   };
 
   it('should create a user', async () => {
-    const { sut, userRepository } = makeSut();
+    const { sut, userRepository } = makeSut()
 
     userRepository.findByEmail.mockResolvedValue(null);
     userRepository.create.mockResolvedValue({
