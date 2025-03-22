@@ -5,8 +5,10 @@
   "scripts": {
     "build": "npx tsc",
     "test": "jest --runInBand",
+    "test:staged": "jest --passWithNoTests --silent --findRelatedTests",
     "lint": "eslint \"src/**/*.{ts}\"",
-    "lint:fix": "eslint \"src/**/*.{ts}\" --fix",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "lint-staged": "lint-staged",
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
     "prepare": "husky"
@@ -32,6 +34,7 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
+    "lint-staged": "^15.5.0",
     "prettier": "^3.5.3",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",

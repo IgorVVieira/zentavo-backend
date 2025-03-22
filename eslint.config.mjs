@@ -19,8 +19,6 @@ export default [
       'scripts',
       'test',
       'tests',
-      'tmp',
-      'vendor',
     ],
   },
 
