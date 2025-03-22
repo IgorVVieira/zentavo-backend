@@ -5,10 +5,10 @@
   "scripts": {
     "build": "npx tsc",
     "test": "jest --runInBand",
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,json,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,md}\"",
+    "lint": "eslint \"src/**/*.{ts}\"",
+    "lint:fix": "eslint \"src/**/*.{ts}\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
     "prepare": "husky"
   },
   "keywords": [],
