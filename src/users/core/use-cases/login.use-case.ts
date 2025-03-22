@@ -1,11 +1,10 @@
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 
-import { AuthUserResponseDto } from 'users/application/dtos/auth-user-response.dto';
-import { LoginDto } from 'users/application/dtos/login.dto';
-import { IUserRepositoryPort } from 'users/core/domain/repositories/user.repository.port';
-import { IEncryptPort } from 'users/core/gateways/encypt.port';
-import { IJwtPort } from 'users/core/gateways/jwt.port';
+import { AuthUserResponseDto, LoginDto } from '../../application/dtos';
+import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
+import { IEncryptPort } from '../gateways/encypt.port';
+import { IJwtPort } from '../gateways/jwt.port';
 
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {
   public constructor(

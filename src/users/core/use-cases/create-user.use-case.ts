@@ -1,10 +1,9 @@
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
-import { CreateUserDto } from 'users/application/dtos/create-user.dto';
-import { UserDto } from 'users/application/dtos/user.dto';
-import { IUserRepositoryPort } from 'users/core/domain/repositories/user.repository.port';
-import { IEncryptPort } from 'users/core/gateways/encypt.port';
+import { CreateUserDto, UserDto } from '../../application/dtos';
+import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
+import { IEncryptPort } from '../gateways/encypt.port';
 
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
   public constructor(
