@@ -1,7 +1,7 @@
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
-import { CreateUserUseCase } from '../../domain/use-cases/create-user.use-case';
+import { CreateUserUseCase } from './create-user.use-case';
 
 describe('CreateUserUseCase', () => {
   type UserRepositoryMock = BaseRepositoryMock & {

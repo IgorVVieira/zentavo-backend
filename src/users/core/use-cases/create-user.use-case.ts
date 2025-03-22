@@ -2,8 +2,8 @@ import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.e
 
 import { CreateUserDto } from 'users/application/dtos/create-user.dto';
 import { UserDto } from 'users/application/dtos/user.dto';
-import { IUserRepositoryPort } from 'users/domain/repositories/user.repository.interface';
-import { IBaseUseCase } from 'users/domain/use-cases/base.use-case';
+import { IUserRepositoryPort } from 'users/core/domain/repositories/user.repository.port';
+import { IBaseUseCase } from 'users/core/use-cases/base.use-case';
 
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
   public constructor(private readonly userRepository: IUserRepositoryPort) {}

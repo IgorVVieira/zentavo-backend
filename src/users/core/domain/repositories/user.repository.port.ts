@@ -1,4 +1,4 @@
-import { User } from 'users/domain/entities/user';
+import { User } from 'users/core/domain/entities/user';
 
 import { IBaseRepository } from 'shared/domain/repositories/base.repository.interface';
 
