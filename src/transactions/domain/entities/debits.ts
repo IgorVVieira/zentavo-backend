@@ -1,9 +1,9 @@
-import { BaseEntity } from "shared/domain/entities/base-entity";
+import { BaseEntity } from 'shared/domain/entities/base-entity';
 
 export enum DebitStatus {
-  PENDING = "PENDING",
-  PAID = "PAID",
-  CANCELED = "CANCELED",
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  CANCELED = 'CANCELED',
 }
 
 export class Debit extends BaseEntity {
