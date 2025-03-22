@@ -13,6 +13,7 @@ describe('CreateUserUseCase', () => {
     userRepository: UserRepositoryMock;
     encypterMock: {
       encrypt: jest.Mock;
+      compare: jest.Mock;
     };
   };
 
@@ -24,6 +25,7 @@ describe('CreateUserUseCase', () => {
 
     const encypterMock = {
       encrypt: jest.fn(),
+      compare: jest.fn(),
     };
     const sut = new CreateUserUseCase(userRepository, encypterMock);
 
