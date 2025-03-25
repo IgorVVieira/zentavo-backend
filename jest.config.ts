@@ -1,6 +1,7 @@
 const config = {
   roots: ['<rootDir>/src'],
   collectCoverage: true,
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
   collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/main/**'],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
