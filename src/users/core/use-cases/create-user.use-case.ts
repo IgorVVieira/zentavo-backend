@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
@@ -5,9 +7,12 @@ import { CreateUserDto, UserDto } from '../../application/dtos';
 import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
 import { IEncryptPort } from '../gateways/encypt.port';
 
+@injectable()
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
   public constructor(
+    @inject('UserRepository')
     private readonly userRepository: IUserRepositoryPort,
+    @inject('EncrypterAdapter')
     private readonly encrypter: IEncryptPort,
   ) {}
 
