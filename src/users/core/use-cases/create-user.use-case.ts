@@ -3,8 +3,9 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
+import { IUserRepositoryPort } from '@users/core/domain/repositories/user.repository.port';
+
 import { CreateUserDto, UserDto } from '../../application/dtos';
-import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
 import { IEncryptPort } from '../gateways/encypt.port';
 
 @injectable()
