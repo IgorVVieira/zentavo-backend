@@ -11,7 +11,7 @@
     "lint-staged": "lint-staged",
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
-    "start": "ts-node src/app.ts",
+    "start": "ts-node -r tsconfig-paths/register src/app.ts",
     "prepare": "husky"
   },
   "keywords": [],
@@ -43,6 +43,7 @@
     "prisma": "^6.5.0",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1"
   },
