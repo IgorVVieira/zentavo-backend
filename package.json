@@ -11,6 +11,7 @@
     "lint-staged": "lint-staged",
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
+    "start": "ts-node src/app.ts",
     "prepare": "husky"
   },
   "keywords": [],
@@ -22,6 +23,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/js": "^9.22.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.10",
@@ -48,6 +50,7 @@
     "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.8.0"
