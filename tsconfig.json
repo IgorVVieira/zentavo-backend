@@ -34,6 +34,9 @@
       "@users/*": [
         "users/*"
       ],
+      "@transactions/*": [
+        "transactions/*"
+      ],
       "@shared/*": [
         "shared/*"
       ],
