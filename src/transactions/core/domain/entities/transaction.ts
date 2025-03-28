@@ -5,14 +5,12 @@ export enum TransactionType {
   CASH_OUT = 'CASH_OUT',
 }
 
-export class Transaction extends BaseEntity {
+export class TransactionEntity extends BaseEntity {
   public userId: string;
   public tagId?: string;
   public externalTransactionId: string;
   public date: Date;
   public amount: number;
   public description: string;
-  public customName: string;
   public type: TransactionType;
-  public bankName?: string;
 }
