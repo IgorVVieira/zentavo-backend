@@ -1,6 +1,6 @@
+import { PrismaClient } from '@prisma/client';
 import { injectable } from 'tsyringe';
 
-import { EntityName } from '@shared/domain/entities/entity-name.enum';
 import { BaseRepository } from '@shared/repositories/base.repository';
 
 import { User } from '@users/core/domain/entities/user';
@@ -8,8 +8,13 @@ import { IUserRepositoryPort } from '@users/core/domain/repositories/user.reposi
 
 @injectable()
 export class UserRepositoryAdapter extends BaseRepository<User> implements IUserRepositoryPort {
-  public constructor() {
-    super(EntityName.users);
+  private readonly prisma: PrismaClient;
+
+  constructor() {
+    const prisma = new PrismaClient();
+
+    super(prisma.user);
+    this.prisma = prisma;
   }
 
   async findByEmail(email: string): Promise<User | null> {
