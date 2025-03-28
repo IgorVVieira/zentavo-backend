@@ -14,7 +14,7 @@ container.registerSingleton<IUserRepositoryPort>('UserRepository', UserRepositor
 container.registerSingleton<IEncryptPort>('EncrypterAdapter', EncptyAdapter);
 container.registerSingleton<IJwtPort>('JwtAdapter', JwtAdapter);
 
-container.registerSingleton(CreateUserUseCase);
+container.registerSingleton('CreateUserUseCase', CreateUserUseCase);
 container.registerSingleton(LoginUseCase);
 container.registerSingleton(UserController);
 
