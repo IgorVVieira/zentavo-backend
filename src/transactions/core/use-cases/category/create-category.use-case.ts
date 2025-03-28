@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
@@ -9,7 +9,10 @@ import { ICategoryRepositoryPort } from '@transactions/core/domain/repositories/
 
 @injectable()
 export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, CategoryDto> {
-  public constructor(private readonly categoryRepository: ICategoryRepositoryPort) {}
+  public constructor(
+    @inject('CategoryRepository')
+    private readonly categoryRepository: ICategoryRepositoryPort,
+  ) {}
 
   public async execute(data: CreateCategoryDto): Promise<CategoryDto> {
     const categoryExists = await this.categoryRepository.findByNameAndUserId(
