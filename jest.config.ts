@@ -8,6 +8,7 @@ const config = {
   transform: {
     '.+\\.ts$': 'ts-jest',
   },
+  testMatch: ['**/*.spec.ts'],
   moduleNameMapper: {
     '^@users/(.*)$': '<rootDir>/src/users/$1',
     '^@transactions/(.*)$': '<rootDir>/src/transactions/$1',
