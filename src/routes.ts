@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { AuthController } from '@users/infra/controllers/auth.controller';
 import { container } from '@users/infra/di/container';
 
 import { UserController } from './users/infra/controllers/user.controller';
@@ -7,6 +8,7 @@ import { UserController } from './users/infra/controllers/user.controller';
 const router = Router();
 
 const userController = container.resolve(UserController);
+const authController = container.resolve(AuthController);
 
 /**
  * @swagger
@@ -69,5 +71,104 @@ const userController = container.resolve(UserController);
  *         description: Internal server error
  */
 router.post('/users', userController.create);
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Autenticação de usuário
+ *     description: Endpoint para login de usuário e obtenção de token JWT
+ *     tags:
+ *       - Autenticação
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginDto'
+ *     responses:
+ *       200:
+ *         description: Login realizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AuthUserResponseDto'
+ *       400:
+ *         description: Requisição inválida
+ *       401:
+ *         description: Credenciais inválidas
+ *       500:
+ *         description: Erro interno do servidor
+ *
+ * components:
+ *   schemas:
+ *     LoginDto:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email do usuário
+ *         password:
+ *           type: string
+ *           format: password
+ *           description: Senha do usuário
+ *       example:
+ *         email: usuario@exemplo.com
+ *         password: senha123
+ *
+ *     AuthUserResponseDto:
+ *       type: object
+ *       required:
+ *         - user
+ *         - token
+ *       properties:
+ *         user:
+ *           $ref: '#/components/schemas/UserDto'
+ *         token:
+ *           type: string
+ *           description: Token JWT para autenticação
+ *       example:
+ *         user:
+ *           id: "550e8400-e29b-41d4-a716-446655440000"
+ *           nome: "João Silva"
+ *           email: "usuario@exemplo.com"
+ *           createdAt: "2024-03-31T14:30:00.000Z"
+ *           updatedAt: "2024-03-31T14:30:00.000Z"
+ *         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *
+ *     UserDto:
+ *       type: object
+ *       required:
+ *         - id
+ *         - nome
+ *         - email
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *           description: ID único do usuário
+ *         nome:
+ *           type: string
+ *           description: Nome completo do usuário
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email do usuário
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Data de criação do registro
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Data da última atualização do registro
+ */
+router.post('/users/login', authController.login);
 
 export { router };
