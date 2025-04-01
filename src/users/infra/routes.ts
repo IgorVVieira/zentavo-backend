@@ -5,9 +5,9 @@ import { container } from '@users/infra/di/container';
 
 import { Router } from 'express';
 
-import { UserController } from './users/infra/controllers/user.controller';
+import { UserController } from './controllers/user.controller';
 
-const router = Router();
+const userRouter = Router();
 
 const userController = container.resolve(UserController);
 const authController = container.resolve(AuthController);
@@ -72,7 +72,7 @@ const authController = container.resolve(AuthController);
  *       500:
  *         description: Internal server error
  */
-router.post('/users', userController.create);
+userRouter.post('/users', userController.create);
 
 /**
  * @swagger
@@ -171,7 +171,7 @@ router.post('/users', userController.create);
  *           format: date-time
  *           description: Data da última atualização do registro
  */
-router.post('/users/login', authController.login);
+userRouter.post('/users/login', authController.login);
 
 /**
  * @swagger
@@ -204,6 +204,6 @@ router.post('/users/login', authController.login);
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-router.get('/users/me', authMiddleware, userController.getMe);
+userRouter.get('/users/me', authMiddleware, userController.getMe);
 
-export { router };
+export { userRouter };

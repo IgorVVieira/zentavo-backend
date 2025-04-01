@@ -5,10 +5,11 @@ import swaggerUi from 'swagger-ui-express';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
+import { userRouter } from '@users/infra/routes';
+
 import { transactionRouter } from '@transactions/infra/routes';
 import express from 'express';
 
-import { router } from './routes';
 import { swaggerDocument } from './swagger';
 
 const app = express();
@@ -26,7 +27,7 @@ app.use('/healthcheck', (req, res) => {
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use(router);
+app.use(userRouter);
 app.use(transactionRouter);
 
 export { app };
