@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { injectable } from 'tsyringe';
 
-import { IEncryptPort } from 'users/core/gateways/encypt.port';
+import { IEncryptPort } from '@users/gateways/encypt.port';
 
 @injectable()
 export class EncptyAdapter implements IEncryptPort {

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { injectable } from 'tsyringe';
 
-import { IJwtPort } from 'users/core/gateways/jwt.port';
+import { IJwtPort } from '@users/gateways/jwt.port';
 
 @injectable()
 export class JwtAdapter implements IJwtPort {

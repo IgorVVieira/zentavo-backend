@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
 import { CreateUserDto } from '@users/application/dtos';
-import { CreateUserUseCase } from '@users/core/use-cases/create-user.use-case';
+import { CreateUserUseCase } from '@users/use-cases/create-user.use-case';
+
+import { Request, Response } from 'express';
 
 @injectable()
 export class UserController {

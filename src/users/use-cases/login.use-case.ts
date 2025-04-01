@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 
-import { AuthUserResponseDto, LoginDto } from '../../application/dtos';
+import { AuthUserResponseDto, LoginDto } from '../application/dtos';
 import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
 import { IEncryptPort } from '../gateways/encypt.port';
 import { IJwtPort } from '../gateways/jwt.port';

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
-import { LoginUseCase } from '@users/core/use-cases/login.use-case';
+import { LoginUseCase } from '@users/use-cases/login.use-case';
+
+import { Request, Response } from 'express';
 
 @injectable()
 export class AuthController {
