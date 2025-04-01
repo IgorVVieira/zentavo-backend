@@ -3,8 +3,8 @@ import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
 
-import { CategoryEntity } from '@transactions/core/domain/entities/category';
-import { ICategoryRepositoryPort } from '@transactions/core/domain/repositories/category.repositor.port';
+import { CategoryEntity } from '@transactions/domain/entities/category';
+import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
 
 @injectable()
 export class CategoryRepositoryAdapter

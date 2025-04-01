@@ -5,7 +5,7 @@ import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.e
 
 import { CreateCategoryDto } from '@transactions/application/dto/in/create-category.dto';
 import { CategoryDto } from '@transactions/application/dto/out/category.dto';
-import { ICategoryRepositoryPort } from '@transactions/core/domain/repositories/category.repositor.port';
+import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
 
 @injectable()
 export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, CategoryDto> {

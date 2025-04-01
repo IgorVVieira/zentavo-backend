@@ -1,4 +1,4 @@
-import { BaseEntity } from 'shared/domain/entities/base-entity';
+import { BaseEntity } from '@shared/domain/entities/base-entity';
 
 export enum DebitStatus {
   PENDING = 'PENDING',

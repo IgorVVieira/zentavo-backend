@@ -1,8 +1,8 @@
 import { container } from 'tsyringe';
 
+import { ICategoryRepositoryPort } from '@transactions//domain/repositories/category.repositor.port';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
-import { ICategoryRepositoryPort } from '@transactions/core/domain/repositories/category.repositor.port';
-import { CreateCategoryUseCase } from '@transactions/core/use-cases/category/create-category.use-case';
+import { CreateCategoryUseCase } from '@transactions/use-cases/category/create-category.use-case';
 
 container.registerSingleton<ICategoryRepositoryPort>(
   'CategoryRepository',
