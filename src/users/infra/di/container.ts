@@ -9,6 +9,7 @@ import { IJwtPort } from '@users/gateways/jwt.port';
 import { AuthController } from '@users/infra/controllers/auth.controller';
 import { UserController } from '@users/infra/controllers/user.controller';
 import { CreateUserUseCase } from '@users/use-cases/create-user.use-case';
+import { GetMeUseCase } from '@users/use-cases/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login.use-case';
 
 container.registerSingleton<IUserRepositoryPort>('UserRepository', UserRepositoryAdapter);
@@ -17,6 +18,7 @@ container.registerSingleton<IJwtPort>('JwtAdapter', JwtAdapter);
 
 container.registerSingleton('CreateUserUseCase', CreateUserUseCase);
 container.registerSingleton('LoginUseCase', LoginUseCase);
+container.registerSingleton('GetMeUseCase', GetMeUseCase);
 container.registerSingleton(UserController);
 container.registerSingleton(AuthController);
 
