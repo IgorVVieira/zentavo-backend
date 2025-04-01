@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
-import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 import { HttpStatus } from '@shared/http-status.enum';
+
+import express from 'express';
 
 import { router } from './routes';
 import { swaggerDocument } from './swagger';

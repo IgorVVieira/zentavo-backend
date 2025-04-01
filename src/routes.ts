@@ -1,7 +1,7 @@
-import { Router } from 'express';
-
 import { AuthController } from '@users/infra/controllers/auth.controller';
 import { container } from '@users/infra/di/container';
+
+import { Router } from 'express';
 
 import { UserController } from './users/infra/controllers/user.controller';
 
