@@ -36,13 +36,6 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
     const token = this.jwt.sign(user.id as string, user.name, user.email);
 
     return {
-      user: {
-        id: user.id as string,
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt as Date,
-        updatedAt: user.updatedAt as Date,
-      },
       token,
     };
   }

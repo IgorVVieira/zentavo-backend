@@ -60,11 +60,6 @@ describe('LoginUseCase', () => {
     expect(encypterMock.compare).toHaveBeenCalledWith('any_password', 'any_password');
     expect(jwtMock.sign).toHaveBeenCalledWith('any_id', 'any_name', 'any_email');
     expect(user).toEqual({
-      user: {
-        id: 'any_id',
-        email: 'any_email',
-        name: 'any_name',
-      },
       token: 'any_token',
     });
   });
