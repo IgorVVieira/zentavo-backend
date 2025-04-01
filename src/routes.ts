@@ -1,3 +1,5 @@
+import { authMiddleware } from '@shared/middlewares/auth';
+
 import { AuthController } from '@users/infra/controllers/auth.controller';
 import { container } from '@users/infra/di/container';
 
@@ -170,5 +172,38 @@ router.post('/users', userController.create);
  *           description: Data da última atualização do registro
  */
 router.post('/users/login', authController.login);
+
+/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Obter dados do usuário logado
+ *     description: Endpoint para obter os dados do usuário autenticado através do token JWT
+ *     tags:
+ *       - Usuários
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Dados do usuário retornados com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserDto'
+ *       401:
+ *         description: Não autorizado - Token inválido ou ausente
+ *       403:
+ *         description: Acesso negado
+ *       500:
+ *         description: Erro interno do servidor
+ *
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+router.get('/users/me', authMiddleware, userController.getMe);
 
 export { router };

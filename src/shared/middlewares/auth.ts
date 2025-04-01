@@ -33,8 +33,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    // TODO: validar com o tipo de decoded
-    req.userId = decoded as string;
+    if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
+      req.userId = (decoded as jwt.JwtPayload)['id'];
+    } else {
+      throw new UnauthorizedError('Token inválido');
+    }
 
     return next();
   } catch (error) {
