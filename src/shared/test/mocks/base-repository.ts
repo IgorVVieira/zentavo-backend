@@ -1,5 +1,6 @@
 export type BaseRepositoryMock = {
   create: jest.Mock;
+  createMany: jest.Mock;
   findAll: jest.Mock;
   update: jest.Mock;
   delete: jest.Mock;
@@ -14,4 +15,5 @@ export const baseRepository: BaseRepositoryMock = {
   findAll: jest.fn(),
   findByEmail: jest.fn(),
   create: jest.fn(),
+  createMany: jest.fn(),
 };
