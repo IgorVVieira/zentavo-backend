@@ -5,12 +5,20 @@ export enum TransactionType {
   CASH_OUT = 'CASH_OUT',
 }
 
+export enum TransactionMethod {
+  PIX = 'PIX',
+  DEBIT = 'DEBIT',
+  TRANSFER = 'TRANSFER',
+  CARD_PAYMENT = 'CARD_PAYMENT',
+}
+
 export class TransactionEntity extends BaseEntity {
   public userId: string;
-  public tagId?: string;
-  public externalTransactionId: string;
-  public date: Date;
+  public categoryId?: string | null;
+  public externalId?: string | null;
   public amount: number;
+  public date: Date;
   public description: string;
   public type: TransactionType;
+  public method: TransactionMethod;
 }
