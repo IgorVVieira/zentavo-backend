@@ -27,7 +27,7 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
             const amount = Number(row['Valor']);
             const statement: Statement = {
               externalId: row['Identificador'],
-              date: new Date(row['Data']),
+              date: this.parseDate(row['Data']),
               description: row['Descrição'],
               amount: +amount,
               type: amount > 0 ? TransactionType.CASH_IN : TransactionType.CASH_OUT,
@@ -40,7 +40,7 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
             console.error('Error parsing CSV:', error);
             reject(error);
           })
-          .end(() => {
+          .on('end', () => {
             resolve(rows);
           });
       });
@@ -50,6 +50,12 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
       console.error('Error processing CSV file:', error);
       throw new Error('Error processing CSV file');
     }
+  }
+
+  private parseDate(dateString: string): Date {
+    const [day, month, year] = dateString.split('/').map(Number);
+
+    return new Date(year, month - 1, day);
   }
 
   private getMethod(description: string): TransactionMethod {

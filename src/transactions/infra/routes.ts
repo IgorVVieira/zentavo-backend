@@ -1,5 +1,7 @@
 import multer from 'multer';
 
+import { authMiddleware } from '@shared/middlewares/auth';
+
 import { TransactionController } from '@transactions/infra/controllers/transaction.controller';
 import { container } from '@transactions/infra/di/container';
 import { Router } from 'express';
@@ -62,6 +64,7 @@ const transactionController = container.resolve(TransactionController);
  */
 transactionRouter.post(
   '/import',
+  authMiddleware,
   upload.single('statement'),
   transactionController.importData.bind(transactionController),
 );
