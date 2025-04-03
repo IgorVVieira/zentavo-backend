@@ -14,7 +14,7 @@ const authController = container.resolve(AuthController);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -72,11 +72,11 @@ const authController = container.resolve(AuthController);
  *       500:
  *         description: Internal server error
  */
-userRouter.post('/users', userController.create);
+userRouter.post('/', userController.create);
 
 /**
  * @swagger
- * /users/login:
+ * /api/users/login:
  *   post:
  *     summary: Autenticação de usuário
  *     description: Endpoint para login de usuário e obtenção de token JWT
@@ -171,11 +171,11 @@ userRouter.post('/users', userController.create);
  *           format: date-time
  *           description: Data da última atualização do registro
  */
-userRouter.post('/users/login', authController.login);
+userRouter.post('/login', authController.login);
 
 /**
  * @swagger
- * /users/me:
+ * /api/users/me:
  *   get:
  *     summary: Obter dados do usuário logado
  *     description: Endpoint para obter os dados do usuário autenticado através do token JWT
@@ -204,6 +204,6 @@ userRouter.post('/users/login', authController.login);
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-userRouter.get('/users/me', authMiddleware, userController.getMe);
+userRouter.get('/me', authMiddleware, userController.getMe);
 
 export { userRouter };

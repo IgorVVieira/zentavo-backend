@@ -13,7 +13,7 @@ const transactionController = container.resolve(TransactionController);
 
 /**
  * @swagger
- * /import:
+ * /api/transactions/import:
  *   post:
  *     summary: Importar arquivo CSV
  *     description: Endpoint para importar dados a partir de um arquivo CSV

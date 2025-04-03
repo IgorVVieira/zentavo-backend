@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
+import { UnauthorizedError } from '@shared/errors/unauthorized.error';
 
 import { AuthUserResponseDto, LoginDto } from '../application/dtos';
 import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
@@ -30,7 +31,7 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
     const isPasswordValid = await this.encrypter.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+      throw new UnauthorizedError('Invalid password');
     }
 
     const token = this.jwt.sign(user.id as string, user.name, user.email);
