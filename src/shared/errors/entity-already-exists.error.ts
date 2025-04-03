@@ -1,6 +1,8 @@
-export class EntityAlreadyExistsError extends Error {
-  constructor(name: string) {
-    super(`${name} already exists`);
-    this.name = 'EntityAlreadyExistsError';
+import { CustomApplicationError } from '@shared/errors/custom-application.error';
+import { HttpStatus } from '@shared/http-status.enum';
+
+export class EntityAlreadyExistsError extends CustomApplicationError {
+  constructor(message: string) {
+    super(`${message} already exists`, HttpStatus.BAD_REQUEST, 'EntityAlreadyExistsError');
   }
 }
