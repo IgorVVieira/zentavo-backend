@@ -69,4 +69,10 @@ transactionRouter.post(
   transactionController.importData.bind(transactionController),
 );
 
+transactionRouter.get(
+  '/:month/:year',
+  authMiddleware,
+  transactionController.getTransactionsByDate.bind(transactionController),
+);
+
 export { transactionRouter };

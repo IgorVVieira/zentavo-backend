@@ -27,28 +27,29 @@ export class CreateTransactionUseCase implements IBaseUseCase<CreateTransactionD
     const batchSize = 10;
     const batch: TransactionEntity[] = [];
 
-    const transactionPromises = transactionsToCreate.map(async transaction => {
-      const transactionExists = await this.transactionRepository.findByExternalIdAndUserId(
-        transaction.externalId,
-        transaction.userId,
-      );
+    try {
+      for (const transaction of transactionsToCreate) {
+        const transactionExists = await this.transactionRepository.findByExternalIdAndUserId(
+          transaction.externalId,
+          transaction.userId,
+        );
 
-      if (transactionExists) {
-        return;
-      }
-      batch.push(transaction);
+        if (!transactionExists) {
+          batch.push(transaction);
+        }
 
-      if (batch.length === batchSize) {
-        await this.transactionRepository.createMany(batch);
-        batch.length = 0;
+        if (batch.length === batchSize) {
+          await this.transactionRepository.createMany(batch);
+          batch.length = 0;
+        }
       }
 
       if (batch.length > 0) {
         await this.transactionRepository.createMany(batch);
-        batch.length = 0;
       }
-    });
-
-    await Promise.all(transactionPromises);
+    } catch (error) {
+      console.error('Erro ao criar transações:', error);
+      throw new Error('Erro ao processar transações');
+    }
   }
 }

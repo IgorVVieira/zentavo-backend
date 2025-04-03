@@ -45,4 +45,26 @@ export class TransactionRepositoryAdapter
       method: transaction.method as TransactionMethod,
     };
   }
+
+  public async findByDate(
+    userId: string,
+    month: number,
+    year: number,
+  ): Promise<TransactionEntity[]> {
+    const transactions = await this.prisma.transaction.findMany({
+      where: {
+        userId,
+        date: {
+          gte: new Date(year, month - 1, 1),
+          lt: new Date(year, month, 1),
+        },
+      },
+    });
+
+    return transactions.map(transaction => ({
+      ...transaction,
+      type: transaction.type as TransactionType,
+      method: transaction.method as TransactionMethod,
+    }));
+  }
 }

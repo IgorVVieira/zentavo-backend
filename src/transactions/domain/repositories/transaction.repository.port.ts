@@ -4,4 +4,5 @@ import { TransactionEntity } from '@transactions/domain/entities/transaction.ent
 
 export interface ITransactionRepositoryPort extends IBaseRepository<TransactionEntity> {
   findByExternalIdAndUserId(externalId: string, userId: string): Promise<TransactionEntity | null>;
+  findByDate(userId: string, month: number, year: number): Promise<TransactionEntity[]>;
 }
