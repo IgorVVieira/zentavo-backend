@@ -9,6 +9,7 @@ import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser
 import { TransactionController } from '@transactions/infra/controllers/transaction.controller';
 import { CreateCategoryUseCase } from '@transactions/use-cases/category/create-category.use-case';
 import { CreateTransactionUseCase } from '@transactions/use-cases/transactions/create-transaction.use-case';
+import { GetTransactionsByDateUseCase } from '@transactions/use-cases/transactions/get-transactions-by-date.use-case';
 
 container.registerSingleton<ICategoryRepositoryPort>(
   'CategoryRepository',
@@ -23,6 +24,7 @@ container.registerSingleton<ICsvStatementParser>('CsvStatementParser', NubankSta
 
 container.registerSingleton('CreateCategoryUseCase', CreateCategoryUseCase);
 container.registerSingleton('CreateTransactionUseCase', CreateTransactionUseCase);
+container.registerSingleton('GetTransactionsByDateUseCase', GetTransactionsByDateUseCase);
 
 container.registerSingleton(TransactionController);
 
