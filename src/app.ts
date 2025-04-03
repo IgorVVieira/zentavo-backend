@@ -4,6 +4,7 @@ import 'dotenv/config';
 import swaggerUi from 'swagger-ui-express';
 
 import { HttpStatus } from '@shared/http-status.enum';
+import { errorHandler } from '@shared/middlewares/error-handler';
 
 import { userRouter } from '@users/infra/routes';
 
@@ -20,6 +21,7 @@ app.listen(process.env.PORT, () => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(errorHandler);
 
 app.use('/healthcheck', (req, res) => {
   res.status(HttpStatus.OK).json({ message: 'OK' });
