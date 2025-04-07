@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import 'express-async-errors';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
@@ -22,7 +23,6 @@ app.listen(process.env.PORT, () => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(errorHandler);
 
 app.use('/healthcheck', (req, res) => {
   res.status(HttpStatus.OK).json({ message: 'OK' });
@@ -32,5 +32,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api/users', userRouter);
 app.use('/api/transactions', transactionRouter);
+
+app.use(errorHandler);
 
 export { app };
