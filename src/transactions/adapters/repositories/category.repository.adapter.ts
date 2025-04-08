@@ -34,4 +34,15 @@ export class CategoryRepositoryAdapter
 
     return category;
   }
+
+  public async findByUserId(userId: string): Promise<CategoryEntity[]> {
+    return this.prisma.category.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+  }
 }
