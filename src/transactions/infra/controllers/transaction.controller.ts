@@ -2,8 +2,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
-import { CreateTransactionUseCase } from '@transactions/use-cases/transactions/create-transaction.use-case';
-import { GetTransactionsByDateUseCase } from '@transactions/use-cases/transactions/get-transactions-by-date.use-case';
+import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
+import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { Request, Response } from 'express';
 
 @injectable()

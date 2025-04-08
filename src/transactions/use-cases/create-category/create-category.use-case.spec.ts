@@ -1,6 +1,6 @@
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
-import { CreateCategoryUseCase } from '@transactions/use-cases/category/create-category.use-case';
+import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 
 describe('CreateCategoryUseCase', () => {
   type SutTypes = {

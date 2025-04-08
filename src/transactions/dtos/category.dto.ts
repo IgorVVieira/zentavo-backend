@@ -1,4 +1,4 @@
-import { CreateCategoryDto } from '@transactions/application/dto/in/create-category.dto';
+import { CreateCategoryDto } from '@transactions/dtos/create-category.dto';
 
 export class CategoryDto extends CreateCategoryDto {
   id: string;

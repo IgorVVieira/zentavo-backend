@@ -2,9 +2,9 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 
-import { CreateTransactionDto } from '@transactions/application/dto/in/create-transaction.dto';
 import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
+import { CreateTransactionDto } from '@transactions/dtos';
 import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
 
 @injectable()
