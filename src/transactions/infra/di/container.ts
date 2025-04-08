@@ -12,6 +12,7 @@ import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/c
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
+import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 
 container.registerSingleton<ICategoryRepositoryPort>(
   'CategoryRepository',
@@ -28,6 +29,7 @@ container.registerSingleton('CreateCategoryUseCase', CreateCategoryUseCase);
 container.registerSingleton('CreateTransactionUseCase', CreateTransactionUseCase);
 container.registerSingleton('GetTransactionsByDateUseCase', GetTransactionsByDateUseCase);
 container.registerSingleton('ListCategoriesUseCase', ListCategoriesUseCase);
+container.registerSingleton('UpdateTransactionUseCase', UpdateTransactionUseCase);
 
 container.registerSingleton(TransactionController);
 container.registerSingleton(CategoryController);

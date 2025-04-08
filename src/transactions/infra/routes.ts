@@ -77,6 +77,12 @@ transactionRouter.get(
   transactionController.getTransactionsByDate.bind(transactionController),
 );
 
+transactionRouter.put(
+  '/:id',
+  authMiddleware,
+  transactionController.update.bind(transactionController),
+);
+
 transactionRouter.post(
   '/categories',
   authMiddleware,
