@@ -61,14 +61,21 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
   private getMethod(description: string): TransactionMethod {
     const lowerDescription = description.toLowerCase();
 
-    if (lowerDescription.includes('pix')) {
-      return TransactionMethod.PIX;
-    }
-    if (lowerDescription.includes('débito')) {
-      return TransactionMethod.DEBIT;
-    }
-    if (lowerDescription.includes('Pagamento de fatura')) {
-      return TransactionMethod.CARD_PAYMENT;
+    const patterns: [string | RegExp, TransactionMethod][] = [
+      [/pix/, TransactionMethod.PIX],
+      [/d[ée]bito/, TransactionMethod.DEBIT],
+      [/pagamento\s+de\s+fatura/, TransactionMethod.CARD_PAYMENT],
+      [/transfer[eê]ncia\s+recebida/, TransactionMethod.PIX],
+    ];
+
+    for (const [pattern, method] of patterns) {
+      if (
+        typeof pattern === 'string'
+          ? lowerDescription.includes(pattern)
+          : pattern.test(lowerDescription)
+      ) {
+        return method;
+      }
     }
 
     return TransactionMethod.DEBIT;
