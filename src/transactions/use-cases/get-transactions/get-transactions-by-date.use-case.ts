@@ -28,6 +28,11 @@ export class GetTransactionsByDateUseCase
       description: transaction.description,
       date: transaction.date,
       amount: transaction.amount,
+      category: {
+        id: transaction?.category?.id,
+        color: transaction?.category?.color,
+        name: transaction?.category?.name,
+      },
     }));
   }
 }

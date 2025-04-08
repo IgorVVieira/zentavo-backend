@@ -13,4 +13,9 @@ export class TransactionDto {
   description: string;
   type: TransactionType;
   method: TransactionMethod;
+  category?: {
+    id?: string;
+    name?: string;
+    color?: string;
+  };
 }

@@ -59,12 +59,16 @@ export class TransactionRepositoryAdapter
           lt: new Date(year, month, 1),
         },
       },
+      include: {
+        category: true,
+      },
     });
 
     return transactions.map(transaction => ({
       ...transaction,
       type: transaction.type as TransactionType,
       method: transaction.method as TransactionMethod,
+      category: transaction.category,
     }));
   }
 }
