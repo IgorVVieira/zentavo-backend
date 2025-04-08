@@ -3,6 +3,8 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
+import { IUserValidatorPort } from '@users/services/user-validator.port';
+
 import { CreateCategoryDto } from '@transactions/application/dto/in/create-category.dto';
 import { CategoryDto } from '@transactions/application/dto/out/category.dto';
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
@@ -12,6 +14,8 @@ export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, Ca
   public constructor(
     @inject('CategoryRepository')
     private readonly categoryRepository: ICategoryRepositoryPort,
+    @inject('UserValidator')
+    private readonly userValidator: IUserValidatorPort,
   ) {}
 
   public async execute(data: CreateCategoryDto): Promise<CategoryDto> {
@@ -19,6 +23,8 @@ export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, Ca
       data.name,
       data.userId,
     );
+
+    await this.userValidator.validateUserExists(data.userId);
 
     if (categoryExists) {
       throw new EntityAlreadyExistsError('Category');
