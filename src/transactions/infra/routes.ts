@@ -2,6 +2,7 @@ import multer from 'multer';
 
 import { authMiddleware } from '@shared/middlewares/auth';
 
+import { CategoryController } from '@transactions/controllers/category.controller';
 import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { container } from '@transactions/infra/di/container';
 import { Router } from 'express';
@@ -10,6 +11,7 @@ const transactionRouter = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 const transactionController = container.resolve(TransactionController);
+const categoryController = container.resolve(CategoryController);
 
 /**
  * @swagger
@@ -73,6 +75,18 @@ transactionRouter.get(
   '/:month/:year',
   authMiddleware,
   transactionController.getTransactionsByDate.bind(transactionController),
+);
+
+transactionRouter.post(
+  '/categories',
+  authMiddleware,
+  categoryController.create.bind(categoryController),
+);
+
+transactionRouter.get(
+  '/categories',
+  authMiddleware,
+  categoryController.list.bind(categoryController),
 );
 
 export { transactionRouter };

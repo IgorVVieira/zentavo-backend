@@ -4,6 +4,7 @@ import { ICategoryRepositoryPort } from '@transactions//domain/repositories/cate
 import { NubankStatementCsvParser } from '@transactions/adapters/gateways/nubank-statement-csv-parser.adapter';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
 import { TransactionRepositoryAdapter } from '@transactions/adapters/repositories/transaction.repository.adapter';
+import { CategoryController } from '@transactions/controllers/category.controller';
 import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
@@ -29,5 +30,6 @@ container.registerSingleton('GetTransactionsByDateUseCase', GetTransactionsByDat
 container.registerSingleton('ListCategoriesUseCase', ListCategoriesUseCase);
 
 container.registerSingleton(TransactionController);
+container.registerSingleton(CategoryController);
 
 export { container };
