@@ -4,9 +4,9 @@ import { ICategoryRepositoryPort } from '@transactions//domain/repositories/cate
 import { NubankStatementCsvParser } from '@transactions/adapters/gateways/nubank-statement-csv-parser.adapter';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
 import { TransactionRepositoryAdapter } from '@transactions/adapters/repositories/transaction.repository.adapter';
+import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
-import { TransactionController } from '@transactions/infra/controllers/transaction.controller';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';

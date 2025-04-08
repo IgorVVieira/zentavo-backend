@@ -4,9 +4,8 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
-
-import { CreateUserDto, UserDto } from '../application/dtos';
-import { IEncryptPort } from '../gateways/encypt.port';
+import { CreateUserDto, UserDto } from '@users/dtos';
+import { IEncryptPort } from '@users/gateways/encypt.port';
 
 @injectable()
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {

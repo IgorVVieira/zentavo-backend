@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
-import { LoginUseCase } from '@users/use-cases/login.use-case';
+import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 
 import { Request, Response } from 'express';
 

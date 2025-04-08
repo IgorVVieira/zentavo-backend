@@ -4,10 +4,10 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { UnauthorizedError } from '@shared/errors/unauthorized.error';
 
-import { AuthUserResponseDto, LoginDto } from '../application/dtos';
-import { IUserRepositoryPort } from '../domain/repositories/user.repository.port';
-import { IEncryptPort } from '../gateways/encypt.port';
-import { IJwtPort } from '../gateways/jwt.port';
+import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
+import { AuthUserResponseDto, LoginDto } from '@users/dtos';
+import { IEncryptPort } from '@users/gateways/encypt.port';
+import { IJwtPort } from '@users/gateways/jwt.port';
 
 @injectable()
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {

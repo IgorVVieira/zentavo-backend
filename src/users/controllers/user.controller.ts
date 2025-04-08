@@ -4,9 +4,9 @@ import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
-import { CreateUserDto } from '@users/application/dtos';
-import { CreateUserUseCase } from '@users/use-cases/create-user.use-case';
-import { GetMeUseCase } from '@users/use-cases/get-me.use-case';
+import { CreateUserDto } from '@users/dtos';
+import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
+import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 
 import { Request, Response } from 'express';
 

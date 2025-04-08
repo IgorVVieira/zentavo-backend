@@ -1,7 +1,7 @@
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
-import { GetMeUseCase } from '@users/use-cases/get-me.use-case';
+import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 
 describe('GetMeUseCase', () => {
   type UserRepositoryMock = BaseRepositoryMock & {

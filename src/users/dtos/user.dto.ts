@@ -1,4 +1,4 @@
-import { CreateUserDto } from 'users/application/dtos/create-user.dto';
+import { CreateUserDto } from '@users/dtos/create-user.dto';
 
 export type UserDto = Omit<CreateUserDto, 'password'> & {
   id: string;

@@ -1,6 +1,6 @@
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
-import { LoginUseCase } from './login.use-case';
+import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 
 describe('LoginUseCase', () => {
   type UserRepositoryMock = BaseRepositoryMock & {

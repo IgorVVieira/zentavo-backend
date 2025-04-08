@@ -1,11 +1,11 @@
 import { authMiddleware } from '@shared/middlewares/auth';
 
-import { AuthController } from '@users/infra/controllers/auth.controller';
+import { AuthController } from '@users/controllers/auth.controller';
 import { container } from '@users/infra/di/container';
 
 import { Router } from 'express';
 
-import { UserController } from './controllers/user.controller';
+import { UserController } from '../controllers/user.controller';
 
 const userRouter = Router();
 

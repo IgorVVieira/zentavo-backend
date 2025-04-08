@@ -2,7 +2,7 @@ import multer from 'multer';
 
 import { authMiddleware } from '@shared/middlewares/auth';
 
-import { TransactionController } from '@transactions/infra/controllers/transaction.controller';
+import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { container } from '@transactions/infra/di/container';
 import { Router } from 'express';
 
