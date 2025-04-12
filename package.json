@@ -12,6 +12,7 @@
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
     "start": "ts-node -r tsconfig-paths/register --files src/app.ts",
+    "dev": "tsx watch -r tsconfig-paths/register src/app.ts",
     "prepare": "husky"
   },
   "keywords": [],
