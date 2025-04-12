@@ -29,9 +29,9 @@ export class GetTransactionsByDateUseCase
       date: transaction.date,
       amount: transaction.amount,
       category: {
-        id: transaction?.category?.id,
-        color: transaction?.category?.color,
-        name: transaction?.category?.name,
+        id: transaction?.category?.id as string,
+        color: transaction?.category?.color as string,
+        name: transaction?.category?.name as string,
       },
     }));
   }

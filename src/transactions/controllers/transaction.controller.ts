@@ -1,15 +1,19 @@
+import { Body, CurrentUser, JsonController, Param, Post, Put } from 'routing-controllers';
+import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
+import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 import { Request, Response } from 'express';
 
 @injectable()
+@JsonController('/transactions')
 export class TransactionController {
-  public constructor(
+  constructor(
     @inject('CreateTransactionUseCase')
     private readonly createTransactionUseCase: CreateTransactionUseCase,
     @inject('GetTransactionsByDateUseCase')
@@ -18,28 +22,31 @@ export class TransactionController {
     private readonly updateTransactionUseCase: UpdateTransactionUseCase,
   ) {}
 
-  public async importData(req: Request, resp: Response): Promise<void> {
-    const file = req.file;
-
-    if (!file) {
-      resp.status(HttpStatus.BAD_REQUEST).send('No file uploaded');
-
-      return;
-    }
-
-    const userId = req.userId;
-
-    await this.createTransactionUseCase.execute({
+  @Post('/import')
+  @OpenAPI({
+    summary: 'Import transactions from a file',
+    description: 'Import transactions from a file',
+    responses: {
+      '200': {
+        description: 'Transactions imported successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid file',
+      },
+    },
+  })
+  @ResponseSchema(TransactionDto)
+  async importData(
+    @CurrentUser() userId: string,
+    @Body() file: Express.Multer.File,
+  ): Promise<void> {
+    return this.createTransactionUseCase.execute({
       userId,
-      file: req.file as Express.Multer.File,
-    });
-
-    resp.status(HttpStatus.OK).json({
-      message: 'File imported successfully',
+      file,
     });
   }
 
-  public async getTransactionsByDate(req: Request, resp: Response): Promise<void> {
+  async getTransactionsByDate(req: Request, resp: Response): Promise<void> {
     const { month, year } = req.params;
 
     const { userId } = req;
@@ -53,19 +60,32 @@ export class TransactionController {
     resp.status(HttpStatus.OK).json(transactions);
   }
 
-  public async update(req: Request, resp: Response): Promise<void> {
-    const { id } = req.params;
-
-    const { userId } = req;
-
-    const transactionData = {
-      ...req.body,
+  @Put('/:id')
+  @OpenAPI({
+    summary: 'Update a transaction',
+    description: 'Update a transaction by ID',
+    responses: {
+      '200': {
+        description: 'Transaction updated successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid data',
+      },
+      '404': {
+        description: 'Transaction not found',
+      },
+    },
+  })
+  @ResponseSchema(TransactionDto)
+  async update(
+    @Param('id') id: string,
+    @Body() updateTransactionDto: UpdateTransactionDto,
+    @CurrentUser() userId: string,
+  ): Promise<TransactionDto> {
+    return this.updateTransactionUseCase.execute({
+      ...updateTransactionDto,
       id,
       userId,
-    };
-
-    const transaction = await this.updateTransactionUseCase.execute(transactionData);
-
-    resp.status(HttpStatus.OK).json(transaction);
+    });
   }
 }

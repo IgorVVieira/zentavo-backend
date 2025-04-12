@@ -1,41 +1,62 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Body, CurrentUser, Get, JsonController, Post } from 'routing-controllers';
+import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { HttpStatus } from '@shared/http-status.enum';
-
+import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
-import { Request, Response } from 'express';
 
 @injectable()
+@JsonController('/categories')
 export class CategoryController {
-  public constructor(
+  constructor(
     @inject('CreateCategoryUseCase')
     private readonly createCategoryUseCase: CreateCategoryUseCase,
     @inject('ListCategoriesUseCase')
     private readonly listCategoriesUseCase: ListCategoriesUseCase,
   ) {}
 
-  public async create(req: Request, resp: Response): Promise<any> {
-    const { name, color } = req.body;
+  @Post('/')
+  @OpenAPI({
+    summary: 'Create a new category',
+    description: 'Create a new category for the user',
+    responses: {
+      '201': {
+        description: 'Category created successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid data',
+      },
+    },
+  })
+  @ResponseSchema(CategoryDto)
+  async create(
+    @CurrentUser() userId: string,
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<CategoryDto> {
+    const { name, color } = createCategoryDto;
 
-    const userId = req.userId;
-
-    const category = await this.createCategoryUseCase.execute({
+    return this.createCategoryUseCase.execute({
       userId,
       name,
       color,
     });
-
-    resp.status(HttpStatus.CREATED).json(category);
   }
 
-  public async list(req: Request, resp: Response): Promise<any> {
-    const userId = req.userId;
-
-    const categories = await this.listCategoriesUseCase.execute(userId);
-
-    resp.status(HttpStatus.OK).json(categories);
+  @Get('/')
+  @OpenAPI({
+    summary: 'List categories',
+    description: 'List all categories for the user',
+    responses: {
+      '200': {
+        description: 'Categories retrieved successfully',
+      },
+    },
+  })
+  @ResponseSchema(CategoryDto, { isArray: true })
+  async list(@CurrentUser() userId: string): Promise<any> {
+    return this.listCategoriesUseCase.execute(userId);
   }
 }

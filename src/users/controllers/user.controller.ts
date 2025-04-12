@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { Authorized, Body, CurrentUser, Get, JsonController, Post } from 'routing-controllers';
+import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { HttpStatus } from '@shared/http-status.enum';
-
-import { CreateUserDto } from '@users/dtos';
+import { CreateUserDto, UserDto } from '@users/dtos';
 import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 
-import { Request, Response } from 'express';
-
 @injectable()
+@JsonController('/users')
 export class UserController {
   constructor(
     @inject('CreateUserUseCase')
@@ -22,21 +19,47 @@ export class UserController {
     this.getMe = this.getMe.bind(this);
   }
 
-  public async create(request: Request, response: Response): Promise<any> {
-    const body: CreateUserDto = {
-      email: request.body.email,
-      password: request.body.password,
-      name: request.body.name,
-    };
-    const user = await this.createUserUseCase.execute(body);
-
-    return response.status(HttpStatus.CREATED).json(user);
+  @Post('/create')
+  @OpenAPI({
+    summary: 'Create a new user',
+    description: 'Creates a new user with the provided email, password, and name',
+    responses: {
+      '201': {
+        description: 'User created successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid input data',
+      },
+      '409': {
+        description: 'Conflict - User with this email already exists',
+      },
+    },
+  })
+  @ResponseSchema(CreateUserDto)
+  public async create(@Body() userDto: CreateUserDto): Promise<UserDto> {
+    return this.createUserUseCase.execute(userDto);
   }
 
-  public async getMe(request: Request, response: Response): Promise<any> {
-    const userId = request.userId;
-    const user = await this.getMeUseCase.execute(userId);
-
-    return response.status(HttpStatus.OK).json(user);
+  @Get('/me')
+  @Authorized()
+  @OpenAPI({
+    summary: 'Get current user profile',
+    description: 'Returns the profile of the currently authenticated user',
+    security: [{ bearerAuth: [] }],
+    responses: {
+      '200': {
+        description: 'User profile retrieved successfully',
+      },
+      '401': {
+        description: 'Unauthorized - Missing or invalid authentication',
+      },
+      '404': {
+        description: 'Not found - User not found',
+      },
+    },
+  })
+  @ResponseSchema(CreateUserDto)
+  public async getMe(@CurrentUser() userId: string): Promise<UserDto> {
+    return this.getMeUseCase.execute(userId);
   }
 }

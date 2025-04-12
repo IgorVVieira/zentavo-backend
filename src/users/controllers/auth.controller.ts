@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Body, JsonController, Post } from 'routing-controllers';
+import { OpenAPI } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
 import { HttpStatus } from '@shared/http-status.enum';
 
+import { LoginDto } from '@users/dtos';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @injectable()
+@JsonController('/auth')
 export class AuthController {
   constructor(
     @inject('LoginUseCase')
@@ -17,8 +21,21 @@ export class AuthController {
     this.login = this.login.bind(this);
   }
 
-  public async login(request: Request, response: Response): Promise<any> {
-    const { email, password } = request.body;
+  @Post('/login')
+  @OpenAPI({
+    summary: 'Login user',
+    description: 'Login user with email and password',
+    responses: {
+      '200': {
+        description: 'User logged in successfully',
+      },
+      '401': {
+        description: 'Unauthorized - Invalid credentials',
+      },
+    },
+  })
+  public async login(@Body() loginDto: LoginDto, response: Response): Promise<any> {
+    const { email, password } = loginDto;
     const token = await this.loginUserCase.execute({ email, password });
 
     return response.status(HttpStatus.OK).json(token);
