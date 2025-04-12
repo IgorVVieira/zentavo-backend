@@ -34,7 +34,7 @@ export class AuthController {
       },
     },
   })
-  public async login(@Body() loginDto: LoginDto, response: Response): Promise<any> {
+  async login(@Body() loginDto: LoginDto, response: Response): Promise<any> {
     const { email, password } = loginDto;
     const token = await this.loginUserCase.execute({ email, password });
 

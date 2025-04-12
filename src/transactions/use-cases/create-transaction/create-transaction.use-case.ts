@@ -9,14 +9,14 @@ import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser
 
 @injectable()
 export class CreateTransactionUseCase implements IBaseUseCase<CreateTransactionDto, void> {
-  public constructor(
+  constructor(
     @inject('TransactionRepository')
     private readonly transactionRepository: ITransactionRepositoryPort,
     @inject('CsvStatementParser')
     private readonly csvStatementParser: ICsvStatementParser,
   ) {}
 
-  public async execute(data: CreateTransactionDto): Promise<void> {
+  async execute(data: CreateTransactionDto): Promise<void> {
     const { userId, file } = data;
     const transactions = await this.csvStatementParser.parse(file);
     const transactionsToCreate = transactions.map(transaction => ({

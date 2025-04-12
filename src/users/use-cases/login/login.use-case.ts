@@ -11,7 +11,7 @@ import { IJwtPort } from '@users/gateways/jwt.port';
 
 @injectable()
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {
-  public constructor(
+  constructor(
     @inject('UserRepository')
     private readonly userRepository: IUserRepositoryPort,
     @inject('EncrypterAdapter')
@@ -20,7 +20,7 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
     private readonly jwt: IJwtPort,
   ) {}
 
-  public async execute(data: LoginDto): Promise<AuthUserResponseDto> {
+  async execute(data: LoginDto): Promise<AuthUserResponseDto> {
     const { email, password } = data;
     const user = await this.userRepository.findByEmail(email);
 

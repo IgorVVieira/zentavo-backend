@@ -17,14 +17,14 @@ export class TransactionRepositoryAdapter
 {
   private readonly prisma: PrismaClient;
 
-  public constructor() {
+  constructor() {
     const prisma = new PrismaClient();
 
     super(prisma.transaction);
     this.prisma = prisma;
   }
 
-  public async findByExternalIdAndUserId(
+  async findByExternalIdAndUserId(
     externalId: string,
     userId: string,
   ): Promise<TransactionEntity | null> {
@@ -46,11 +46,7 @@ export class TransactionRepositoryAdapter
     };
   }
 
-  public async findByDate(
-    userId: string,
-    month: number,
-    year: number,
-  ): Promise<TransactionEntity[]> {
+  async findByDate(userId: string, month: number, year: number): Promise<TransactionEntity[]> {
     const transactions = await this.prisma.transaction.findMany({
       where: {
         userId,

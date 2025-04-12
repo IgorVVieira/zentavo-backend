@@ -1,5 +1,5 @@
 export class BaseEntity {
-  public id?: string;
-  public createdAt?: Date;
-  public updatedAt?: Date;
+  id?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

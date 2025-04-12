@@ -13,7 +13,7 @@ export class GetMeUseCase implements IBaseUseCase<string, UserDto> {
     private readonly userRepository: IUserRepositoryPort,
   ) {}
 
-  public async execute(userId: string): Promise<UserDto> {
+  async execute(userId: string): Promise<UserDto> {
     const user = await this.userRepository.findOne(userId);
 
     if (!user) {
