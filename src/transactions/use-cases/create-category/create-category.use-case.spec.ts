@@ -7,6 +7,7 @@ describe('CreateCategoryUseCase', () => {
     sut: CreateCategoryUseCase;
     categoryRepositoryMock: BaseRepositoryMock & {
       findByNameAndUserId: jest.Mock;
+      findByUserId: jest.Mock;
     };
     userValidatorMock: {
       validateUserExists: jest.Mock;
@@ -17,6 +18,7 @@ describe('CreateCategoryUseCase', () => {
     const categoryRepositoryMock = {
       ...baseRepository,
       findByNameAndUserId: jest.fn(),
+      findByUserId: jest.fn(),
     };
 
     const userValidatorMock = {
