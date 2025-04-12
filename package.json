@@ -12,6 +12,8 @@
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
     "start": "ts-node -r tsconfig-paths/register --files src/app.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --files -r tsconfig-paths/register src/app.ts",
+    "debug-controller": "node scripts/debug-controllers.js",
     "prepare": "husky"
   },
   "keywords": [],
@@ -47,9 +49,9 @@
     "prettier": "^3.5.3",
     "prisma": "^6.5.0",
     "supertest": "^7.1.0",
-    "swagger-jsdoc": "^6.2.8",
     "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1"
@@ -57,6 +59,9 @@
   "dependencies": {
     "@prisma/client": "^6.5.0",
     "bcrypt": "^5.1.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "class-validator-jsonschema": "^5.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -65,6 +70,8 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
     "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.11.2",
+    "routing-controllers-openapi": "^5.0.0",
     "swagger-ui-express": "^5.0.1",
     "tsyringe": "^4.8.0"
   }

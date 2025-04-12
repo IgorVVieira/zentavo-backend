@@ -10,7 +10,7 @@ import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser
 
 @injectable()
 export class NubankStatementCsvParser implements ICsvStatementParser {
-  public async parse(file: Express.Multer.File): Promise<Statement[]> {
+  async parse(file: Express.Multer.File): Promise<Statement[]> {
     const data = file.buffer.toString('utf-8');
 
     try {

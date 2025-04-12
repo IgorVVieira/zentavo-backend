@@ -7,12 +7,12 @@ import { CategoryDto } from '@transactions/dtos';
 
 @injectable()
 export class ListCategoriesUseCase implements IBaseUseCase<string, CategoryDto[]> {
-  public constructor(
+  constructor(
     @inject('CategoryRepository')
     private readonly categoryRepository: ICategoryRepositoryPort,
   ) {}
 
-  public async execute(userId: string): Promise<CategoryDto[]> {
+  async execute(userId: string): Promise<CategoryDto[]> {
     const categories = await this.categoryRepository.findByUserId(userId);
 
     return categories.map(category => ({

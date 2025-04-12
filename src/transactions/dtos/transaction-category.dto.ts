@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class CreateCategoryDto {
+export class TransactionCategoryDto {
   @IsUUID()
   @IsNotEmpty()
-  userId: string;
+  id: string;
 
   @IsString()
   @IsNotEmpty()

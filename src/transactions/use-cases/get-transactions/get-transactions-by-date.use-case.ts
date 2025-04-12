@@ -9,12 +9,12 @@ import { GetTransactionsDto, TransactionDto } from '@transactions/dtos';
 export class GetTransactionsByDateUseCase
   implements IBaseUseCase<GetTransactionsDto, TransactionDto[]>
 {
-  public constructor(
+  constructor(
     @inject('TransactionRepository')
     private readonly transactionRepository: ITransactionRepositoryPort,
   ) {}
 
-  public async execute(data: GetTransactionsDto): Promise<TransactionDto[]> {
+  async execute(data: GetTransactionsDto): Promise<TransactionDto[]> {
     const { userId, month, year } = data;
 
     const transactions = await this.transactionRepository.findByDate(userId, month, year);
@@ -29,9 +29,9 @@ export class GetTransactionsByDateUseCase
       date: transaction.date,
       amount: transaction.amount,
       category: {
-        id: transaction?.category?.id,
-        color: transaction?.category?.color,
-        name: transaction?.category?.name,
+        id: transaction?.category?.id as string,
+        color: transaction?.category?.color as string,
+        name: transaction?.category?.name as string,
       },
     }));
   }

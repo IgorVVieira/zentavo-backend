@@ -7,12 +7,12 @@ import { IUserValidatorPort } from '@users/services/user-validator.port';
 
 @injectable()
 export class UserValidatorAdapterService implements IUserValidatorPort {
-  public constructor(
+  constructor(
     @inject('UserRepository')
     private readonly userRepository: IUserRepositoryPort,
   ) {}
 
-  public async validateUserExists(userId: string): Promise<void> {
+  async validateUserExists(userId: string): Promise<void> {
     const userExists = await this.userRepository.findOne(userId);
 
     if (!userExists) {

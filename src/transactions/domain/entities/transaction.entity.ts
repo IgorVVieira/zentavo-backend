@@ -15,14 +15,14 @@ export enum TransactionMethod {
 }
 
 export class TransactionEntity extends BaseEntity {
-  public userId: string;
-  public categoryId?: string | null;
-  public externalId?: string | null;
-  public amount: number;
-  public date: Date;
-  public description: string;
-  public type: TransactionType;
-  public method: TransactionMethod;
+  userId: string;
+  categoryId?: string | null;
+  externalId?: string | null;
+  amount: number;
+  date: Date;
+  description: string;
+  type: TransactionType;
+  method: TransactionMethod;
 
-  public category?: CategoryEntity | null;
+  category?: CategoryEntity | null;
 }

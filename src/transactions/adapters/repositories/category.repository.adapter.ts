@@ -13,14 +13,14 @@ export class CategoryRepositoryAdapter
 {
   private readonly prisma: PrismaClient;
 
-  public constructor() {
+  constructor() {
     const prisma = new PrismaClient();
 
     super(prisma.category);
     this.prisma = prisma;
   }
 
-  public async findByNameAndUserId(name: string, userId: string): Promise<CategoryEntity | null> {
+  async findByNameAndUserId(name: string, userId: string): Promise<CategoryEntity | null> {
     const category = await this.prisma.category.findFirst({
       where: {
         name,
@@ -35,7 +35,7 @@ export class CategoryRepositoryAdapter
     return category;
   }
 
-  public async findByUserId(userId: string): Promise<CategoryEntity[]> {
+  async findByUserId(userId: string): Promise<CategoryEntity[]> {
     return this.prisma.category.findMany({
       where: {
         userId,

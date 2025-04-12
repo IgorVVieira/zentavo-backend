@@ -9,14 +9,14 @@ import { IEncryptPort } from '@users/gateways/encypt.port';
 
 @injectable()
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
-  public constructor(
+  constructor(
     @inject('UserRepository')
     private readonly userRepository: IUserRepositoryPort,
     @inject('EncrypterAdapter')
     private readonly encrypter: IEncryptPort,
   ) {}
 
-  public async execute(createUserData: CreateUserDto): Promise<UserDto> {
+  async execute(createUserData: CreateUserDto): Promise<UserDto> {
     const { email, password, name } = createUserData;
     const user = await this.userRepository.findByEmail(email);
 

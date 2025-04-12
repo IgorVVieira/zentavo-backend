@@ -10,14 +10,14 @@ import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 
 @injectable()
 export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, CategoryDto> {
-  public constructor(
+  constructor(
     @inject('CategoryRepository')
     private readonly categoryRepository: ICategoryRepositoryPort,
     @inject('UserValidator')
     private readonly userValidator: IUserValidatorPort,
   ) {}
 
-  public async execute(data: CreateCategoryDto): Promise<CategoryDto> {
+  async execute(data: CreateCategoryDto): Promise<CategoryDto> {
     const categoryExists = await this.categoryRepository.findByNameAndUserId(
       data.name,
       data.userId,

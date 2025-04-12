@@ -1,38 +1,102 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import 'express-async-errors';
-import cors from 'cors';
+import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
+import {
+  createExpressServer,
+  getMetadataArgsStorage,
+  RoutingControllersOptions,
+  useContainer,
+} from 'routing-controllers';
+import { routingControllersToSpec } from 'routing-controllers-openapi';
 import swaggerUi from 'swagger-ui-express';
 
 import { HttpStatus } from '@shared/http-status.enum';
+import { authMiddleware } from '@shared/middlewares/auth';
 import { errorHandler } from '@shared/middlewares/error-handler';
 
-import { userRouter } from '@users/infra/routes';
+import '@users/infra/di/container';
+import '@transactions/infra/di/container';
+import { TsyringeAdapter } from './tsyringe-adapter';
 
-import { transactionRouter } from '@transactions/infra/routes';
-import express from 'express';
+useContainer(TsyringeAdapter);
 
-import { swaggerDocument } from './swagger';
+const routeOptions: RoutingControllersOptions = {
+  routePrefix: '/api',
+  cors: {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204,
+  },
+  defaults: {
+    nullResultCode: HttpStatus.NOT_FOUND,
+    undefinedResultCode: HttpStatus.NOT_FOUND,
+    paramOptions: {
+      required: true,
+    },
+  },
+  validation: {
+    forbidUnknownValues: true,
+    whitelist: true,
+  },
+  defaultErrorHandler: false,
+  classTransformer: true,
+  authorizationChecker: async action => {
+    try {
+      await new Promise((resolve, reject) => {
+        authMiddleware(action.request, action.response, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        });
+      });
 
-const app = express();
+      return true;
+    } catch {
+      return false;
+    }
+  },
+  currentUserChecker: async action => action.request.userId,
+  controllers: [__dirname + '/**/*.controller.ts'],
+  middlewares: [__dirname + '/shared/middlewares/*.ts'],
+};
+
+const app = createExpressServer(routeOptions);
+
+app.use(errorHandler);
+
+try {
+  const storage = getMetadataArgsStorage();
+  const schemas = validationMetadatasToSchemas();
+  const spec = routingControllersToSpec(storage, routeOptions, {
+    components: {
+      schemas,
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    info: {
+      title: 'Zentavo API Documentation',
+      version: '1.0.0',
+      description: 'API Documentation for Zentavo a financial management system',
+    },
+  });
+
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
+} catch (error) {
+  console.error('Error generating Swagger documentation:', error);
+}
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use('/healthcheck', (req, res) => {
-  res.status(HttpStatus.OK).json({ message: 'OK' });
-});
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use('/api/users', userRouter);
-app.use('/api/transactions', transactionRouter);
-
-app.use(errorHandler);
 
 export { app };
