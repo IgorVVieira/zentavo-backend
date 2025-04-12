@@ -1,15 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Body, JsonController, Post } from 'routing-controllers';
-import { OpenAPI } from 'routing-controllers-openapi';
+import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { HttpStatus } from '@shared/http-status.enum';
-
-import { LoginDto } from '@users/dtos';
+import { AuthUserResponseDto, LoginDto } from '@users/dtos';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
-
-import { Response } from 'express';
 
 @injectable()
 @JsonController('/auth')
@@ -34,10 +28,10 @@ export class AuthController {
       },
     },
   })
-  async login(@Body() loginDto: LoginDto, response: Response): Promise<any> {
+  @ResponseSchema(AuthUserResponseDto)
+  async login(@Body() loginDto: LoginDto): Promise<AuthUserResponseDto> {
     const { email, password } = loginDto;
-    const token = await this.loginUserCase.execute({ email, password });
 
-    return response.status(HttpStatus.OK).json(token);
+    return this.loginUserCase.execute({ email, password });
   }
 }

@@ -1,17 +1,32 @@
-import { Body, CurrentUser, JsonController, Param, Post, Put } from 'routing-controllers';
+import multer from 'multer';
+import {
+  Authorized,
+  Body,
+  CurrentUser,
+  Get,
+  JsonController,
+  Param,
+  Post,
+  Put,
+  UploadedFile,
+  UseBefore,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
-
-import { HttpStatus } from '@shared/http-status.enum';
 
 import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
-import { Request, Response } from 'express';
+
+// Configurando o middleware multer para uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 
 @injectable()
 @JsonController('/transactions')
+@Authorized() // Aplica o middleware de autenticação para todas as rotas
 export class TransactionController {
   constructor(
     @inject('CreateTransactionUseCase')
@@ -25,7 +40,23 @@ export class TransactionController {
   @Post('/import')
   @OpenAPI({
     summary: 'Import transactions from a file',
-    description: 'Import transactions from a file',
+    description: 'Import transactions from a CSV file',
+    requestBody: {
+      content: {
+        'multipart/form-data': {
+          schema: {
+            type: 'object',
+            properties: {
+              statement: {
+                type: 'string',
+                format: 'binary',
+                description: 'CSV file containing transaction data',
+              },
+            },
+          },
+        },
+      },
+    },
     responses: {
       '200': {
         description: 'Transactions imported successfully',
@@ -35,29 +66,44 @@ export class TransactionController {
       },
     },
   })
-  @ResponseSchema(TransactionDto)
+  @UseBefore(upload.single('statement'))
   async importData(
     @CurrentUser() userId: string,
-    @Body() file: Express.Multer.File,
-  ): Promise<void> {
-    return this.createTransactionUseCase.execute({
+    @UploadedFile('statement') file: Express.Multer.File,
+  ): Promise<{ message: string }> {
+    if (!file) {
+      return { message: 'No file uploaded' };
+    }
+
+    await this.createTransactionUseCase.execute({
       userId,
       file,
     });
+
+    return { message: 'File imported successfully' };
   }
 
-  async getTransactionsByDate(req: Request, resp: Response): Promise<void> {
-    const { month, year } = req.params;
-
-    const { userId } = req;
-
-    const transactions = await this.getTransactionsByDateUseCase.execute({
+  @Get('/:month/:year')
+  @OpenAPI({
+    summary: 'Get transactions by date',
+    description: 'Get transactions filtered by month and year',
+    responses: {
+      '200': {
+        description: 'Transactions retrieved successfully',
+      },
+    },
+  })
+  @ResponseSchema(TransactionDto, { isArray: true })
+  async getTransactionsByDate(
+    @Param('month') month: string,
+    @Param('year') year: string,
+    @CurrentUser() userId: string,
+  ): Promise<TransactionDto[]> {
+    return this.getTransactionsByDateUseCase.execute({
       userId,
       month: Number(month),
       year: Number(year),
     });
-
-    resp.status(HttpStatus.OK).json(transactions);
   }
 
   @Put('/:id')

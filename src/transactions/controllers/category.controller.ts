@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { Body, CurrentUser, Get, JsonController, Post } from 'routing-controllers';
+import { Authorized, Body, CurrentUser, Get, JsonController, Post } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
@@ -10,6 +8,7 @@ import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/l
 
 @injectable()
 @JsonController('/categories')
+@Authorized()
 export class CategoryController {
   constructor(
     @inject('CreateCategoryUseCase')
@@ -56,7 +55,7 @@ export class CategoryController {
     },
   })
   @ResponseSchema(CategoryDto, { isArray: true })
-  async list(@CurrentUser() userId: string): Promise<any> {
+  async list(@CurrentUser() userId: string): Promise<CategoryDto[]> {
     return this.listCategoriesUseCase.execute(userId);
   }
 }

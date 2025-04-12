@@ -1,7 +1,30 @@
-import { CreateUserDto } from '@users/dtos/create-user.dto';
+import { Expose } from 'class-transformer';
+import { IsDate, IsEmail, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export type UserDto = Omit<CreateUserDto, 'password'> & {
+export class UserDto {
+  @IsUUID()
+  @Expose()
+  @IsNotEmpty()
   id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Expose()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  @Expose()
+  email: string;
+
+  @IsDate()
+  @Expose()
+  @IsNotEmpty()
   createdAt: Date;
+
+  @IsDate()
+  @Expose()
+  @IsNotEmpty()
   updatedAt: Date;
-};
+}

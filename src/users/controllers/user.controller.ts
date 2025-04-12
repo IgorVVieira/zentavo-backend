@@ -35,7 +35,7 @@ export class UserController {
       },
     },
   })
-  @ResponseSchema(CreateUserDto)
+  @ResponseSchema(UserDto)
   async create(@Body() userDto: CreateUserDto): Promise<UserDto> {
     return this.createUserUseCase.execute(userDto);
   }
@@ -58,7 +58,7 @@ export class UserController {
       },
     },
   })
-  @ResponseSchema(CreateUserDto)
+  @ResponseSchema(UserDto)
   async getMe(@CurrentUser() userId: string): Promise<UserDto> {
     return this.getMeUseCase.execute(userId);
   }
