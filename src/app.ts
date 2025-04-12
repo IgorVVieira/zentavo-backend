@@ -23,7 +23,13 @@ useContainer(TsyringeAdapter);
 
 const routeOptions: RoutingControllersOptions = {
   routePrefix: '/api',
-  cors: true,
+  cors: {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204,
+  },
   defaults: {
     nullResultCode: HttpStatus.NOT_FOUND,
     undefinedResultCode: HttpStatus.NOT_FOUND,

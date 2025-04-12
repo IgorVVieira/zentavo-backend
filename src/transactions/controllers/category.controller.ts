@@ -8,7 +8,6 @@ import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/l
 
 @injectable()
 @JsonController('/categories')
-@Authorized()
 export class CategoryController {
   constructor(
     @inject('CreateCategoryUseCase')
@@ -18,9 +17,11 @@ export class CategoryController {
   ) {}
 
   @Post('/')
+  @Authorized()
   @OpenAPI({
     summary: 'Create a new category',
     description: 'Create a new category for the user',
+    security: [{ bearerAuth: [] }],
     responses: {
       '201': {
         description: 'Category created successfully',
@@ -45,9 +46,11 @@ export class CategoryController {
   }
 
   @Get('/')
+  @Authorized()
   @OpenAPI({
     summary: 'List categories',
     description: 'List all categories for the user',
+    security: [{ bearerAuth: [] }],
     responses: {
       '200': {
         description: 'Categories retrieved successfully',

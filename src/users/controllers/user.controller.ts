@@ -14,10 +14,7 @@ export class UserController {
     private readonly createUserUseCase: CreateUserUseCase,
     @inject('GetMeUseCase')
     private readonly getMeUseCase: GetMeUseCase,
-  ) {
-    this.create = this.create.bind(this);
-    this.getMe = this.getMe.bind(this);
-  }
+  ) {}
 
   @Post('/create')
   @OpenAPI({

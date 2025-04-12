@@ -1,4 +1,3 @@
-import multer from 'multer';
 import {
   Authorized,
   Body,
@@ -9,7 +8,6 @@ import {
   Post,
   Put,
   UploadedFile,
-  UseBefore,
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
@@ -18,11 +16,6 @@ import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
-
-// Configurando o middleware multer para uploads
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
 
 @injectable()
 @JsonController('/transactions')
@@ -38,9 +31,11 @@ export class TransactionController {
   ) {}
 
   @Post('/import')
+  @Authorized()
   @OpenAPI({
     summary: 'Import transactions from a file',
     description: 'Import transactions from a CSV file',
+    security: [{ bearerAuth: [] }],
     requestBody: {
       content: {
         'multipart/form-data': {
@@ -66,27 +61,36 @@ export class TransactionController {
       },
     },
   })
-  @UseBefore(upload.single('statement'))
   async importData(
     @CurrentUser() userId: string,
-    @UploadedFile('statement') file: Express.Multer.File,
+    @UploadedFile('statement', {
+      required: true,
+    })
+    file: Express.Multer.File,
   ): Promise<{ message: string }> {
-    if (!file) {
-      return { message: 'No file uploaded' };
+    console.log('File:', file);
+    try {
+      if (!file) {
+        return { message: 'No file uploaded' };
+      }
+
+      await this.createTransactionUseCase.execute({
+        userId,
+        file,
+      });
+
+      return { message: 'File imported successfully' };
+    } catch (error) {
+      console.error('Error importing file:', error);
+      throw new Error('Error importing file');
     }
-
-    await this.createTransactionUseCase.execute({
-      userId,
-      file,
-    });
-
-    return { message: 'File imported successfully' };
   }
 
   @Get('/:month/:year')
   @OpenAPI({
     summary: 'Get transactions by date',
-    description: 'Get transactions filtered by month and year',
+    description: 'Get tranåsactions filtered by month and year',
+    security: [{ bearerAuth: [] }],
     responses: {
       '200': {
         description: 'Transactions retrieved successfully',

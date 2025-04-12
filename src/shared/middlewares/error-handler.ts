@@ -14,12 +14,20 @@ const normalizeError = (error: Error): CustomApplicationError => {
 };
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
+  console.log('Error handler:', err);
   if (res.headersSent) {
     return next(err);
   }
   const error = normalizeError(err);
   const { statusCode } = error;
   const body = error.getBody();
+
+  // TODO: Log data-log
+  console.log({
+    statusCode,
+    message: error.message,
+    stack: error?.stack,
+  });
 
   res.status(statusCode).json(body);
 };
