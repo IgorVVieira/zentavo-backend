@@ -26,7 +26,7 @@ const upload = multer({
 
 @injectable()
 @JsonController('/transactions')
-@Authorized() // Aplica o middleware de autenticação para todas as rotas
+@Authorized()
 export class TransactionController {
   constructor(
     @inject('CreateTransactionUseCase')
@@ -50,9 +50,9 @@ export class TransactionController {
               statement: {
                 type: 'string',
                 format: 'binary',
-                description: 'CSV file containing transaction data',
               },
             },
+            required: ['statement'],
           },
         },
       },

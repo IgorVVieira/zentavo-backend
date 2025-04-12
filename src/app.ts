@@ -38,7 +38,6 @@ const routeOptions: RoutingControllersOptions = {
   defaultErrorHandler: false,
   classTransformer: true,
   authorizationChecker: async action => {
-    // Esta função é chamada quando @Authorized() é usado
     try {
       await new Promise((resolve, reject) => {
         authMiddleware(action.request, action.response, err => {
@@ -56,7 +55,7 @@ const routeOptions: RoutingControllersOptions = {
     }
   },
   currentUserChecker: async action => action.request.userId,
-  controllers: [__dirname + '/**/controllers/*.ts', __dirname + '/health-controller.ts'],
+  controllers: [__dirname + '/**/*.controller.ts'],
   middlewares: [__dirname + '/shared/middlewares/*.ts'],
 };
 
@@ -64,27 +63,31 @@ const app = createExpressServer(routeOptions);
 
 app.use(errorHandler);
 
-const storage = getMetadataArgsStorage();
-const schemas = validationMetadatasToSchemas();
-const spec = routingControllersToSpec(storage, routeOptions, {
-  components: {
-    schemas,
-    securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
+try {
+  const storage = getMetadataArgsStorage();
+  const schemas = validationMetadatasToSchemas();
+  const spec = routingControllersToSpec(storage, routeOptions, {
+    components: {
+      schemas,
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
       },
     },
-  },
-  info: {
-    title: 'Zentavo API Documentation',
-    version: '1.0.0',
-    description: 'API Documentation for Zentavo a financial management system',
-  },
-});
+    info: {
+      title: 'Zentavo API Documentation',
+      version: '1.0.0',
+      description: 'API Documentation for Zentavo a financial management system',
+    },
+  });
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
+} catch (error) {
+  console.error('Error generating Swagger documentation:', error);
+}
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
