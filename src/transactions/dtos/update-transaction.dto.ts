@@ -5,8 +5,7 @@ export class UpdateTransactionDto {
   @IsNotEmpty()
   id: string;
 
-  @IsUUID()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 
   @IsUUID()

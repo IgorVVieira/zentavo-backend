@@ -18,6 +18,7 @@ import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transa
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 
 @injectable()
+@Authorized()
 @JsonController('/transactions')
 export class TransactionController {
   constructor(
@@ -67,22 +68,16 @@ export class TransactionController {
     })
     file: Express.Multer.File,
   ): Promise<{ message: string }> {
-    console.log('File:', file);
-    try {
-      if (!file) {
-        return { message: 'No file uploaded' };
-      }
-
-      await this.createTransactionUseCase.execute({
-        userId,
-        file,
-      });
-
-      return { message: 'File imported successfully' };
-    } catch (error) {
-      console.error('Error importing file:', error);
-      throw new Error('Error importing file');
+    if (!file) {
+      return { message: 'No file uploaded' };
     }
+
+    await this.createTransactionUseCase.execute({
+      userId,
+      file,
+    });
+
+    return { message: 'File imported successfully' };
   }
 
   @Get('/:month/:year')
@@ -96,6 +91,7 @@ export class TransactionController {
       },
     },
   })
+  @Authorized()
   @ResponseSchema(TransactionDto, { isArray: true })
   async getTransactionsByDate(
     @Param('month') month: string,
@@ -125,6 +121,7 @@ export class TransactionController {
       },
     },
   })
+  @Authorized()
   @ResponseSchema(TransactionDto)
   async update(
     @Param('id') id: string,
