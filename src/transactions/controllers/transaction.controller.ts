@@ -19,7 +19,6 @@ import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transac
 
 @injectable()
 @JsonController('/transactions')
-@Authorized()
 export class TransactionController {
   constructor(
     @inject('CreateTransactionUseCase')
