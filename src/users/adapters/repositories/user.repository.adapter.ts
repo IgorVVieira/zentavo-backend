@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
 
-import { User } from '@users/domain/entities/user';
+import { User } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 
 @injectable()
