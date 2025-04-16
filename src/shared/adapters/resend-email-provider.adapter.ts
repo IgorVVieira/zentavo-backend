@@ -12,14 +12,20 @@ export class ResendEmailProvider implements IEmailProviderPort {
     this.resend = new Resend(process.env.RESEND_API_KEY);
   }
 
-  async sendEmail(data: SendEmailDto): Promise<void> {
+  async sendEmail(sendEmailData: SendEmailDto): Promise<void> {
     try {
-      await this.resend.emails.send({
+      const { to, subject, body } = sendEmailData;
+      const { error } = await this.resend.emails.send({
         from: process.env.SENDER_EMAIL as string,
-        to: data.to,
-        subject: data.subject,
-        html: data.body,
+        to,
+        subject,
+        html: body,
       });
+
+      if (error) {
+        console.error('Error sending email:', error);
+        throw new Error('Failed to send email');
+      }
     } catch (error) {
       console.error('Error sending email:', error);
       throw new Error('Failed to send email');

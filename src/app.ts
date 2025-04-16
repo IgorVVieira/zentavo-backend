@@ -61,8 +61,8 @@ const routeOptions: RoutingControllersOptions = {
     }
   },
   currentUserChecker: async action => action.request.userId,
-  controllers: [__dirname + '/**/*.controller.ts'],
-  middlewares: [__dirname + '/shared/middlewares/*.ts'],
+  controllers: [__dirname + '/**/*.controller.{ts,js}'],
+  middlewares: [__dirname + '/shared/middlewares/*.{ts,js}'],
 };
 
 const app = createExpressServer(routeOptions);
