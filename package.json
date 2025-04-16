@@ -70,6 +70,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
     "reflect-metadata": "^0.2.2",
+    "resend": "^4.3.0",
     "routing-controllers": "^0.11.2",
     "routing-controllers-openapi": "^5.0.0",
     "swagger-ui-express": "^5.0.1",
