@@ -1,6 +1,8 @@
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
+import { UserStatus } from '@users/domain/entities/user.entity';
+
 import { CreateUserUseCase } from './create-user.use-case';
 
 describe('CreateUserUseCase', () => {
@@ -44,6 +46,7 @@ describe('CreateUserUseCase', () => {
       name: 'any_name',
       createdAt: new Date(),
       updatedAt: new Date(),
+      status: UserStatus.PEDING_VERIFICATION,
     });
     const user = await sut.execute({
       email: 'any_email',
@@ -57,6 +60,7 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password_encrypted',
       name: 'any_name',
+      status: UserStatus.PEDING_VERIFICATION,
     });
 
     expect(user).toEqual({

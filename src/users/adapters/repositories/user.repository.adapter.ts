@@ -3,7 +3,7 @@ import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
 
-import { User } from '@users/domain/entities/user.entity';
+import { User, UserStatus } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 
 @injectable()
@@ -26,6 +26,9 @@ export class UserRepositoryAdapter extends BaseRepository<User> implements IUser
       return null;
     }
 
-    return user;
+    return {
+      ...user,
+      status: user.status as UserStatus,
+    };
   }
 }

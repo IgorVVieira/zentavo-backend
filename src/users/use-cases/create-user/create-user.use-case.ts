@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 
+import { UserStatus } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { CreateUserDto, UserDto } from '@users/dtos';
 import { IEncryptPort } from '@users/gateways/encypt.port';
@@ -30,6 +31,7 @@ export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
       email,
       password: encryptedPassword,
       name,
+      status: UserStatus.PEDING_VERIFICATION,
     });
 
     return {
