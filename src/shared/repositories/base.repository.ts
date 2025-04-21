@@ -15,7 +15,11 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async findAll(): Promise<T[]> {
-    return this.model.findMany();
+    return this.model.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
   }
 
   async findOne(id: string): Promise<T | null> {
@@ -27,6 +31,6 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async delete(id: string): Promise<T> {
-    return this.model.delete({ where: { id } });
+    return this.model.update({ where: { id }, data: { deletedAt: new Date() } });
   }
 }

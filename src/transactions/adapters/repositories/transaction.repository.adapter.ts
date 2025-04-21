@@ -32,6 +32,7 @@ export class TransactionRepositoryAdapter
       where: {
         externalId,
         userId,
+        deletedAt: null,
       },
     });
 
@@ -50,6 +51,7 @@ export class TransactionRepositoryAdapter
     const transactions = await this.prisma.transaction.findMany({
       where: {
         userId,
+        deletedAt: null,
         date: {
           gte: new Date(year, month - 1, 1),
           lt: new Date(year, month, 1),

@@ -21,6 +21,7 @@ model User {
   status    String      @default("PENDING_VERIFICATION")
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  deletedAt DateTime? @map("deleted_at")
   categories Category[]
   transactions Transaction[]
   verificationTokens VerificationToken[]
@@ -35,6 +36,7 @@ model Category {
   color     String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  deletedAt DateTime? @map("deleted_at")
   user      User        @relation(fields: [userId], references: [id])
   transactions Transaction[]
 
@@ -55,6 +57,7 @@ model Transaction {
   method      String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  deletedAt DateTime? @map("deleted_at")
   user        User        @relation(fields: [userId], references: [id])
   category    Category?   @relation(fields: [categoryId], references: [id])
 
@@ -73,6 +76,7 @@ model VerificationToken {
   isUsed         Boolean     @default(false)
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+  deletedAt DateTime? @map("deleted_at")
 
   user      User        @relation(fields: [userId], references: [id])
 
