@@ -58,7 +58,11 @@ export class TransactionRepositoryAdapter
         },
       },
       include: {
-        category: true,
+        category: {
+          where: {
+            deletedAt: null,
+          },
+        },
       },
     });
 
@@ -68,5 +72,17 @@ export class TransactionRepositoryAdapter
       method: transaction.method as TransactionMethod,
       category: transaction.category,
     }));
+  }
+
+  async deleteCategoryId(categoryId: string): Promise<void> {
+    await this.prisma.transaction.updateMany({
+      where: {
+        categoryId,
+        deletedAt: null,
+      },
+      data: {
+        categoryId: null,
+      },
+    });
   }
 }

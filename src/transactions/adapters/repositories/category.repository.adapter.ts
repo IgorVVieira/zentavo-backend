@@ -39,6 +39,7 @@ export class CategoryRepositoryAdapter
     return this.prisma.category.findMany({
       where: {
         userId,
+        deletedAt: null,
       },
       orderBy: {
         name: 'asc',
