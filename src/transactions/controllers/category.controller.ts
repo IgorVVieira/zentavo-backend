@@ -13,7 +13,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
-import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category';
+import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
 
 @injectable()

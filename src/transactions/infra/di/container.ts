@@ -10,7 +10,7 @@ import { ITransactionRepositoryPort } from '@transactions/domain/repositories/tr
 import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
-import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category';
+import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
