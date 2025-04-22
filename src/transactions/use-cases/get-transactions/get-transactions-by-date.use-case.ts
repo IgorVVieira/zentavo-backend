@@ -17,7 +17,11 @@ export class GetTransactionsByDateUseCase
   async execute(data: GetTransactionsDto): Promise<TransactionDto[]> {
     const { userId, month, year } = data;
 
-    const transactions = await this.transactionRepository.findByDate(userId, month, year);
+    const transactions = await this.transactionRepository.findByDate({
+      month,
+      year,
+      userId,
+    });
 
     return transactions.map(transaction => ({
       id: transaction.id as string,

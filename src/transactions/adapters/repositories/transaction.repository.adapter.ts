@@ -8,7 +8,11 @@ import {
   TransactionMethod,
   TransactionType,
 } from '@transactions/domain/entities/transaction.entity';
-import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
+import {
+  FindByDateParams,
+  ITransactionRepositoryPort,
+} from '@transactions/domain/repositories/transaction.repository.port';
+import { TransactionsByMethod } from '@transactions/domain/types/transactions-by-method';
 
 @injectable()
 export class TransactionRepositoryAdapter
@@ -47,7 +51,9 @@ export class TransactionRepositoryAdapter
     };
   }
 
-  async findByDate(userId: string, month: number, year: number): Promise<TransactionEntity[]> {
+  async findByDate(params: FindByDateParams): Promise<TransactionEntity[]> {
+    const { userId, month, year } = params;
+
     const transactions = await this.prisma.transaction.findMany({
       where: {
         userId,
@@ -84,5 +90,29 @@ export class TransactionRepositoryAdapter
         categoryId: null,
       },
     });
+  }
+
+  async listByPaymentMethod(params: FindByDateParams): Promise<TransactionsByMethod[]> {
+    const { userId, month, year } = params;
+
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 1);
+
+    const transactions = await this.prisma.$queryRaw<TransactionsByMethod[]>`
+      SELECT method, SUM(amount) as total
+      FROM transactions
+      WHERE "user_id" = ${userId}::uuid
+        AND "deleted_at" IS NULL
+        AND "date" >= ${startDate}
+        AND "date" < ${endDate}
+        AND "type" = ${TransactionType.CASH_OUT}
+        AND "description" != 'Aplicação RDB'
+      GROUP BY method
+    `;
+
+    return transactions.map(transaction => ({
+      method: transaction.method as TransactionMethod,
+      total: transaction.total,
+    }));
   }
 }
