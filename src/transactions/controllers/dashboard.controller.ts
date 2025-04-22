@@ -2,7 +2,10 @@ import { Authorized, CurrentUser, Get, JsonController, Param } from 'routing-con
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { TransactionsByMethodDto } from '@transactions/dtos/transactions-by-method.dto';
+import {
+  TransactionsByCategoryDto,
+  TransactionsByMethodDto,
+} from '@transactions/dtos/dashboard.dto';
 import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.use-case';
 
 @injectable()
@@ -36,6 +39,34 @@ export class DashboardController {
     @CurrentUser() userId: string,
   ): Promise<TransactionsByMethodDto[]> {
     return this.dashboardUseCase.listByPaymentMethod({
+      month: Number(month),
+      year: Number(year),
+      userId,
+    });
+  }
+
+  @Get('/categories/:month/:year')
+  @Authorized()
+  @OpenAPI({
+    summary: 'List transactions by category',
+    description: 'List transactions by category for the user',
+    security: [{ bearerAuth: [] }],
+    responses: {
+      '200': {
+        description: 'List of transactions by category',
+      },
+      '400': {
+        description: 'Bad request - Invalid data',
+      },
+    },
+  })
+  @ResponseSchema(TransactionsByCategoryDto, { isArray: true })
+  async listByCategory(
+    @Param('month') month: string,
+    @Param('year') year: string,
+    @CurrentUser() userId: string,
+  ): Promise<TransactionsByCategoryDto[]> {
+    return this.dashboardUseCase.listByCategory({
       month: Number(month),
       year: Number(year),
       userId,

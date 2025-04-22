@@ -12,7 +12,10 @@ import {
   FindByDateParams,
   ITransactionRepositoryPort,
 } from '@transactions/domain/repositories/transaction.repository.port';
-import { TransactionsByMethod } from '@transactions/domain/types/transactions-by-method';
+import {
+  TransactionsByCategory,
+  TransactionsByMethod,
+} from '@transactions/domain/types/dashboard.type';
 
 @injectable()
 export class TransactionRepositoryAdapter
@@ -114,5 +117,40 @@ export class TransactionRepositoryAdapter
       method: transaction.method as TransactionMethod,
       total: transaction.total,
     }));
+  }
+
+  async listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]> {
+    const { userId, month, year } = params;
+
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 1);
+
+    return this.prisma.$queryRaw<TransactionsByCategory[]>`
+      WITH totals AS (
+        SELECT 
+          COALESCE(categories.name, 'Outros') as name,
+          categories.color as color,
+          transactions.category_id as id,
+          SUM(transactions.amount) as total
+        FROM transactions
+        LEFT JOIN categories ON transactions.category_id = categories.id
+        WHERE transactions.user_id = ${userId}::uuid
+          AND transactions.deleted_at IS NULL
+          AND transactions.date >= ${startDate}
+          AND transactions.date < ${endDate}
+          AND transactions.type = ${TransactionType.CASH_OUT}
+          AND transactions.description != 'Aplicação RDB'
+          AND (categories.deleted_at IS NULL OR transactions.category_id IS NULL)
+        GROUP BY transactions.category_id, categories.name, categories.color
+      )
+      SELECT 
+        id,
+        name,
+        total,
+        color,
+        ROUND(CAST((total * 100.0 / SUM(total) OVER ()) AS numeric), 2)
+      FROM totals
+      ORDER BY total DESC
+  `;
   }
 }
