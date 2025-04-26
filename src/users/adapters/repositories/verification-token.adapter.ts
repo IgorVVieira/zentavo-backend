@@ -1,0 +1,77 @@
+import { PrismaClient } from '@prisma/client';
+import { injectable } from 'tsyringe';
+
+import { BaseRepository } from '@shared/repositories/base.repository';
+
+import {
+  VerificationTokenEntity,
+  VerificationTokenType,
+} from '@users/domain/entities/verification-token.entity';
+import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/verification-token.repository.port';
+
+@injectable()
+export class VerificationTokenRepositoryAdapter
+  extends BaseRepository<VerificationTokenEntity>
+  implements IVerificationTokenRepositoryPort
+{
+  private readonly prisma: PrismaClient;
+
+  constructor() {
+    const prisma = new PrismaClient();
+
+    super(prisma.verificationToken);
+    this.prisma = prisma;
+  }
+
+  async findByUserId(
+    userId: string,
+    type: VerificationTokenType,
+  ): Promise<VerificationTokenEntity | null> {
+    const token = await this.prisma.verificationToken.findFirst({
+      where: {
+        userId,
+        type,
+        deletedAt: null,
+      },
+    });
+
+    if (!token) {
+      return null;
+    }
+
+    return {
+      ...token,
+      type: token.type as VerificationTokenType,
+    };
+  }
+
+  async findByToken(token: string): Promise<VerificationTokenEntity | null> {
+    const verificationToken = await this.prisma.verificationToken.findFirst({
+      where: {
+        token,
+        deletedAt: null,
+      },
+    });
+
+    if (!verificationToken) {
+      return null;
+    }
+
+    return {
+      ...verificationToken,
+      type: verificationToken.type as VerificationTokenType,
+    };
+  }
+
+  async updateUsedStatus(tokenId: string, isUsed: boolean): Promise<void> {
+    await this.prisma.verificationToken.update({
+      where: {
+        id: tokenId,
+      },
+      data: {
+        isUsed,
+        deletedAt: new Date(),
+      },
+    });
+  }
+}
