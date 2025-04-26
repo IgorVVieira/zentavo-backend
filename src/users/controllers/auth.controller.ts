@@ -4,6 +4,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { AuthUserResponseDto, LoginDto } from '@users/dtos';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
+import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
 
 @injectable()
 @JsonController('/auth')
@@ -11,9 +12,9 @@ export class AuthController {
   constructor(
     @inject('LoginUseCase')
     private readonly loginUserCase: LoginUseCase,
-  ) {
-    this.login = this.login.bind(this);
-  }
+    @inject('SendRecoveryPasswordTokenUseCase')
+    private readonly sendRecoveryPasswordTokenUseCase: SendRecoveryPasswordTokenUseCase,
+  ) {}
 
   @Post('/login')
   @OpenAPI({
@@ -33,5 +34,31 @@ export class AuthController {
     const { email, password } = loginDto;
 
     return this.loginUserCase.execute({ email, password });
+  }
+
+  @Post('/forgot-password')
+  @OpenAPI({
+    summary: 'Send recovery password token',
+    description: 'Sends a recovery password token to the user email address',
+    responses: {
+      '200': {
+        description: 'Recovery password token sent successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid input data',
+      },
+      '404': {
+        description: 'Not found - User not found',
+      },
+    },
+  })
+  async sendRecoveryPasswordToken(
+    @Body() { email }: { email: string },
+  ): Promise<{ message: string }> {
+    await this.sendRecoveryPasswordTokenUseCase.execute({ email });
+
+    return {
+      message: 'Recovery password token sent successfully',
+    };
   }
 }
