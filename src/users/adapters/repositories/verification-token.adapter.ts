@@ -49,6 +49,7 @@ export class VerificationTokenRepositoryAdapter
     const verificationToken = await this.prisma.verificationToken.findFirst({
       where: {
         token,
+        isUsed: false,
         deletedAt: null,
       },
     });
@@ -63,13 +64,13 @@ export class VerificationTokenRepositoryAdapter
     };
   }
 
-  async updateUsedStatus(tokenId: string, isUsed: boolean): Promise<void> {
+  async updateUsedStatus(tokenId: string): Promise<void> {
     await this.prisma.verificationToken.update({
       where: {
         id: tokenId,
       },
       data: {
-        isUsed,
+        isUsed: true,
         deletedAt: new Date(),
       },
     });

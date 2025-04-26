@@ -19,6 +19,7 @@ import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
+import { ValidateTokenUseCase } from '@users/use-cases/validate-token/validate-token.use-case';
 
 container.registerSingleton<IUserRepositoryPort>('UserRepository', UserRepositoryAdapter);
 container.registerSingleton<IVerificationTokenRepositoryPort>(
@@ -35,6 +36,7 @@ container.registerSingleton('CreateUserUseCase', CreateUserUseCase);
 container.registerSingleton('LoginUseCase', LoginUseCase);
 container.registerSingleton('GetMeUseCase', GetMeUseCase);
 container.registerSingleton('SendRecoveryPasswordTokenUseCase', SendRecoveryPasswordTokenUseCase);
+container.registerSingleton('ValidateTokenUseCase', ValidateTokenUseCase);
 
 container.registerSingleton(UserController);
 container.registerSingleton(AuthController);
