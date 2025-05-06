@@ -34,6 +34,10 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
       throw new UnauthorizedError('Invalid password');
     }
 
+    if (!user.isActive()) {
+      throw new UnauthorizedError('User is not active');
+    }
+
     const token = this.jwt.sign(user.id as string, user.name, user.email);
 
     return {

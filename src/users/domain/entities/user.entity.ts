@@ -11,4 +11,8 @@ export class User extends BaseEntity {
   email: string;
   password: string;
   status: UserStatus;
+
+  isActive(): boolean {
+    return this.status === UserStatus.ACTIVE;
+  }
 }

@@ -1,5 +1,6 @@
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
+import { UserStatus } from '@users/domain/entities/user.entity';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 
 describe('LoginUseCase', () => {
@@ -49,6 +50,7 @@ describe('LoginUseCase', () => {
       email: 'any_email',
       password: 'any_password',
       name: 'any_name',
+      status: UserStatus.ACTIVE,
     });
     jwtMock.sign.mockReturnValue('any_token');
     const user = await sut.execute({
@@ -109,5 +111,22 @@ describe('LoginUseCase', () => {
     });
 
     await expect(sut.execute({ email: 'any_email', password: 'any_password' })).rejects.toThrow();
+  });
+
+  it('should throw an error when user is not active', async () => {
+    const { sut, userRepository, encypterMock } = makeSut();
+
+    encypterMock.compare.mockResolvedValue(true);
+    userRepository.findByEmail.mockResolvedValue({
+      id: 'any_id',
+      email: 'any_email',
+      password: 'any_password',
+      name: 'any_name',
+      status: UserStatus.PEDING_VERIFICATION,
+    });
+
+    await expect(sut.execute({ email: 'any_email', password: 'any_password' })).rejects.toThrow(
+      'User is not active',
+    );
   });
 });
