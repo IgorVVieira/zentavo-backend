@@ -16,6 +16,7 @@ import { IEncryptPort } from '@users/gateways/encypt.port';
 import { IJwtPort } from '@users/gateways/jwt.port';
 import { IUserValidatorPort } from '@users/services/user-validator.port';
 import { UserService } from '@users/services/user.service';
+import { ActivateUserUseCase } from '@users/use-cases/activate-user/activate-user.use-case';
 import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
@@ -43,6 +44,7 @@ container.registerSingleton(
   'SendAccountVerificationEmailUseCase',
   SendAccountVerificationEmailUseCase,
 );
+container.registerSingleton('ActivateUserUseCase', ActivateUserUseCase);
 
 container.registerSingleton('UserService', UserService);
 

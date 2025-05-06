@@ -13,7 +13,7 @@ export class SendAccountVerificationEmailUseCase
   implements IBaseUseCase<SendAccountVerificationEmailDto, void>
 {
   constructor(
-    @inject('verificationTokenRepository')
+    @inject('VerificationTokenRepository')
     private readonly verificationTokenRepository: IVerificationTokenRepositoryPort,
     @inject('EmailProvider')
     private readonly emailProvider: IEmailProviderPort,
