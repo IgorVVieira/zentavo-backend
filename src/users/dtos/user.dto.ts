@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class UserDto {
   @IsUUID()
@@ -27,4 +27,14 @@ export class UserDto {
   @Expose()
   @IsNotEmpty()
   updatedAt: Date;
+}
+
+export class ActivateUserDto {
+  @IsOptional()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Expose()
+  token: string;
 }
