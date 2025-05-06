@@ -32,7 +32,7 @@ export class SendAccountVerificationEmailUseCase
       token: generateSixDigitToken(),
     });
 
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-account/token=${verificationToken.token}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/verify-account/userId=${userId}`;
 
     await this.emailProvider.sendEmail({
       to: email,
@@ -42,6 +42,8 @@ export class SendAccountVerificationEmailUseCase
         <p>Olá ${name},</p>
         <p>Obrigado por criar uma conta na Zentavo! Para ativar sua conta, clique no link abaixo:</p>
         <a href="${verificationUrl}">Verificar conta</a>
+        <p>Seu código de verificação é: ${verificationToken.token}</p>
+        <p>Este código de verificação é válido por 1 hora.</p>
         <p>Se você não se inscreveu, ignore este e-mail.</p>
         <p>Atenciosamente,</p>
         <p>Zentavo Team</p>
