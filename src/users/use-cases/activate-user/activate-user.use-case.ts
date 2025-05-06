@@ -20,7 +20,7 @@ export class ActivateUserUseCase implements IBaseUseCase<string, void> {
       throw new EntityNotFoundError('User');
     }
 
-    if (user.isActive()) {
+    if (user.isActive?.()) {
       return;
     }
 

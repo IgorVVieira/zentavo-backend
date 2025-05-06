@@ -34,7 +34,7 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
       throw new UnauthorizedError('Invalid password');
     }
 
-    if (!user.isActive()) {
+    if (!user.isActive?.()) {
       throw new UnauthorizedError('User is not active');
     }
 
