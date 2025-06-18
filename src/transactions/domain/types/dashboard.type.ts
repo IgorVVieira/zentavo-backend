@@ -12,3 +12,10 @@ export type TransactionsByCategory = {
   total: number;
   percentage: number;
 };
+
+export type TransactionsLastSixMonths = {
+  month: number;
+  year: number;
+  totalCashIn: number;
+  totalCashOut: number;
+};

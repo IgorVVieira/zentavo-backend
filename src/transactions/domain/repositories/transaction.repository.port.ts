@@ -4,6 +4,7 @@ import { TransactionEntity } from '@transactions/domain/entities/transaction.ent
 import {
   TransactionsByCategory,
   TransactionsByMethod,
+  TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
 
 export type FindByDateParams = {
@@ -20,6 +21,8 @@ export interface ITransactionRepositoryPort extends IBaseRepository<TransactionE
   listByPaymentMethod(params: FindByDateParams): Promise<TransactionsByMethod[]>;
 
   listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]>;
+
+  listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonths[]>;
 
   deleteCategoryId(categoryId: string): Promise<void>;
 }

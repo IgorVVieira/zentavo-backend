@@ -5,6 +5,7 @@ import { GetTransactionsDto } from '@transactions/dtos';
 import {
   TransactionsByCategoryDto,
   TransactionsByMethodDto,
+  TransactionsLastSixMonthsDto,
 } from '@transactions/dtos/dashboard.dto';
 
 @injectable()
@@ -20,5 +21,9 @@ export class DashboardUseCase {
 
   async listByCategory(data: GetTransactionsDto): Promise<TransactionsByCategoryDto[]> {
     return this.transactionRepository.listByCategory(data);
+  }
+
+  async listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonthsDto[]> {
+    return this.transactionRepository.listByLastSixMonths(userId);
   }
 }

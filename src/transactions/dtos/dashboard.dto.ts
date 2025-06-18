@@ -32,3 +32,21 @@ export class TransactionsByCategoryDto {
   @IsNotEmpty()
   percentage: number;
 }
+
+export class TransactionsLastSixMonthsDto {
+  @IsNumber()
+  @IsNotEmpty()
+  month: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  year: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  totalCashIn: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  totalCashOut: number;
+}

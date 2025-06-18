@@ -15,6 +15,7 @@ import {
 import {
   TransactionsByCategory,
   TransactionsByMethod,
+  TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
 
 @injectable()
@@ -133,8 +134,8 @@ export class TransactionRepositoryAdapter
           c.color,
           SUM(t.amount) AS total
         FROM transactions t
-        LEFT JOIN categories c 
-          ON t.category_id = c.id 
+        LEFT JOIN categories c
+          ON t.category_id = c.id
           AND c.deleted_at IS NULL
         WHERE t.user_id = ${userId}::uuid
           AND t.deleted_at IS NULL
@@ -163,5 +164,23 @@ export class TransactionRepositoryAdapter
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       percentage: (item.percentage as any)?.toNumber?.() ?? 0,
     }));
+  }
+
+  async listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonths[]> {
+    return this.prisma.$queryRaw<TransactionsLastSixMonths[]>`
+      SELECT
+        EXTRACT(MONTH FROM t.date)::int AS month,
+        EXTRACT(YEAR FROM t.date)::int AS year,
+        SUM(CASE WHEN t.type = 'CASH_IN' THEN t.amount ELSE 0 END)::float AS "totalCashIn",
+        SUM(CASE WHEN t.type = 'CASH_OUT' THEN t.amount ELSE 0 END)::float AS "totalCashOut"
+      FROM transactions t
+      WHERE t.user_id = ${userId}::uuid
+        AND t.deleted_at IS NULL
+        AND t.date >= date_trunc('month', CURRENT_DATE) - INTERVAL '5 months'
+        AND t.date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
+        AND t.description != 'Aplicação RDB'
+      GROUP BY year, month
+      ORDER BY year, month;
+    `;
   }
 }
