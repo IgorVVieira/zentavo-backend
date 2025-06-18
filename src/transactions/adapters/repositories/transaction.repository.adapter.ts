@@ -125,32 +125,43 @@ export class TransactionRepositoryAdapter
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 1);
 
-    return this.prisma.$queryRaw<TransactionsByCategory[]>`
+    const result = await this.prisma.$queryRaw<TransactionsByCategory[]>`
       WITH totals AS (
-        SELECT 
-          COALESCE(categories.name, 'Outros') as name,
-          categories.color as color,
-          transactions.category_id as id,
-          SUM(transactions.amount) as total
-        FROM transactions
-        LEFT JOIN categories ON transactions.category_id = categories.id
-        WHERE transactions.user_id = ${userId}::uuid
-          AND transactions.deleted_at IS NULL
-          AND transactions.date >= ${startDate}
-          AND transactions.date < ${endDate}
-          AND transactions.type = ${TransactionType.CASH_OUT}
-          AND transactions.description != 'Aplicação RDB'
-          AND (categories.deleted_at IS NULL OR transactions.category_id IS NULL)
-        GROUP BY transactions.category_id, categories.name, categories.color
+        SELECT
+          COALESCE(c.id::text, 'uncatecorized') AS id,
+          COALESCE(c.name, 'Outros') AS name,
+          c.color,
+          SUM(t.amount) AS total
+        FROM transactions t
+        LEFT JOIN categories c 
+          ON t.category_id = c.id 
+          AND c.deleted_at IS NULL
+        WHERE t.user_id = ${userId}::uuid
+          AND t.deleted_at IS NULL
+          AND t.type = 'CASH_OUT'
+          AND t.date >= ${startDate}
+          AND t.date < ${endDate}
+          AND t.description != 'Aplicação RDB'
+        GROUP BY c.id, c.name, c.color
       )
-      SELECT 
+      SELECT
         id,
         name,
-        total,
         color,
-        ROUND(CAST((total * 100.0 / SUM(total) OVER ()) AS numeric), 2)
+        ROUND(total::numeric, 2) AS total,
+        ROUND((total * 100.0 / SUM(total) OVER ())::numeric, 2) AS percentage
       FROM totals
-      ORDER BY total DESC
-  `;
+      ORDER BY total DESC;
+    `;
+
+    return result.map(item => ({
+      id: item.id,
+      name: item.name,
+      color: item.color,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      total: (item.total as any)?.toNumber?.() ?? 0,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      percentage: (item.percentage as any)?.toNumber?.() ?? 0,
+    }));
   }
 }
