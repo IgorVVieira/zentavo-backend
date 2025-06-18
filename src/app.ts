@@ -15,8 +15,8 @@ import { HttpStatus } from '@shared/http-status.enum';
 import { authMiddleware } from '@shared/middlewares/auth';
 import { errorHandler } from '@shared/middlewares/error-handler';
 
-import '@users/infra/di/container';
-import '@transactions/infra/di/container';
+import '@users/infra/container';
+import '@transactions/infra/container';
 import { TsyringeAdapter } from './tsyringe-adapter';
 
 useContainer(TsyringeAdapter);
