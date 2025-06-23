@@ -2,7 +2,7 @@ import { Body, JsonController, Post } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { AuthUserResponseDto, LoginDto } from '@users/dtos';
+import { AuthUserResponseDto, LoginDto, SendRecoveryPasswordTokenDto } from '@users/dtos';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
 
@@ -53,9 +53,9 @@ export class AuthController {
     },
   })
   async sendRecoveryPasswordToken(
-    @Body() { email }: { email: string },
+    @Body() resetPasswordDto: SendRecoveryPasswordTokenDto,
   ): Promise<{ message: string }> {
-    await this.sendRecoveryPasswordTokenUseCase.execute({ email });
+    await this.sendRecoveryPasswordTokenUseCase.execute(resetPasswordDto);
 
     return {
       message: 'Recovery password token sent successfully',

@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 
-import { ResendEmailProvider } from '@shared/adapters/resend-email-provider.adapter';
+import { NodemailerEmailProvider } from '@shared/adapters/nodemailer-provider.adapter';
 import { IEmailProviderPort } from '@shared/gateways/email-provider.port';
 
 import { EncptyAdapter } from '@users/adapters/gateways/encypt.adapter';
@@ -31,7 +31,7 @@ container.registerSingleton<IVerificationTokenRepositoryPort>(
 );
 container.registerSingleton<IEncryptPort>('EncrypterAdapter', EncptyAdapter);
 container.registerSingleton<IJwtPort>('JwtAdapter', JwtAdapter);
-container.registerSingleton<IEmailProviderPort>('EmailProvider', ResendEmailProvider);
+container.registerSingleton<IEmailProviderPort>('EmailProvider', NodemailerEmailProvider);
 
 container.registerSingleton<IUserValidatorPort>('UserValidator', UserValidatorAdapterService);
 
