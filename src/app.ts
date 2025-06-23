@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'module-alias/register';
 import 'dotenv/config';
 import 'express-async-errors';
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
@@ -17,6 +18,14 @@ import { errorHandler } from '@shared/middlewares/error-handler';
 
 import '@users/infra/container';
 import '@transactions/infra/container';
+import { AuthController } from '@users/controllers/auth.controller';
+import { UserController } from '@users/controllers/user.controller';
+
+import { CategoryController } from '@transactions/controllers/category.controller';
+import { DashboardController } from '@transactions/controllers/dashboard.controller';
+import { TransactionController } from '@transactions/controllers/transaction.controller';
+
+import { HealthController } from './health-controller';
 import { TsyringeAdapter } from './tsyringe-adapter';
 
 useContainer(TsyringeAdapter);
@@ -61,8 +70,15 @@ const routeOptions: RoutingControllersOptions = {
     }
   },
   currentUserChecker: async action => action.request.userId,
-  controllers: [__dirname + '/**/*.controller.{ts,js}'],
-  middlewares: [__dirname + '/shared/middlewares/*.{ts,js}'],
+  controllers: [
+    UserController,
+    AuthController,
+    TransactionController,
+    CategoryController,
+    DashboardController,
+    HealthController,
+  ],
+  middlewares: [authMiddleware, errorHandler],
 };
 
 const app = createExpressServer(routeOptions);

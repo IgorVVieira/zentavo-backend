@@ -110,7 +110,6 @@ export class TransactionRepositoryAdapter
         AND "date" >= ${startDate}
         AND "date" < ${endDate}
         AND "type" = ${TransactionType.CASH_OUT}
-        AND "description" != 'Aplicação RDB'
       GROUP BY method
     `;
 
@@ -142,7 +141,6 @@ export class TransactionRepositoryAdapter
           AND t.type = 'CASH_OUT'
           AND t.date >= ${startDate}
           AND t.date < ${endDate}
-          AND t.description != 'Aplicação RDB'
         GROUP BY c.id, c.name, c.color
       )
       SELECT
@@ -178,7 +176,6 @@ export class TransactionRepositoryAdapter
         AND t.deleted_at IS NULL
         AND t.date >= date_trunc('month', CURRENT_DATE) - INTERVAL '5 months'
         AND t.date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
-        AND t.description != 'Aplicação RDB'
       GROUP BY year, month
       ORDER BY year, month;
     `;

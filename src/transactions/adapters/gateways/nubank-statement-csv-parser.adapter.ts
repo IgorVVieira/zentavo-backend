@@ -24,6 +24,11 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
             ignoreEmpty: true,
           })
           .on('data', row => {
+            if (row['Descrição'] === 'Aplicação RDB') {
+              // Skip rows with 'Aplicação RDB' description
+              return;
+            }
+
             const amount = Number(row['Valor']);
             const statement: Statement = {
               externalId: row['Identificador'],

@@ -11,7 +11,8 @@
     "lint-staged": "lint-staged",
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
-    "start": "ts-node -r tsconfig-paths/register --files src/app.ts",
+    "start": "node dist/app.js",
+    "start:prod": "bash ./start.sh",
     "dev": "ts-node-dev --respawn --transpile-only --clear --files -r tsconfig-paths/register src/app.ts",
     "debug-controller": "node scripts/debug-controllers.js",
     "prepare": "husky"
@@ -70,6 +71,7 @@
     "express-async-errors": "^3.1.1",
     "fast-csv": "^5.0.2",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^7.0.3",
     "reflect-metadata": "^0.2.2",
@@ -78,5 +80,12 @@
     "routing-controllers-openapi": "^5.0.0",
     "swagger-ui-express": "^5.0.1",
     "tsyringe": "^4.8.0"
+  },
+  "_moduleAliases": {
+    "@domain": "dist/domain",
+    "@users": "dist/users",
+    "@transactions": "dist/transactions",
+    "@shared": "dist/shared",
+    "@types": "dist/types"
   }
 }
