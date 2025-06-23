@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json,md}\"",
     "start": "node dist/app.js",
-    "start:prod": "bash ./start.sh",
+    "start:prod": "npx prisma migrate deploy && node dist/app.js",
     "migrate:prod": "npx prisma migrate deploy",
     "dev": "ts-node-dev --respawn --transpile-only --clear --files -r tsconfig-paths/register src/app.ts",
     "debug-controller": "node scripts/debug-controllers.js",
