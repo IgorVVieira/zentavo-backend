@@ -6,20 +6,21 @@ import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/ver
 import { ValidateTokenDto } from '@users/dtos';
 
 @injectable()
-export class ValidateTokenUseCase implements IBaseUseCase<ValidateTokenDto, boolean> {
+export class ValidateTokenUseCase
+  implements IBaseUseCase<ValidateTokenDto, { isValid: boolean; userId?: string }>
+{
   constructor(
     @inject('VerificationTokenRepository')
     private readonly verificationTokenRepository: IVerificationTokenRepositoryPort,
   ) {}
 
-  async execute(data: ValidateTokenDto): Promise<boolean> {
+  async execute(data: ValidateTokenDto): Promise<{ isValid: boolean; userId?: string }> {
     const verificationToken = await this.verificationTokenRepository.findByToken(data.token);
 
-    const isInvalidToken =
-      !verificationToken || !verificationToken.isUsed || verificationToken.userId !== data.userId;
+    const isInvalidToken = !verificationToken || verificationToken.isUsed;
 
     if (isInvalidToken) {
-      return false;
+      return { isValid: false };
     }
 
     const isExpired = verificationToken.expirationDate < new Date();
@@ -28,12 +29,12 @@ export class ValidateTokenUseCase implements IBaseUseCase<ValidateTokenDto, bool
       // TODO: isso vai ser feito no job
       // await this.verificationTokenRepository.updateUsedStatus(verificationToken.id as string);
 
-      return false;
+      return { isValid: false };
     }
 
     // TODO: invalidar o token na alteracao de senha
     // await this.verificationTokenRepository.updateUsedStatus(verificationToken.id as string);
 
-    return true;
+    return { isValid: true, userId: verificationToken.userId };
   }
 }

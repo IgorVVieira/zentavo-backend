@@ -34,17 +34,16 @@ export class UserService {
   }
 
   async activateUser(activateUserDto: ActivateUserDto): Promise<void> {
-    const isValid = await this.validateTokenUseCase.execute({
+    const { isValid, userId } = await this.validateTokenUseCase.execute({
       token: activateUserDto.token,
-      userId: activateUserDto.id,
       type: VerificationTokenType.ACCOUNT_VERIFICATION,
     });
 
-    if (!isValid) {
+    if (!isValid && !userId) {
       throw new Error('Invalid token');
     }
 
-    await this.activateUserUseCase.execute(activateUserDto.id);
+    await this.activateUserUseCase.execute(userId as string);
 
     // TODO: Queimar token
   }
