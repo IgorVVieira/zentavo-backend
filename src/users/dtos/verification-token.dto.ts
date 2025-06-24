@@ -12,6 +12,10 @@ export class ValidateTokenDto {
   @IsNotEmpty()
   token: string;
 
+  @IsUUID()
+  @IsNotEmpty()
+  userId: string;
+
   @IsEnum(VerificationTokenType)
   @IsNotEmpty()
   type: VerificationTokenType;

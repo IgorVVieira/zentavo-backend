@@ -34,4 +34,10 @@ export class ActivateUserDto {
   @IsNotEmpty()
   @Expose()
   token: string;
+
+  @IsString()
+  @IsUUID()
+  @IsNotEmpty()
+  @Expose()
+  userId: string;
 }

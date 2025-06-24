@@ -76,9 +76,9 @@ export class UserController {
       },
     },
   })
-  async activateUser(@Body() activateUserDto: ActivateUserDto): Promise<void> {
-    return this.userService.activateUser({
-      ...activateUserDto,
-    });
+  async activateUser(@Body() activateUserDto: ActivateUserDto): Promise<string> {
+    await this.userService.activateUser(activateUserDto);
+
+    return 'User account activated successfully';
   }
 }
