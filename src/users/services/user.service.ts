@@ -36,6 +36,7 @@ export class UserService {
   async activateUser(activateUserDto: ActivateUserDto): Promise<void> {
     const { isValid, userId } = await this.validateTokenUseCase.execute({
       token: activateUserDto.token,
+      userId: activateUserDto.userId,
       type: VerificationTokenType.ACCOUNT_VERIFICATION,
     });
 

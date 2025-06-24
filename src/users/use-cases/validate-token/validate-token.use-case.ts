@@ -17,7 +17,11 @@ export class ValidateTokenUseCase
   async execute(data: ValidateTokenDto): Promise<{ isValid: boolean; userId?: string }> {
     const verificationToken = await this.verificationTokenRepository.findByToken(data.token);
 
-    const isInvalidToken = !verificationToken || verificationToken.isUsed;
+    const isInvalidToken =
+      !verificationToken ||
+      verificationToken.isUsed ||
+      verificationToken.userId !== data.userId ||
+      verificationToken.type !== data.type;
 
     if (isInvalidToken) {
       return { isValid: false };

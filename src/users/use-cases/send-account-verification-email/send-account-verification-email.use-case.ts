@@ -32,7 +32,7 @@ export class SendAccountVerificationEmailUseCase
       token: generateSixDigitToken(),
     });
 
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-account/userId=${userId}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/verify-account?userId=${userId}`;
 
     await this.emailProvider.sendEmail({
       to: email,
