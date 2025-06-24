@@ -10,6 +10,8 @@ import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser
 
 @injectable()
 export class NubankStatementCsvParser implements ICsvStatementParser {
+  private readonly skipedRows = ['Aplicação RDB', 'Resgate RDB'];
+
   async parse(file: Express.Multer.File): Promise<Statement[]> {
     const data = file.buffer.toString('utf-8');
 
@@ -24,7 +26,7 @@ export class NubankStatementCsvParser implements ICsvStatementParser {
             ignoreEmpty: true,
           })
           .on('data', row => {
-            if (row['Descrição'] === 'Aplicação RDB') {
+            if (this.skipedRows.includes(row['Descrição'])) {
               // Skip rows with 'Aplicação RDB' description
               return;
             }
