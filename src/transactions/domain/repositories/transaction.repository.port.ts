@@ -1,6 +1,9 @@
 import { IBaseRepository } from '@shared/domain/repositories/base.repository.interface';
 
-import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
+import {
+  TransactionEntity,
+  TransactionType,
+} from '@transactions/domain/entities/transaction.entity';
 import {
   TransactionsByCategory,
   TransactionsByMethod,
@@ -11,18 +14,14 @@ export type FindByDateParams = {
   userId: string;
   month: number;
   year: number;
+  transactionType?: TransactionType;
 };
 
 export interface ITransactionRepositoryPort extends IBaseRepository<TransactionEntity> {
   findByExternalIdAndUserId(externalId: string, userId: string): Promise<TransactionEntity | null>;
-
   findByDate(params: FindByDateParams): Promise<TransactionEntity[]>;
-
   listByPaymentMethod(params: FindByDateParams): Promise<TransactionsByMethod[]>;
-
   listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]>;
-
   listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonths[]>;
-
   deleteCategoryId(categoryId: string): Promise<void>;
 }

@@ -17,6 +17,10 @@ export class GetTransactionsByDateUseCase
   async execute(data: GetTransactionsDto): Promise<TransactionDto[]> {
     const { userId, month, year } = data;
 
+    if (isNaN(month) || isNaN(year)) {
+      return [];
+    }
+
     const transactions = await this.transactionRepository.findByDate({
       month,
       year,

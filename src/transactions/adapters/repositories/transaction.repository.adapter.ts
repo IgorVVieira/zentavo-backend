@@ -120,7 +120,7 @@ export class TransactionRepositoryAdapter
   }
 
   async listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]> {
-    const { userId, month, year } = params;
+    const { userId, month, year, transactionType } = params;
 
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 1);
@@ -138,7 +138,7 @@ export class TransactionRepositoryAdapter
           AND c.deleted_at IS NULL
         WHERE t.user_id = ${userId}::uuid
           AND t.deleted_at IS NULL
-          AND t.type = 'CASH_OUT'
+          AND t.type = ${transactionType}
           AND t.date >= ${startDate}
           AND t.date < ${endDate}
         GROUP BY c.id, c.name, c.color

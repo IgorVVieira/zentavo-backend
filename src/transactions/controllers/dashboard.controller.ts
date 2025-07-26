@@ -1,7 +1,8 @@
-import { Authorized, CurrentUser, Get, JsonController, Param } from 'routing-controllers';
+import { Authorized, CurrentUser, Get, JsonController, Param, Params } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { ListByCategoryQueryDto } from '@transactions/dtos';
 import {
   TransactionsByCategoryDto,
   TransactionsByMethodDto,
@@ -13,10 +14,7 @@ import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.us
 @Authorized()
 @JsonController('/transactions/dashboard')
 export class DashboardController {
-  constructor(
-    @inject('DashboardUseCase')
-    private readonly dashboardUseCase: DashboardUseCase,
-  ) {}
+  constructor(@inject('DashboardUseCase') private readonly dashboardUseCase: DashboardUseCase) {}
 
   @Get('/payment-methods/:month/:year')
   @Authorized()
@@ -46,7 +44,7 @@ export class DashboardController {
     });
   }
 
-  @Get('/categories/:month/:year')
+  @Get('/categories/:month/:year/:transactionType')
   @Authorized()
   @OpenAPI({
     summary: 'List transactions by category',
@@ -63,13 +61,16 @@ export class DashboardController {
   })
   @ResponseSchema(TransactionsByCategoryDto, { isArray: true })
   async listByCategory(
-    @Param('month') month: string,
-    @Param('year') year: string,
+    @Params() params: ListByCategoryQueryDto,
+
     @CurrentUser() userId: string,
   ): Promise<TransactionsByCategoryDto[]> {
+    const { month, year, transactionType } = params;
+
     return this.dashboardUseCase.listByCategory({
-      month: Number(month),
-      year: Number(year),
+      month: +month,
+      year: +year,
+      transactionType,
       userId,
     });
   }
