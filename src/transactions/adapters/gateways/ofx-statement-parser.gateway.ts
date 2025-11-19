@@ -1,0 +1,93 @@
+import { injectable } from 'tsyringe';
+
+import {
+  TransactionMethod,
+  TransactionType,
+} from '@transactions/domain/entities/transaction.entity';
+import {
+  OfxStatement,
+  OfxStatementType,
+  Statement,
+} from '@transactions/domain/types/statement.type';
+import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
+import ofx from 'ofx';
+
+@injectable()
+export class OfxStatementParserGateway implements IOfxStatementParser {
+  private readonly skipedDescriptions = ['Aplicação RDB', 'Resgate RDB'];
+
+  async parse(ofxData: string): Promise<Statement[]> {
+    try {
+      const ofxParsed = ofx.parse(ofxData);
+
+      if (!ofxParsed?.OFX?.BANKMSGSRSV1?.STMTTRNRS?.STMTRS?.BANKTRANLIST?.STMTTRN) {
+        return [];
+      }
+
+      return ofxParsed.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN.filter(
+        (statement: OfxStatement) => !this.skipedDescriptions.includes(statement.MEMO),
+      ).map((statement: OfxStatement) => ({
+        externalId: statement.FITID,
+        date: this.parseOfxDate(statement.DTPOSTED),
+        description: statement.MEMO,
+        amount: +Number(statement.TRNAMT).toFixed(2),
+        type:
+          statement.TRNTYPE === OfxStatementType.DEBIT
+            ? TransactionType.CASH_OUT
+            : TransactionType.CASH_IN,
+        method: this.getMethod(statement.MEMO),
+      }));
+    } catch (error) {
+      console.error('Error parsing OFX file:', error);
+      throw new Error('Error parsing OFX file');
+    }
+  }
+
+  private getMethod(description: string): TransactionMethod {
+    const lowerDescription = description.toLowerCase();
+
+    const patterns: [string | RegExp, TransactionMethod][] = [
+      [/pix/, TransactionMethod.PIX],
+      [/d[ée]bito/, TransactionMethod.DEBIT],
+      [/pagamento\s+de\s+fatura/, TransactionMethod.CARD_PAYMENT],
+      [/transfer[eê]ncia\s+recebida/, TransactionMethod.PIX],
+      [/cr[ée]dito\s+em\s+conta/, TransactionMethod.CASH_BACK],
+    ];
+
+    for (const [pattern, method] of patterns) {
+      if (
+        typeof pattern === 'string'
+          ? lowerDescription.includes(pattern)
+          : pattern.test(lowerDescription)
+      ) {
+        return method;
+      }
+    }
+
+    return TransactionMethod.DEBIT;
+  }
+
+  private parseOfxDate(ofxDate: string): Date {
+    const main = ofxDate.match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/);
+
+    if (!main) {
+      throw new Error(`Data OFX inválida: ${ofxDate}`);
+    }
+
+    const [, year, month, day, hour, minute, second] = main.map(Number);
+
+    // Pega offset, ex: -3
+    const offsetMatch = ofxDate.match(/\[([+-]?\d+)/);
+    const offset = offsetMatch ? Number(offsetMatch[1]) : 0;
+
+    // Cria a data como se fosse no UTC
+    const date = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+
+    // Ajusta o offset do OFX (ex: -3)
+    // offset * 60 * 60 * 1000 = ms
+    /* eslint-disable-next-line @typescript-eslint/no-magic-numbers */
+    const offsetInMilliseconds = offset * 60 * 60 * 1000;
+
+    return new Date(date.getTime() - offsetInMilliseconds);
+  }
+}

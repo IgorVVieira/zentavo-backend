@@ -1,14 +1,14 @@
 import { container } from 'tsyringe';
 
 import { ICategoryRepositoryPort } from '@transactions//domain/repositories/category.repositor.port';
-import { NubankStatementCsvParser } from '@transactions/adapters/gateways/nubank-statement-csv-parser.adapter';
+import { OfxStatementParserGateway } from '@transactions/adapters/gateways/ofx-statement-parser.gateway';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
 import { TransactionRepositoryAdapter } from '@transactions/adapters/repositories/transaction.repository.adapter';
 import { CategoryController } from '@transactions/controllers/category.controller';
 import { DashboardController } from '@transactions/controllers/dashboard.controller';
 import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
-import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
+import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.use-case';
@@ -26,7 +26,7 @@ container.registerSingleton<ITransactionRepositoryPort>(
   TransactionRepositoryAdapter,
 );
 
-container.registerSingleton<ICsvStatementParser>('CsvStatementParser', NubankStatementCsvParser);
+container.registerSingleton<IOfxStatementParser>('OfxStatementParser', OfxStatementParserGateway);
 
 container.registerSingleton('CreateCategoryUseCase', CreateCategoryUseCase);
 container.registerSingleton('ListCategoriesUseCase', ListCategoriesUseCase);

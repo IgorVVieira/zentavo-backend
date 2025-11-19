@@ -34,7 +34,7 @@ export class TransactionController {
   @Authorized()
   @OpenAPI({
     summary: 'Import transactions from a file',
-    description: 'Import transactions from a CSV file',
+    description: 'Import transactions from a OFX file',
     security: [{ bearerAuth: [] }],
     requestBody: {
       content: {

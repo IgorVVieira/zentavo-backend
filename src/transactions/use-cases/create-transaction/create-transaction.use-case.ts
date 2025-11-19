@@ -5,20 +5,20 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { CreateTransactionDto } from '@transactions/dtos';
-import { ICsvStatementParser } from '@transactions/gateways/csv-statement-parser.interface';
+import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
 
 @injectable()
 export class CreateTransactionUseCase implements IBaseUseCase<CreateTransactionDto, void> {
   constructor(
     @inject('TransactionRepository')
     private readonly transactionRepository: ITransactionRepositoryPort,
-    @inject('CsvStatementParser')
-    private readonly csvStatementParser: ICsvStatementParser,
+    @inject('OfxStatementParser')
+    private readonly ofxStatementParser: IOfxStatementParser,
   ) {}
 
   async execute(data: CreateTransactionDto): Promise<void> {
     const { userId, file } = data;
-    const transactions = await this.csvStatementParser.parse(file);
+    const transactions = await this.ofxStatementParser.parse(file?.buffer?.toString('utf-8') ?? '');
     const transactionsToCreate = transactions.map(transaction => ({
       ...transaction,
       userId,
@@ -44,7 +44,7 @@ export class CreateTransactionUseCase implements IBaseUseCase<CreateTransactionD
         }
       }
 
-      if (batch.length > 0) {
+      if (batch.length) {
         await this.transactionRepository.createMany(batch);
       }
     } catch (error) {

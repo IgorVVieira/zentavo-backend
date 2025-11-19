@@ -12,6 +12,7 @@ export enum TransactionMethod {
   DEBIT = 'DEBIT',
   TRANSFER = 'TRANSFER',
   CARD_PAYMENT = 'CARD_PAYMENT',
+  CASH_BACK = 'CASH_BACK',
 }
 
 export class TransactionEntity extends BaseEntity {
