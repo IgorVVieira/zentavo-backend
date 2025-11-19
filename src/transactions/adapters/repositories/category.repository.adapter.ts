@@ -25,6 +25,7 @@ export class CategoryRepositoryAdapter
       where: {
         name,
         userId,
+        deletedAt: null,
       },
     });
 

@@ -15,6 +15,7 @@ import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.us
 import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
+import { UpdateCategoryUseCase } from '@transactions/use-cases/update-category/update-category.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 
 container.registerSingleton<ICategoryRepositoryPort>(
@@ -31,6 +32,7 @@ container.registerSingleton<IOfxStatementParser>('OfxStatementParser', OfxStatem
 container.registerSingleton('CreateCategoryUseCase', CreateCategoryUseCase);
 container.registerSingleton('ListCategoriesUseCase', ListCategoriesUseCase);
 container.registerSingleton('DeleteCategoryUseCase', DeleteCategoryUseCase);
+container.registerSingleton('UpdateCategoryUseCase', UpdateCategoryUseCase);
 
 container.registerSingleton('CreateTransactionUseCase', CreateTransactionUseCase);
 container.registerSingleton('GetTransactionsByDateUseCase', GetTransactionsByDateUseCase);
