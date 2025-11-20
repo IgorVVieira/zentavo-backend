@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
+import { Injections } from '@shared/types/injections';
 
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { UserDto } from '@users/dtos';
@@ -9,7 +10,7 @@ import { UserDto } from '@users/dtos';
 @injectable()
 export class GetMeUseCase implements IBaseUseCase<string, UserDto> {
   constructor(
-    @inject('UserRepository')
+    @inject(Injections.USER_REPOSITORY)
     private readonly userRepository: IUserRepositoryPort,
   ) {}
 

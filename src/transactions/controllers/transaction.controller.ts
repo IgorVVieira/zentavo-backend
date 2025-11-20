@@ -12,6 +12,8 @@ import {
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
 import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
@@ -22,11 +24,11 @@ import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transac
 @JsonController('/transactions')
 export class TransactionController {
   constructor(
-    @inject('CreateTransactionUseCase')
+    @inject(Injections.CREATE_TRANSACTION_USE_CASE)
     private readonly createTransactionUseCase: CreateTransactionUseCase,
-    @inject('GetTransactionsByDateUseCase')
+    @inject(Injections.GET_TRANSACTIONS_BY_DATE_USE_CASE)
     private readonly getTransactionsByDateUseCase: GetTransactionsByDateUseCase,
-    @inject('UpdateTransactionUseCase')
+    @inject(Injections.UPDATE_TRANSACTION_USE_CASE)
     private readonly updateTransactionUseCase: UpdateTransactionUseCase,
   ) {}
 

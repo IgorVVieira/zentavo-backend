@@ -46,7 +46,7 @@ describe('CreateUserUseCase', () => {
       name: 'any_name',
       createdAt: new Date(),
       updatedAt: new Date(),
-      status: UserStatus.PEDING_VERIFICATION,
+      status: UserStatus.ACTIVE,
     });
     const user = await sut.execute({
       email: 'any_email',
@@ -60,7 +60,7 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password_encrypted',
       name: 'any_name',
-      status: UserStatus.PEDING_VERIFICATION,
+      status: UserStatus.ACTIVE,
     });
 
     expect(user).toEqual({

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
+import { Injections } from '@shared/types/injections';
 
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
 import { CategoryDto } from '@transactions/dtos';
@@ -8,7 +9,7 @@ import { CategoryDto } from '@transactions/dtos';
 @injectable()
 export class ListCategoriesUseCase implements IBaseUseCase<string, CategoryDto[]> {
   constructor(
-    @inject('CategoryRepository')
+    @inject(Injections.CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepositoryPort,
   ) {}
 

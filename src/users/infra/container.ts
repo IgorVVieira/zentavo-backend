@@ -2,6 +2,7 @@ import { container } from 'tsyringe';
 
 import { NodemailerEmailProvider } from '@shared/adapters/nodemailer-provider.adapter';
 import { IEmailProviderPort } from '@shared/gateways/email-provider.port';
+import { Injections } from '@shared/types/injections';
 
 import { EncptyAdapter } from '@users/adapters/gateways/encypt.adapter';
 import { JwtAdapter } from '@users/adapters/gateways/jwt.adapter';
@@ -15,40 +16,36 @@ import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/ver
 import { IEncryptPort } from '@users/gateways/encypt.port';
 import { IJwtPort } from '@users/gateways/jwt.port';
 import { IUserValidatorPort } from '@users/services/user-validator.port';
-import { UserService } from '@users/services/user.service';
-import { ActivateUserUseCase } from '@users/use-cases/activate-user/activate-user.use-case';
 import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
-import { SendAccountVerificationEmailUseCase } from '@users/use-cases/send-account-verification-email/send-account-verification-email.use-case';
 import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
 import { ValidateTokenUseCase } from '@users/use-cases/validate-token/validate-token.use-case';
 
-container.registerSingleton<IUserRepositoryPort>('UserRepository', UserRepositoryAdapter);
+container.registerSingleton<IUserRepositoryPort>(Injections.USER_REPOSITORY, UserRepositoryAdapter);
 container.registerSingleton<IVerificationTokenRepositoryPort>(
-  'VerificationTokenRepository',
+  Injections.VERIFICATION_TOKEN_REPOSITORY,
   VerificationTokenRepositoryAdapter,
 );
-container.registerSingleton<IEncryptPort>('EncrypterAdapter', EncptyAdapter);
-container.registerSingleton<IJwtPort>('JwtAdapter', JwtAdapter);
-container.registerSingleton<IEmailProviderPort>('EmailProvider', NodemailerEmailProvider);
+container.registerSingleton<IEncryptPort>(Injections.ENCRYPT_PORT, EncptyAdapter);
+container.registerSingleton<IJwtPort>(Injections.JWT_PORT, JwtAdapter);
+container.registerSingleton<IEmailProviderPort>(Injections.EMAIL_PROVIDER, NodemailerEmailProvider);
 
-container.registerSingleton<IUserValidatorPort>('UserValidator', UserValidatorAdapterService);
-
-container.registerSingleton('CreateUserUseCase', CreateUserUseCase);
-container.registerSingleton('LoginUseCase', LoginUseCase);
-container.registerSingleton('GetMeUseCase', GetMeUseCase);
-container.registerSingleton('SendRecoveryPasswordTokenUseCase', SendRecoveryPasswordTokenUseCase);
-container.registerSingleton('ValidateTokenUseCase', ValidateTokenUseCase);
-container.registerSingleton(
-  'SendAccountVerificationEmailUseCase',
-  SendAccountVerificationEmailUseCase,
+container.registerSingleton<IUserValidatorPort>(
+  Injections.USER_VALIDATOR,
+  UserValidatorAdapterService,
 );
-container.registerSingleton('ActivateUserUseCase', ActivateUserUseCase);
 
-container.registerSingleton('UserService', UserService);
+container.registerSingleton(Injections.CREATE_USER_USE_CASE, CreateUserUseCase);
+container.registerSingleton(Injections.LOGIN_USE_CASE, LoginUseCase);
+container.registerSingleton(Injections.GET_ME_USE_CASE, GetMeUseCase);
+container.registerSingleton(
+  Injections.SEND_RECOVERY_PASSWORD_TOKEN_USE_CASE,
+  SendRecoveryPasswordTokenUseCase,
+);
+container.registerSingleton(Injections.VALIDATE_TOKEN_USE_CASE, ValidateTokenUseCase);
 
-container.registerSingleton(UserController);
-container.registerSingleton(AuthController);
+container.registerSingleton(Injections.USER_CONTROLLER, UserController);
+container.registerSingleton(Injections.AUTH_CONTROLLER, AuthController);
 
 export { container };

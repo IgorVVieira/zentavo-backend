@@ -10,8 +10,6 @@ export interface IVerificationTokenRepositoryPort extends IBaseRepository<Verifi
     userId: string,
     type: VerificationTokenType,
   ): Promise<VerificationTokenEntity | null>;
-
   findByToken(token: string): Promise<VerificationTokenEntity | null>;
-
   updateUsedStatus(tokenId: string): Promise<void>;
 }

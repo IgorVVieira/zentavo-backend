@@ -1,5 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { GetTransactionsDto } from '@transactions/dtos';
 import {
@@ -11,7 +13,7 @@ import {
 @injectable()
 export class DashboardUseCase {
   constructor(
-    @inject('TransactionRepository')
+    @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,
   ) {}
 

@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { UnauthorizedError } from '@shared/errors/unauthorized.error';
+import { Injections } from '@shared/types/injections';
 
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
@@ -12,7 +13,7 @@ export class UpdateTransactionUseCase
   implements IBaseUseCase<UpdateTransactionDto, TransactionDto>
 {
   constructor(
-    @inject('TransactionRepository')
+    @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,
   ) {}
 

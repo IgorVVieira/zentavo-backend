@@ -2,6 +2,8 @@ import { Body, JsonController, Post } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { AuthUserResponseDto, LoginDto, SendRecoveryPasswordTokenDto } from '@users/dtos';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
@@ -10,9 +12,9 @@ import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery
 @JsonController('/auth')
 export class AuthController {
   constructor(
-    @inject('LoginUseCase')
+    @inject(Injections.LOGIN_USE_CASE)
     private readonly loginUserCase: LoginUseCase,
-    @inject('SendRecoveryPasswordTokenUseCase')
+    @inject(Injections.SEND_RECOVERY_PASSWORD_TOKEN_USE_CASE)
     private readonly sendRecoveryPasswordTokenUseCase: SendRecoveryPasswordTokenUseCase,
   ) {}
 

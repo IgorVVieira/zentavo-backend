@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
+import { Injections } from '@shared/types/injections';
 
 import { IUserValidatorPort } from '@users/services/user-validator.port';
 
@@ -11,9 +12,9 @@ import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 @injectable()
 export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, CategoryDto> {
   constructor(
-    @inject('CategoryRepository')
+    @inject(Injections.CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepositoryPort,
-    @inject('UserValidator')
+    @inject(Injections.USER_VALIDATOR)
     private readonly userValidator: IUserValidatorPort,
   ) {}
 

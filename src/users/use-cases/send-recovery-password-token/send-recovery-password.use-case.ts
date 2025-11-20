@@ -4,6 +4,7 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { IEmailProviderPort } from '@shared/gateways/email-provider.port';
+import { Injections } from '@shared/types/injections';
 import { generateSixDigitToken } from '@shared/utils/generate-random-token';
 
 import { VerificationTokenType } from '@users/domain/entities/verification-token.entity';
@@ -16,11 +17,11 @@ export class SendRecoveryPasswordTokenUseCase
   implements IBaseUseCase<SendRecoveryPasswordTokenDto, void>
 {
   public constructor(
-    @inject('UserRepository')
+    @inject(Injections.USER_REPOSITORY)
     private readonly userRepository: IUserRepositoryPort,
-    @inject('VerificationTokenRepository')
+    @inject(Injections.VERIFICATION_TOKEN_REPOSITORY)
     private readonly verificationTokenRepository: IVerificationTokenRepositoryPort,
-    @inject('EmailProvider')
+    @inject(Injections.EMAIL_PROVIDER)
     private readonly emailProvider: IEmailProviderPort,
   ) {}
 

@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
+import { Injections } from '@shared/types/injections';
 
 import { UserStatus } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
@@ -11,9 +12,9 @@ import { IEncryptPort } from '@users/gateways/encypt.port';
 @injectable()
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
   constructor(
-    @inject('UserRepository')
+    @inject(Injections.USER_REPOSITORY)
     private readonly userRepository: IUserRepositoryPort,
-    @inject('EncrypterAdapter')
+    @inject(Injections.ENCRYPT_PORT)
     private readonly encrypter: IEncryptPort,
   ) {}
 
@@ -31,7 +32,7 @@ export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
       email,
       password: encryptedPassword,
       name,
-      status: UserStatus.PEDING_VERIFICATION,
+      status: UserStatus.ACTIVE,
     });
 
     return {

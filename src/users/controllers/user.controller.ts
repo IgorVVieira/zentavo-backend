@@ -2,17 +2,19 @@ import { Authorized, Body, CurrentUser, Get, JsonController, Post } from 'routin
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
-import { ActivateUserDto, CreateUserDto, UserDto } from '@users/dtos';
-import { UserService } from '@users/services/user.service';
+import { Injections } from '@shared/types/injections';
+
+import { CreateUserDto, UserDto } from '@users/dtos';
+import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 
 @injectable()
 @JsonController('/users')
 export class UserController {
   constructor(
-    @inject('UserService')
-    private readonly userService: UserService,
-    @inject('GetMeUseCase')
+    @inject(Injections.CREATE_USER_USE_CASE)
+    private readonly createUserUseCase: CreateUserUseCase,
+    @inject(Injections.GET_ME_USE_CASE)
     private readonly getMeUseCase: GetMeUseCase,
   ) {}
 
@@ -34,7 +36,7 @@ export class UserController {
   })
   @ResponseSchema(UserDto)
   async create(@Body() userDto: CreateUserDto): Promise<UserDto> {
-    return this.userService.registerUser(userDto);
+    return this.createUserUseCase.execute(userDto);
   }
 
   @Get('/me')
@@ -58,27 +60,5 @@ export class UserController {
   @ResponseSchema(UserDto)
   async getMe(@CurrentUser() userId: string): Promise<UserDto> {
     return this.getMeUseCase.execute(userId);
-  }
-
-  @Post('/activate')
-  @OpenAPI({
-    summary: 'Activate user account',
-    description: 'Activates the user account with the provided token',
-    responses: {
-      '200': {
-        description: 'User account activated successfully',
-      },
-      '400': {
-        description: 'Bad request - Invalid token or user ID',
-      },
-      '404': {
-        description: 'Not found - User not found',
-      },
-    },
-  })
-  async activateUser(@Body() activateUserDto: ActivateUserDto): Promise<string> {
-    await this.userService.activateUser(activateUserDto);
-
-    return 'User account activated successfully';
   }
 }

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
+import { Injections } from '@shared/types/injections';
 
 import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
@@ -10,9 +11,9 @@ import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser
 @injectable()
 export class CreateTransactionUseCase implements IBaseUseCase<CreateTransactionDto, void> {
   constructor(
-    @inject('TransactionRepository')
+    @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,
-    @inject('OfxStatementParser')
+    @inject(Injections.OFX_STATEMENT_PARSER)
     private readonly ofxStatementParser: IOfxStatementParser,
   ) {}
 

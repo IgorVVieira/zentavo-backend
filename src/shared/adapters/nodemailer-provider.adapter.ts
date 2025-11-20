@@ -17,7 +17,6 @@ export class NodemailerEmailProvider implements IEmailProviderPort {
   }
 
   async sendEmail(sendEmailData: SendEmailDto): Promise<void> {
-    // throw new Error('Method not implemented.');
     try {
       const { to, subject, body } = sendEmailData;
 

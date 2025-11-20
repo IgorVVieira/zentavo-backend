@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
+import { Injections } from '@shared/types/injections';
 
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
@@ -8,9 +9,9 @@ import { ITransactionRepositoryPort } from '@transactions/domain/repositories/tr
 @injectable()
 export class DeleteCategoryUseCase implements IBaseUseCase<string, void> {
   constructor(
-    @inject('CategoryRepository')
+    @inject(Injections.CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepositoryPort,
-    @inject('TransactionRepository')
+    @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,
   ) {}
 

@@ -28,16 +28,3 @@ export class UserDto {
   @IsNotEmpty()
   updatedAt: Date;
 }
-
-export class ActivateUserDto {
-  @IsString()
-  @IsNotEmpty()
-  @Expose()
-  token: string;
-
-  @IsString()
-  @IsUUID()
-  @IsNotEmpty()
-  @Expose()
-  userId: string;
-}

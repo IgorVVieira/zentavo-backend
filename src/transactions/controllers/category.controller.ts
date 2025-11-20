@@ -12,6 +12,8 @@ import {
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 import { UpdateCategoryDto } from '@transactions/dtos/update-category.dto';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
@@ -24,13 +26,13 @@ import { UpdateCategoryUseCase } from '@transactions/use-cases/update-category/u
 export class CategoryController {
   /* eslint-disable max-params */
   constructor(
-    @inject('CreateCategoryUseCase')
+    @inject(Injections.CREATE_CATEGORY_USE_CASE)
     private readonly createCategoryUseCase: CreateCategoryUseCase,
-    @inject('ListCategoriesUseCase')
+    @inject(Injections.LIST_CATEGORIES_USE_CASE)
     private readonly listCategoriesUseCase: ListCategoriesUseCase,
-    @inject('UpdateCategoryUseCase')
+    @inject(Injections.UPDATE_CATEGORY_USE_CASE)
     private readonly updateCategoryUseCase: UpdateCategoryUseCase,
-    @inject('DeleteCategoryUseCase')
+    @inject(Injections.DELETE_CATEGORY_USE_CASE)
     private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
   ) {}
 

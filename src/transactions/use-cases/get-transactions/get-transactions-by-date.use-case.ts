@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
+import { Injections } from '@shared/types/injections';
 
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { GetTransactionsDto, TransactionDto } from '@transactions/dtos';
@@ -10,7 +11,7 @@ export class GetTransactionsByDateUseCase
   implements IBaseUseCase<GetTransactionsDto, TransactionDto[]>
 {
   constructor(
-    @inject('TransactionRepository')
+    @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,
   ) {}
 

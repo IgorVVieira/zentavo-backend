@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
 import { VerificationTokenType } from '@users/domain/entities/verification-token.entity';
 
@@ -19,17 +19,4 @@ export class ValidateTokenDto {
   @IsEnum(VerificationTokenType)
   @IsNotEmpty()
   type: VerificationTokenType;
-}
-
-export class SendAccountVerificationEmailDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  userId: string;
-
-  @IsString()
-  name: string;
 }

@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { UnauthorizedError } from '@shared/errors/unauthorized.error';
+import { Injections } from '@shared/types/injections';
 
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
 import { CategoryDto } from '@transactions/dtos/category.dto';
@@ -11,7 +12,7 @@ import { UpdateCategoryDto } from '@transactions/dtos/update-category.dto';
 @injectable()
 export class UpdateCategoryUseCase implements IBaseUseCase<UpdateCategoryDto, CategoryDto> {
   constructor(
-    @inject('CategoryRepository')
+    @inject(Injections.CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepositoryPort,
   ) {}
 

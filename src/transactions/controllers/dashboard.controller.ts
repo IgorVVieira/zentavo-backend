@@ -2,6 +2,8 @@ import { Authorized, CurrentUser, Get, JsonController, Param, Params } from 'rou
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { ListByCategoryQueryDto } from '@transactions/dtos';
 import {
   TransactionsByCategoryDto,
@@ -14,7 +16,9 @@ import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.us
 @Authorized()
 @JsonController('/transactions/dashboard')
 export class DashboardController {
-  constructor(@inject('DashboardUseCase') private readonly dashboardUseCase: DashboardUseCase) {}
+  constructor(
+    @inject(Injections.DASHBOARD_USE_CASE) private readonly dashboardUseCase: DashboardUseCase,
+  ) {}
 
   @Get('/payment-methods/:month/:year')
   @Authorized()

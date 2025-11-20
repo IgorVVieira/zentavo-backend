@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
+import { Injections } from '@shared/types/injections';
 
 import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/verification-token.repository.port';
 import { ValidateTokenDto } from '@users/dtos';
@@ -10,7 +11,7 @@ export class ValidateTokenUseCase
   implements IBaseUseCase<ValidateTokenDto, { isValid: boolean; userId?: string }>
 {
   constructor(
-    @inject('VerificationTokenRepository')
+    @inject(Injections.VERIFICATION_TOKEN_REPOSITORY)
     private readonly verificationTokenRepository: IVerificationTokenRepositoryPort,
   ) {}
 

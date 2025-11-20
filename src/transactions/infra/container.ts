@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 
+import { Injections } from '@shared/types/injections';
+
 import { ICategoryRepositoryPort } from '@transactions//domain/repositories/category.repositor.port';
 import { OfxStatementParserGateway } from '@transactions/adapters/gateways/ofx-statement-parser.gateway';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
@@ -19,25 +21,31 @@ import { UpdateCategoryUseCase } from '@transactions/use-cases/update-category/u
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 
 container.registerSingleton<ICategoryRepositoryPort>(
-  'CategoryRepository',
+  Injections.CATEGORY_REPOSITORY,
   CategoryRepositoryAdapter,
 );
 container.registerSingleton<ITransactionRepositoryPort>(
-  'TransactionRepository',
+  Injections.TRANSACTION_REPOSITORY,
   TransactionRepositoryAdapter,
 );
 
-container.registerSingleton<IOfxStatementParser>('OfxStatementParser', OfxStatementParserGateway);
+container.registerSingleton<IOfxStatementParser>(
+  Injections.OFX_STATEMENT_PARSER,
+  OfxStatementParserGateway,
+);
 
-container.registerSingleton('CreateCategoryUseCase', CreateCategoryUseCase);
-container.registerSingleton('ListCategoriesUseCase', ListCategoriesUseCase);
-container.registerSingleton('DeleteCategoryUseCase', DeleteCategoryUseCase);
-container.registerSingleton('UpdateCategoryUseCase', UpdateCategoryUseCase);
+container.registerSingleton(Injections.CREATE_CATEGORY_USE_CASE, CreateCategoryUseCase);
+container.registerSingleton(Injections.LIST_CATEGORIES_USE_CASE, ListCategoriesUseCase);
+container.registerSingleton(Injections.DELETE_CATEGORY_USE_CASE, DeleteCategoryUseCase);
+container.registerSingleton(Injections.UPDATE_CATEGORY_USE_CASE, UpdateCategoryUseCase);
 
-container.registerSingleton('CreateTransactionUseCase', CreateTransactionUseCase);
-container.registerSingleton('GetTransactionsByDateUseCase', GetTransactionsByDateUseCase);
-container.registerSingleton('UpdateTransactionUseCase', UpdateTransactionUseCase);
-container.registerSingleton('DashboardUseCase', DashboardUseCase);
+container.registerSingleton(Injections.CREATE_TRANSACTION_USE_CASE, CreateTransactionUseCase);
+container.registerSingleton(
+  Injections.GET_TRANSACTIONS_BY_DATE_USE_CASE,
+  GetTransactionsByDateUseCase,
+);
+container.registerSingleton(Injections.UPDATE_TRANSACTION_USE_CASE, UpdateTransactionUseCase);
+container.registerSingleton(Injections.DASHBOARD_USE_CASE, DashboardUseCase);
 
 container.registerSingleton(TransactionController);
 container.registerSingleton(CategoryController);
