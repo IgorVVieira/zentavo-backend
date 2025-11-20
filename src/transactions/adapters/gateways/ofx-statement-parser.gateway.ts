@@ -10,7 +10,7 @@ import {
   Statement,
 } from '@transactions/domain/types/statement.type';
 import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
-import ofx from 'ofx';
+import { parse as parseOFX } from 'ofx-js';
 
 @injectable()
 export class OfxStatementParserGateway implements IOfxStatementParser {
@@ -18,7 +18,7 @@ export class OfxStatementParserGateway implements IOfxStatementParser {
 
   async parse(ofxData: string): Promise<Statement[]> {
     try {
-      const ofxParsed = ofx.parse(ofxData);
+      const ofxParsed = parseOFX(ofxData);
 
       if (!ofxParsed?.OFX?.BANKMSGSRSV1?.STMTTRNRS?.STMTRS?.BANKTRANLIST?.STMTTRN) {
         return [];
