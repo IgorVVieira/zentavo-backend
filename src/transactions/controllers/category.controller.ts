@@ -7,23 +7,29 @@ import {
   JsonController,
   Param,
   Post,
+  Put,
 } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
 import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
+import { UpdateCategoryDto } from '@transactions/dtos/update-category.dto';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
+import { UpdateCategoryUseCase } from '@transactions/use-cases/update-category/update-category.use-case';
 
 @injectable()
 @JsonController('/categories')
 export class CategoryController {
+  /* eslint-disable max-params */
   constructor(
     @inject('CreateCategoryUseCase')
     private readonly createCategoryUseCase: CreateCategoryUseCase,
     @inject('ListCategoriesUseCase')
     private readonly listCategoriesUseCase: ListCategoriesUseCase,
+    @inject('UpdateCategoryUseCase')
+    private readonly updateCategoryUseCase: UpdateCategoryUseCase,
     @inject('DeleteCategoryUseCase')
     private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
   ) {}
@@ -54,6 +60,37 @@ export class CategoryController {
       userId,
       name,
       color,
+    });
+  }
+
+  @Put('/:id')
+  @Authorized()
+  @OpenAPI({
+    summary: 'Update a category',
+    description: 'Update a category by ID',
+    security: [{ bearerAuth: [] }],
+    responses: {
+      '200': {
+        description: 'Category updated successfully',
+      },
+      '400': {
+        description: 'Bad request - Invalid data',
+      },
+      '404': {
+        description: 'Category not found',
+      },
+    },
+  })
+  @ResponseSchema(CategoryDto)
+  async update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+    @CurrentUser() userId: string,
+  ): Promise<CategoryDto> {
+    return this.updateCategoryUseCase.execute({
+      ...updateCategoryDto,
+      id,
+      userId,
     });
   }
 
