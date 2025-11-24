@@ -18,7 +18,7 @@ export class OfxStatementParserGateway implements IOfxStatementParser {
 
   async parse(ofxData: string): Promise<Statement[]> {
     try {
-      const ofxParsed = parseOFX(ofxData);
+      const ofxParsed = await parseOFX(ofxData);
 
       if (!ofxParsed?.OFX?.BANKMSGSRSV1?.STMTTRNRS?.STMTRS?.BANKTRANLIST?.STMTTRN) {
         return [];
