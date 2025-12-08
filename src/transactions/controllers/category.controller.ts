@@ -56,12 +56,9 @@ export class CategoryController {
     @CurrentUser() userId: string,
     @Body() createCategoryDto: CreateCategoryDto,
   ): Promise<CategoryDto> {
-    const { name, color } = createCategoryDto;
-
     return this.createCategoryUseCase.execute({
+      ...createCategoryDto,
       userId,
-      name,
-      color,
     });
   }
 

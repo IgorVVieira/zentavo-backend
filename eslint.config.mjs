@@ -19,6 +19,7 @@ export default [
       'scripts',
       'test',
       'tests',
+      'prisma.config.ts',
     ],
   },
 

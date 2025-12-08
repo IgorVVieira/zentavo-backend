@@ -6,7 +6,7 @@ import { Injections } from '@shared/types/injections';
 
 import { IUserValidatorPort } from '@users/services/user-validator.port';
 
-import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
+import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
 
 @injectable()
@@ -37,6 +37,7 @@ export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, Ca
       userId: category.userId,
       name: category.name,
       color: category.color,
+      type: category.type,
       createdAt: category.createdAt as Date,
       updatedAt: category.updatedAt as Date,
     };

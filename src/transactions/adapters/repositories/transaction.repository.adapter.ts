@@ -76,11 +76,16 @@ export class TransactionRepositoryAdapter
       },
     });
 
-    return transactions.map(transaction => ({
+    return transactions?.map(transaction => ({
       ...transaction,
       type: transaction.type as TransactionType,
       method: transaction.method as TransactionMethod,
-      category: transaction.category,
+      category: transaction.category
+        ? {
+            ...transaction.category,
+            type: transaction.category.type as TransactionType | null,
+          }
+        : null,
     }));
   }
 
@@ -113,7 +118,7 @@ export class TransactionRepositoryAdapter
       GROUP BY method
     `;
 
-    return transactions.map(transaction => ({
+    return transactions?.map(transaction => ({
       method: transaction.method as TransactionMethod,
       total: transaction.total,
     }));
@@ -153,7 +158,7 @@ export class TransactionRepositoryAdapter
       ORDER BY total DESC;
     `;
 
-    return result.map(item => ({
+    return result?.map(item => ({
       id: item.id,
       name: item.name,
       color: item.color,

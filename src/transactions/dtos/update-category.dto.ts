@@ -1,4 +1,6 @@
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+
+import { TransactionType } from '@transactions/domain/entities/transaction.entity';
 
 export class UpdateCategoryDto {
   @IsUUID()
@@ -14,4 +16,8 @@ export class UpdateCategoryDto {
   @IsString()
   @IsNotEmpty()
   color: string;
+
+  @IsEnum(TransactionType)
+  @IsOptional()
+  type: TransactionType;
 }

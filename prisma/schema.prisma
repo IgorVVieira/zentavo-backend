@@ -10,7 +10,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -34,6 +33,7 @@ model Category {
   userId       String        @map("user_id") @db.Uuid
   name         String
   color        String
+  type         String?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   deletedAt    DateTime?     @map("deleted_at")

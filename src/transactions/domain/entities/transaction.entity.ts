@@ -1,6 +1,6 @@
 import { BaseEntity } from '@shared/domain/entities/base-entity';
 
-import { CategoryEntity } from '@transactions/domain/entities/category';
+import { CategoryEntity } from '@transactions/domain/entities/category.entity';
 
 export enum TransactionType {
   CASH_IN = 'CASH_IN',

@@ -3,8 +3,9 @@ import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
 
-import { CategoryEntity } from '@transactions/domain/entities/category';
-import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
+import { CategoryEntity } from '@transactions/domain/entities/category.entity';
+import { TransactionType } from '@transactions/domain/entities/transaction.entity';
+import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 
 @injectable()
 export class CategoryRepositoryAdapter
@@ -33,11 +34,14 @@ export class CategoryRepositoryAdapter
       return null;
     }
 
-    return category;
+    return {
+      ...category,
+      type: category.type as TransactionType,
+    };
   }
 
   async findByUserId(userId: string): Promise<CategoryEntity[]> {
-    return this.prisma.category.findMany({
+    const categories = await this.prisma.category.findMany({
       where: {
         userId,
         deletedAt: null,
@@ -46,5 +50,10 @@ export class CategoryRepositoryAdapter
         name: 'asc',
       },
     });
+
+    return categories?.map(category => ({
+      ...category,
+      type: category.type as TransactionType,
+    }));
   }
 }

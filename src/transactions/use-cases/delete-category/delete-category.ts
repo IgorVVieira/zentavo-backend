@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { Injections } from '@shared/types/injections';
 
-import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repositor.port';
+import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 
 @injectable()
