@@ -6,7 +6,7 @@
     "build": "npx tsc",
     "test": "jest --runInBand",
     "test:staged": "jest --passWithNoTests --silent --findRelatedTests",
-    "lint": "eslint \"src/**/*.{ts}\"",
+    "lint": "eslint",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "lint-staged": "lint-staged",
     "format": "prettier --write \"src/**/*.{ts,json,md}\"",

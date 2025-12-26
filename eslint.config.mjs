@@ -33,7 +33,7 @@ export default [
       parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.json',
-        tsconfigRootDir: '.',
+        // tsconfigRootDir: './',
         ecmaVersion: 'latest',
         sourceType: 'module',
       },

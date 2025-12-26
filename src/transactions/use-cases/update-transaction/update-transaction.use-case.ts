@@ -9,9 +9,10 @@ import { ITransactionRepositoryPort } from '@transactions/domain/repositories/tr
 import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
 
 @injectable()
-export class UpdateTransactionUseCase
-  implements IBaseUseCase<UpdateTransactionDto, TransactionDto>
-{
+export class UpdateTransactionUseCase implements IBaseUseCase<
+  UpdateTransactionDto,
+  TransactionDto
+> {
   constructor(
     @inject(Injections.TRANSACTION_REPOSITORY)
     private readonly transactionRepository: ITransactionRepositoryPort,

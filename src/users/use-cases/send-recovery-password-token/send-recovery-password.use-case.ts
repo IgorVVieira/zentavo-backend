@@ -13,9 +13,10 @@ import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/ver
 import { SendRecoveryPasswordTokenDto } from '@users/dtos';
 
 @injectable()
-export class SendRecoveryPasswordTokenUseCase
-  implements IBaseUseCase<SendRecoveryPasswordTokenDto, void>
-{
+export class SendRecoveryPasswordTokenUseCase implements IBaseUseCase<
+  SendRecoveryPasswordTokenDto,
+  void
+> {
   public constructor(
     @inject(Injections.USER_REPOSITORY)
     private readonly userRepository: IUserRepositoryPort,
