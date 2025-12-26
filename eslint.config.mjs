@@ -5,6 +5,12 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   // Configurações básicas e ignores
@@ -14,12 +20,13 @@ export default [
       'dist',
       'build',
       'coverage',
-      'docs',
-      'public',
-      'scripts',
       'test',
       'tests',
       'prisma.config.ts',
+      'jest.config.ts',
+      'jest.setup.ts',
+      'setup-test.ts',
+      'eslint.config.mjs',
     ],
   },
 
@@ -32,8 +39,8 @@ export default [
       },
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.json',
-        // tsconfigRootDir: './',
+        tsconfigRootDir: __dirname,
+        project: ['./tsconfig.eslint.json'],
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
