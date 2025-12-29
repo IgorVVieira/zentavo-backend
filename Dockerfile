@@ -9,15 +9,14 @@ WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 
-# Instalar todas as dependências (incluindo dev para build)
 RUN npm install
 
 # Copiar código fonte
 COPY . .
 
-# Prisma generate com DATABASE_URL fake
-RUN DATABASE_URL="postgresql://user:pass@localhost:5432/db" npx prisma generate
+RUN npx prisma generate
 
 # Build do TypeScript
 RUN npm run build
@@ -33,6 +32,7 @@ RUN addgroup -g 1001 -S nodejs && \
 WORKDIR /app
 
 ENV HUSKY=0
+ENV NODE_ENV=production
 
 # Copiar package files e instalar apenas dependências de produção
 COPY package.json ./
@@ -57,9 +57,6 @@ RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 EXPOSE 3000
-
-ENV NODE_ENV=production
-
 # Health check (ajuste a rota se sua API tiver um endpoint de health)
 # HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 #   CMD node -e "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
@@ -67,4 +64,4 @@ ENV NODE_ENV=production
 CMD ["npm", "run", "start:prod"]
 
 # docker build -t zentavo-backend .
-# docker exec -it zentavo-backend
+# docker start -i zentavo-backend
