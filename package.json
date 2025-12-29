@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "rm -rf dist && npx tsc",
     "test": "jest --runInBand",
     "test:staged": "jest --passWithNoTests --silent --findRelatedTests",
     "lint": "eslint",
