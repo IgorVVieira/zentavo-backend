@@ -16,9 +16,6 @@ RUN npm install
 # Copiar código fonte
 COPY . .
 
-RUN npx prisma generate
-
-# Build do TypeScript
 RUN npm run build
 
 FROM node:24.12.0-alpine3.23 as prod
@@ -45,10 +42,6 @@ COPY --from=builder /app/prisma ./prisma
 
 # Copiar build do TypeScript
 COPY --from=builder /app/dist ./dist
-
-# Copiar Prisma Client gerado
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # Mudar ownership para usuário nodejs
 RUN chown -R nodejs:nodejs /app

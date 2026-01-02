@@ -17,7 +17,7 @@ import {
   TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
 
-import { prismaClientFactory } from '../../../prisma-client';
+import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
 export class TransactionRepositoryAdapter
@@ -27,7 +27,7 @@ export class TransactionRepositoryAdapter
   private readonly prisma;
 
   constructor() {
-    const prisma = prismaClientFactory();
+    const prisma = PrismaClientSingleton.getInstance();
 
     super(prisma.transaction);
     this.prisma = prisma;

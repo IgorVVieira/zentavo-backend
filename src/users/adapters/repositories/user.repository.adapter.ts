@@ -5,14 +5,14 @@ import { BaseRepository } from '@shared/repositories/base.repository';
 import { User, UserStatus } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 
-import { prismaClientFactory } from '../../../prisma-client';
+import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
 export class UserRepositoryAdapter extends BaseRepository<User> implements IUserRepositoryPort {
   private readonly prisma;
 
   constructor() {
-    const prisma = prismaClientFactory();
+    const prisma = PrismaClientSingleton.getInstance();
 
     super(prisma.user);
     this.prisma = prisma;

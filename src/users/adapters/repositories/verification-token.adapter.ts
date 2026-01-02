@@ -8,7 +8,7 @@ import {
 } from '@users/domain/entities/verification-token.entity';
 import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/verification-token.repository.port';
 
-import { prismaClientFactory } from '../../../prisma-client';
+import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
 export class VerificationTokenRepositoryAdapter
@@ -18,7 +18,7 @@ export class VerificationTokenRepositoryAdapter
   private readonly prisma;
 
   constructor() {
-    const prisma = prismaClientFactory();
+    const prisma = PrismaClientSingleton.getInstance();
 
     super(prisma.verificationToken);
     this.prisma = prisma;

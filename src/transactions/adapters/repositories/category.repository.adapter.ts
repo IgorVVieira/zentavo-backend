@@ -6,7 +6,7 @@ import { CategoryEntity } from '@transactions/domain/entities/category.entity';
 import { TransactionType } from '@transactions/domain/entities/transaction.entity';
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 
-import { prismaClientFactory } from '../../../prisma-client';
+import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
 export class CategoryRepositoryAdapter
@@ -16,7 +16,7 @@ export class CategoryRepositoryAdapter
   private readonly prisma;
 
   constructor() {
-    const prisma = prismaClientFactory();
+    const prisma = PrismaClientSingleton.getInstance();
 
     super(prisma.category);
     this.prisma = prisma;
