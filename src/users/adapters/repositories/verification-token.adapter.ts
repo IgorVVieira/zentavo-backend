@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
@@ -9,15 +8,17 @@ import {
 } from '@users/domain/entities/verification-token.entity';
 import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/verification-token.repository.port';
 
+import { prismaClientFactory } from '../../../prisma-client';
+
 @injectable()
 export class VerificationTokenRepositoryAdapter
   extends BaseRepository<VerificationTokenEntity>
   implements IVerificationTokenRepositoryPort
 {
-  private readonly prisma: PrismaClient;
+  private readonly prisma;
 
   constructor() {
-    const prisma = new PrismaClient();
+    const prisma = prismaClientFactory();
 
     super(prisma.verificationToken);
     this.prisma = prisma;

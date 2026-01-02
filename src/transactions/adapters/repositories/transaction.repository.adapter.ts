@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { injectable } from 'tsyringe';
 
 import { BaseRepository } from '@shared/repositories/base.repository';
@@ -18,15 +17,17 @@ import {
   TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
 
+import { prismaClientFactory } from '../../../prisma-client';
+
 @injectable()
 export class TransactionRepositoryAdapter
   extends BaseRepository<TransactionEntity>
   implements ITransactionRepositoryPort
 {
-  private readonly prisma: PrismaClient;
+  private readonly prisma;
 
   constructor() {
-    const prisma = new PrismaClient();
+    const prisma = prismaClientFactory();
 
     super(prisma.transaction);
     this.prisma = prisma;
