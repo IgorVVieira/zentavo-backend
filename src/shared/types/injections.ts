@@ -12,7 +12,8 @@ export enum Injections {
   LIST_CATEGORIES_USE_CASE = 'ListCategoriesUseCase',
   DELETE_CATEGORY_USE_CASE = 'DeleteCategoryUseCase',
   UPDATE_CATEGORY_USE_CASE = 'UpdateCategoryUseCase',
-  CREATE_TRANSACTION_USE_CASE = 'CreateTransactionUseCase',
+  TRANSACTION_IMPORT_PRODUCER_USE_CASE = 'TransactionImportProducerUseCase',
+  TRANSACTION_IMPORT_CONSUMER_USE_CASE = 'TransactionImportConsumerUseCase',
   GET_TRANSACTIONS_BY_DATE_USE_CASE = 'GetTransactionsByDateUseCase',
   UPDATE_TRANSACTION_USE_CASE = 'UpdateTransactionUseCase',
   DASHBOARD_USE_CASE = 'DashboardUseCase',
@@ -24,6 +25,7 @@ export enum Injections {
   CREATE_USER_USE_CASE = 'CreateUserUseCase',
   GET_ME_USE_CASE = 'GetMeUseCase',
   VALIDATE_TOKEN_USE_CASE = 'ValidateTokenUseCase',
+  MESSAGE_QUEUE_PORT = 'MessageQueuePort',
   USER_CONTROLLER = 'UserController',
   AUTH_CONTROLLER = 'AuthController',
 }
