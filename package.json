@@ -78,6 +78,7 @@
     "ofx-js": "^0.2.0",
     "pg": "^8.16.3",
     "prisma": "6.19",
+    "rabbitmq-client": "^5.0.8",
     "reflect-metadata": "^0.2.2",
     "resend": "^4.3.0",
     "routing-controllers": "^0.11.2",
