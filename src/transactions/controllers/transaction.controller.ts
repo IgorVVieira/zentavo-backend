@@ -15,8 +15,8 @@ import { inject, injectable } from 'tsyringe';
 import { Injections } from '@shared/types/injections';
 
 import { TransactionDto, UpdateTransactionDto } from '@transactions/dtos';
-import { CreateTransactionUseCase } from '@transactions/use-cases/create-transaction/create-transaction.use-case';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
+import { TransactionImportProducerUseCase } from '@transactions/use-cases/transaction-import-producer/transaction-import-producer.use-case';
 import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transaction/update-transaction.use-case';
 
 @injectable()
@@ -24,8 +24,8 @@ import { UpdateTransactionUseCase } from '@transactions/use-cases/update-transac
 @JsonController('/transactions')
 export class TransactionController {
   constructor(
-    @inject(Injections.CREATE_TRANSACTION_USE_CASE)
-    private readonly createTransactionUseCase: CreateTransactionUseCase,
+    @inject(Injections.TRANSACTION_IMPORT_PRODUCER_USE_CASE)
+    private readonly transactionImportProducerUseCase: TransactionImportProducerUseCase,
     @inject(Injections.GET_TRANSACTIONS_BY_DATE_USE_CASE)
     private readonly getTransactionsByDateUseCase: GetTransactionsByDateUseCase,
     @inject(Injections.UPDATE_TRANSACTION_USE_CASE)
@@ -74,7 +74,7 @@ export class TransactionController {
       return { message: 'No file uploaded' };
     }
 
-    await this.createTransactionUseCase.execute({
+    await this.transactionImportProducerUseCase.execute({
       userId,
       file,
     });

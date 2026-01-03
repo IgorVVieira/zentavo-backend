@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsObject, IsUUID } from 'class-validator';
 
-export class CreateTransactionDto {
+export class ImportTransactionDto {
   @IsUUID()
   @IsNotEmpty()
   userId: string;

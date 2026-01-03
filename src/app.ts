@@ -1,8 +1,8 @@
-import 'reflect-metadata';
-import 'module-alias/register';
+import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import 'dotenv/config';
 import 'express-async-errors';
-import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
+import 'module-alias/register';
+import 'reflect-metadata';
 import {
   createExpressServer,
   getMetadataArgsStorage,
@@ -16,9 +16,10 @@ import { HttpStatus } from '@shared/http-status.enum';
 import { authMiddleware } from '@shared/middlewares/auth';
 import { errorHandler } from '@shared/middlewares/error-handler';
 
-import '@users/infra/container';
 import '@transactions/infra/container';
+import '@users/infra/container';
 import { TsyringeAdapter } from './tsyringe-adapter';
+import { startConsumers } from './workers';
 
 useContainer(TsyringeAdapter);
 
@@ -99,5 +100,11 @@ try {
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
+
+startConsumers()
+  .then(() => {
+    console.log('Consumers started');
+  })
+  .catch(console.error);
 
 export { app };

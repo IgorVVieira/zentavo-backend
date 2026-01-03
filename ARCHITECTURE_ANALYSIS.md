@@ -302,8 +302,8 @@ Todas as entidades suportam soft delete através do campo `deletedAt`:
 @JsonController('/transactions')
 export class TransactionController {
   constructor(
-    @inject(Injections.CREATE_TRANSACTION_USE_CASE)
-    private readonly createTransactionUseCase: CreateTransactionUseCase,
+    @inject(Injections.TRANSACTION_IMPORT_PRODUCER_USE_CASE)
+    private readonly transactionImportProducerUseCase: TransactionImportProducerUseCase,
   ) {}
 
   @Post('/import')
@@ -312,7 +312,7 @@ export class TransactionController {
     @CurrentUser() userId: string,  // Extraído do JWT
     @UploadedFile('statement') file: Express.Multer.File,
   ): Promise<{ message: string }> {
-    await this.createTransactionUseCase.execute({ userId, file });
+    await this.transactionImportProducerUseCase.execute({ userId, file });
     return { message: 'File imported successfully' };
   }
 
@@ -707,11 +707,11 @@ return user ? new User({
 
 ### 5.5 ⚠️ Validações Faltando em Use Cases
 
-**Problema:** `CreateTransactionUseCase` não valida se usuário existe
+**Problema:** `TransactionImportProducerUseCase` não valida se usuário existe
 
 ```typescript
 // ❌ Assume que userId sempre é válido
-async execute({ userId, file }: CreateTransactionDto) {
+async execute({ userId, file }: ImportTransactionDto) {
   // Não verifica se user existe
   const transactions = await this.parser.parse(file);
   // ...
@@ -844,7 +844,7 @@ Exemplo: Importação de OFX cria múltiplas transações, mas se uma falhar, as
 **Solução Recomendada:**
 ```typescript
 // ✅ Usar Prisma transactions
-async execute({ userId, file }: CreateTransactionDto) {
+async execute({ userId, file }: ImportTransactionDto) {
   const statements = await this.parser.parse(file);
   
   return await this.prisma.$transaction(async (tx) => {
