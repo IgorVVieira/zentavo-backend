@@ -15,6 +15,7 @@ export class CreateCategoryDto {
   color: string;
 
   @IsEnum(TransactionType)
-  @IsNotEmpty()
+  // @IsNotEmpty()
+  @IsOptional()
   type: TransactionType | null;
 }
