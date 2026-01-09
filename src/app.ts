@@ -3,6 +3,7 @@ import 'dotenv/config';
 import 'express-async-errors';
 import 'module-alias/register';
 import 'reflect-metadata';
+import PinoHttp from 'pino-http';
 import {
   createExpressServer,
   getMetadataArgsStorage,
@@ -15,6 +16,7 @@ import swaggerUi from 'swagger-ui-express';
 import { HttpStatus } from '@shared/http-status.enum';
 import { authMiddleware } from '@shared/middlewares/auth';
 import { errorHandler } from '@shared/middlewares/error-handler';
+import { Logger } from '@shared/utils/logger';
 
 import '@transactions/infra/container';
 import '@users/infra/container';
@@ -70,6 +72,7 @@ const routeOptions: RoutingControllersOptions = {
 const app = createExpressServer(routeOptions);
 
 app.use(errorHandler);
+app.use(PinoHttp);
 
 try {
   const storage = getMetadataArgsStorage();
@@ -94,16 +97,16 @@ try {
 
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
 } catch (error) {
-  console.error('Error generating Swagger documentation:', error);
+  Logger.error('Error generating Swagger documentation:', error);
 }
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  Logger.info(`Server is running on port: ${process.env.PORT}`);
 });
 
 startConsumers()
   .then(() => {
-    console.log('Consumers started');
+    Logger.info('Consumers started');
   })
   .catch(console.error);
 

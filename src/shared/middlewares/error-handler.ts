@@ -2,6 +2,7 @@
 
 import { CustomApplicationError } from '@shared/errors/custom-application.error';
 import { InternalServerError } from '@shared/errors/internal-server-error.error';
+import { Logger } from '@shared/utils/logger';
 
 import { NextFunction, Request, Response } from 'express';
 
@@ -14,7 +15,6 @@ const normalizeError = (error: Error): CustomApplicationError => {
 };
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
-  console.log('Error handler:', err);
   if (res.headersSent) {
     return next(err);
   }
@@ -22,12 +22,13 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   const { statusCode } = error;
   // const body = error.getBody();
 
-  // TODO: Log data-log
-  console.log({
+  const errorString = JSON.stringify({
     statusCode,
     message: error.message,
     stack: error?.stack,
   });
+
+  Logger.error(errorString);
 
   res.status(statusCode).json({
     statusCode,
