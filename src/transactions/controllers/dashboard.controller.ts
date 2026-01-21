@@ -1,103 +1,86 @@
-import { Authorized, CurrentUser, Get, JsonController, Param, Params } from 'routing-controllers';
-import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { inject, injectable } from 'tsyringe';
 
+import { HttpStatus } from '@shared/http-status.enum';
 import { Injections } from '@shared/types/injections';
 
-import { ListByCategoryQueryDto } from '@transactions/dtos';
-import {
-  TransactionsByCategoryDto,
-  TransactionsByMethodDto,
-  TransactionsLastSixMonthsDto,
-} from '@transactions/dtos/dashboard.dto';
+import { TransactionType } from '@transactions/domain/entities/transaction.entity';
 import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.use-case';
+import { Request, Response } from 'express';
 
 @injectable()
-@Authorized()
-@JsonController('/transactions/dashboard')
 export class DashboardController {
   constructor(
     @inject(Injections.DASHBOARD_USE_CASE) private readonly dashboardUseCase: DashboardUseCase,
   ) {}
 
-  @Get('/payment-methods/:month/:year')
-  @Authorized()
-  @OpenAPI({
-    summary: 'List transactions by payment method',
-    description: 'List transactions by payment method for the user',
-    security: [{ bearerAuth: [] }],
-    responses: {
-      '200': {
-        description: 'List of transactions by payment method',
-      },
-      '400': {
-        description: 'Bad request - Invalid data',
-      },
-    },
-  })
-  @ResponseSchema(TransactionsByMethodDto, { isArray: true })
-  async listByPaymentMethod(
-    @Param('month') month: string,
-    @Param('year') year: string,
-    @CurrentUser() userId: string,
-  ): Promise<TransactionsByMethodDto[]> {
-    return this.dashboardUseCase.listByPaymentMethod({
-      month: Number(month),
-      year: Number(year),
-      userId,
+  // @OpenAPI({
+  //   summary: 'List transactions by payment method',
+  //   description: 'List transactions by payment method for the user',
+  //   security: [{ bearerAuth: [] }],
+  //   responses: {
+  //     '200': {
+  //       description: 'List of transactions by payment method',
+  //     },
+  //     '400': {
+  //       description: 'Bad request - Invalid data',
+  //     },
+  //   },
+  // })
+  // @ResponseSchema(TransactionsByMethodDto, { isArray: true })
+  async listByPaymentMethod(request: Request, response: Response): Promise<Response> {
+    const transactions = await this.dashboardUseCase.listByPaymentMethod({
+      month: +request.params.month,
+      year: +request.params.year,
+      userId: request.userId,
     });
+
+    return response.status(HttpStatus.OK).json(transactions);
   }
 
-  @Get('/categories/:month/:year/:transactionType')
-  @Authorized()
-  @OpenAPI({
-    summary: 'List transactions by category',
-    description: 'List transactions by category for the user',
-    security: [{ bearerAuth: [] }],
-    responses: {
-      '200': {
-        description: 'List of transactions by category',
-      },
-      '400': {
-        description: 'Bad request - Invalid data',
-      },
-    },
-  })
-  @ResponseSchema(TransactionsByCategoryDto, { isArray: true })
-  async listByCategory(
-    @Params() params: ListByCategoryQueryDto,
+  // @OpenAPI({
+  //   summary: 'List transactions by category',
+  //   description: 'List transactions by category for the user',
+  //   security: [{ bearerAuth: [] }],
+  //   responses: {
+  //     '200': {
+  //       description: 'List of transactions by category',
+  //     },
+  //     '400': {
+  //       description: 'Bad request - Invalid data',
+  //     },
+  //   },
+  // })
+  // @ResponseSchema(TransactionsByCategoryDto, { isArray: true })
+  async listByCategory(request: Request, response: Response): Promise<Response> {
+    const { month, year, transactionType } = request.params;
 
-    @CurrentUser() userId: string,
-  ): Promise<TransactionsByCategoryDto[]> {
-    const { month, year, transactionType } = params;
-
-    return this.dashboardUseCase.listByCategory({
+    const categories = await this.dashboardUseCase.listByCategory({
       month: +month,
       year: +year,
-      transactionType,
-      userId,
+      transactionType: transactionType as TransactionType,
+      userId: request.userId,
     });
+
+    return response.status(HttpStatus.OK).json(categories);
   }
 
-  @Get('/last-six-months')
-  @Authorized()
-  @OpenAPI({
-    summary: 'List transactions for the last six months',
-    description: 'List transactions for the last six months for the user',
-    security: [{ bearerAuth: [] }],
-    responses: {
-      '200': {
-        description: 'List of transactions for the last six months',
-      },
-      '400': {
-        description: 'Bad request - Invalid data',
-      },
-    },
-  })
-  @ResponseSchema(TransactionsLastSixMonthsDto, { isArray: true })
-  async listByLastSixMonths(
-    @CurrentUser() userId: string,
-  ): Promise<TransactionsLastSixMonthsDto[]> {
-    return this.dashboardUseCase.listByLastSixMonths(userId);
+  // @OpenAPI({
+  //   summary: 'List transactions for the last six months',
+  //   description: 'List transactions for the last six months for the user',
+  //   security: [{ bearerAuth: [] }],
+  //   responses: {
+  //     '200': {
+  //       description: 'List of transactions for the last six months',
+  //     },
+  //     '400': {
+  //       description: 'Bad request - Invalid data',
+  //     },
+  //   },
+  // })
+  // @ResponseSchema(TransactionsLastSixMonthsDto, { isArray: true })
+  async listByLastSixMonths(request: Request, response: Response): Promise<Response> {
+    const data = await this.dashboardUseCase.listByLastSixMonths(request.userId);
+
+    return response.status(HttpStatus.OK).json(data);
   }
 }
