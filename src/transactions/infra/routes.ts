@@ -21,10 +21,8 @@ transactionRouter.post(
   multer().single('statement'),
   (req, res) => transactionController.importOfx(req, res),
 );
-transactionRouter.put(
-  '/transactions/:id',
-  (req, res) => transactionController.update(req, res),
-  authMiddleware,
+transactionRouter.put('/transactions/:id', authMiddleware, (req, res) =>
+  transactionController.update(req, res),
 );
 transactionRouter.get('/transactions/:month/:year', authMiddleware, (req, res) =>
   transactionController.getTransactionsByDate(req, res),
@@ -34,7 +32,7 @@ transactionRouter.post('/categories', authMiddleware, (req, res) =>
   categoryController.create(req, res),
 );
 transactionRouter.put('/categories/:id', authMiddleware, (req, res) =>
-  categoryController.create(req, res),
+  categoryController.update(req, res),
 );
 transactionRouter.get('/categories', authMiddleware, (req, res) =>
   categoryController.list(req, res),
@@ -45,13 +43,13 @@ transactionRouter.delete('/categories/:id', authMiddleware, (req, res) =>
 
 transactionRouter.post(
   '/transactions/dashboard/payment-methods/:month/:year',
-  (req, res) => dashboardController.listByPaymentMethod(req, res),
   authMiddleware,
+  (req, res) => dashboardController.listByPaymentMethod(req, res),
 );
 transactionRouter.put(
   '/transactions/dashboard/categories/:month/:year/:transactionType',
-  (req, res) => dashboardController.listByCategory(req, res),
   authMiddleware,
+  (req, res) => dashboardController.listByCategory(req, res),
 );
 transactionRouter.get('/transactions/dashboard/last-six-months', authMiddleware, (req, res) =>
   dashboardController.listByLastSixMonths(req, res),
