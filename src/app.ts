@@ -1,9 +1,9 @@
-import cors from 'cors';
 import 'dotenv/config';
 import 'express-async-errors';
 import 'module-alias/register';
 import 'reflect-metadata';
 
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';

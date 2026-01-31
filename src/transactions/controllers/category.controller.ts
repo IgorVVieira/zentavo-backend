@@ -23,20 +23,6 @@ export class CategoryController {
     private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
   ) {}
 
-  // @OpenAPI({
-  //   summary: 'Create a new category',
-  //   description: 'Create a new category for the user',
-  //   security: [{ bearerAuth: [] }],
-  //   responses: {
-  //     '201': {
-  //       description: 'Category created successfully',
-  //     },
-  //     '400': {
-  //       description: 'Bad request - Invalid data',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(CategoryDto)
   async create(request: Request, response: Response): Promise<Response> {
     const category = await this.createCategoryUseCase.execute({
       ...request.body,
@@ -46,24 +32,6 @@ export class CategoryController {
     return response.status(HttpStatus.CREATED).json(category);
   }
 
-  // @Authorized()
-  // @OpenAPI({
-  //   summary: 'Update a category',
-  //   description: 'Update a category by ID',
-  //   security: [{ bearerAuth: [] }],
-  //   responses: {
-  //     '200': {
-  //       description: 'Category updated successfully',
-  //     },
-  //     '400': {
-  //       description: 'Bad request - Invalid data',
-  //     },
-  //     '404': {
-  //       description: 'Category not found',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(CategoryDto)
   async update(request: Request, response: Response): Promise<Response> {
     const category = await this.updateCategoryUseCase.execute({
       ...request.body,
@@ -74,37 +42,12 @@ export class CategoryController {
     return response.status(HttpStatus.OK).json(category);
   }
 
-  // @OpenAPI({
-  //   summary: 'List categories',
-  //   description: 'List all categories for the user',
-  //   security: [{ bearerAuth: [] }],
-  //   responses: {
-  //     '200': {
-  //       description: 'Categories retrieved successfully',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(CategoryDto, { isArray: true })
   async list(request: Request, response: Response): Promise<Response> {
     const categories = await this.listCategoriesUseCase.execute(request.userId);
 
     return response.status(HttpStatus.OK).json(categories);
   }
 
-  // @OpenAPI({
-  //   summary: 'Delete a category',
-  //   description: 'Delete a category by ID',
-  //   security: [{ bearerAuth: [] }],
-  //   responses: {
-  //     '204': {
-  //       description: 'Category deleted successfully',
-  //     },
-  //     '404': {
-  //       description: 'Category not found',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema('', { statusCode: 204 })
   async delete(request: Request, response: Response): Promise<Response> {
     await this.deleteCategoryUseCase.execute(request.params.id);
 

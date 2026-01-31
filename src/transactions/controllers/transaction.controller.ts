@@ -19,35 +19,6 @@ export class TransactionController {
     private readonly updateTransactionUseCase: UpdateTransactionUseCase,
   ) {}
 
-  // @OpenAPI({
-  //   summary: 'Import transactions from a file',
-  //   description: 'Import transactions from a OFX file',
-  //   security: [{ bearerAuth: [] }],
-  //   requestBody: {
-  //     content: {
-  //       'multipart/form-data': {
-  //         schema: {
-  //           type: 'object',
-  //           properties: {
-  //             statement: {
-  //               type: 'string',
-  //               format: 'binary',
-  //             },
-  //           },
-  //           required: ['statement'],
-  //         },
-  //       },
-  //     },
-  //   },
-  //   responses: {
-  //     '200': {
-  //       description: 'Transactions imported successfully',
-  //     },
-  //     '400': {
-  //       description: 'Bad request - Invalid file',
-  //     },
-  //   },
-  // })
   async importOfx(request: Request, response: Response): Promise<Response> {
     const { userId, file } = request;
 
@@ -63,17 +34,6 @@ export class TransactionController {
     return response.status(HttpStatus.OK).json({ message: 'File imported successfully' });
   }
 
-  // @OpenAPI({
-  //   summary: 'Get transactions by date',
-  //   description: 'Get tranåsactions filtered by month and year',
-  //   security: [{ bearerAuth: [] }],
-  //   responses: {
-  //     '200': {
-  //       description: 'Transactions retrieved successfully',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(TransactionDto, { isArray: true })
   async getTransactionsByDate(request: Request, response: Response): Promise<Response> {
     const { month, year } = request.params;
     const { userId } = request;
@@ -87,22 +47,6 @@ export class TransactionController {
     return response.status(HttpStatus.OK).json(transactions);
   }
 
-  // @OpenAPI({
-  //   summary: 'Update a transaction',
-  //   description: 'Update a transaction by ID',
-  //   responses: {
-  //     '200': {
-  //       description: 'Transaction updated successfully',
-  //     },
-  //     '400': {
-  //       description: 'Bad request - Invalid data',
-  //     },
-  //     '404': {
-  //       description: 'Transaction not found',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(TransactionDto)
   async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { userId } = request;

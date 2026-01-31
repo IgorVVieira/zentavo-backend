@@ -17,19 +17,6 @@ export class AuthController {
     private readonly sendRecoveryPasswordTokenUseCase: SendRecoveryPasswordTokenUseCase,
   ) {}
 
-  // @OpenAPI({
-  //   summary: 'Login user',
-  //   description: 'Login user with email and password',
-  //   responses: {
-  //     '200': {
-  //       description: 'User logged in successfully',
-  //     },
-  //     '401': {
-  //       description: 'Unauthorized - Invalid credentials',
-  //     },
-  //   },
-  // })
-  // @ResponseSchema(AuthUserResponseDto)
   async login(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
@@ -38,21 +25,6 @@ export class AuthController {
     return response.status(HttpStatus.OK).json(user);
   }
 
-  // @OpenAPI({
-  //   summary: 'Send recovery password token',
-  //   description: 'Sends a recovery password token to the user email address',
-  //   responses: {
-  //     '200': {
-  //       description: 'Recovery password token sent successfully',
-  //     },
-  //     '400': {
-  //       description: 'Bad request - Invalid input data',
-  //     },
-  //     '404': {
-  //       description: 'Not found - User not found',
-  //     },
-  //   },
-  // })
   async sendRecoveryPasswordToken(request: Request, response: Response): Promise<Response> {
     await this.sendRecoveryPasswordTokenUseCase.execute(request.body);
 
