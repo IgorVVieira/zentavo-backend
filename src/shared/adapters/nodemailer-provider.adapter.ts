@@ -17,18 +17,13 @@ export class NodemailerEmailProvider implements IEmailProviderPort {
   }
 
   async sendEmail(sendEmailData: SendEmailDto): Promise<void> {
-    try {
-      const { to, subject, body } = sendEmailData;
+    const { to, subject, body } = sendEmailData;
 
-      await this.transporter.sendMail({
-        from: process.env.SENDER_EMAIL,
-        to,
-        subject,
-        html: body,
-      });
-    } catch (error) {
-      console.error('Error sending email:', error);
-      throw new Error('Failed to send email');
-    }
+    await this.transporter.sendMail({
+      from: process.env.SENDER_EMAIL,
+      to,
+      subject,
+      html: body,
+    });
   }
 }

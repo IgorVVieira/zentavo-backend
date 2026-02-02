@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IMessageConsumerUseCase } from '@shared/domain/use-cases/message-consumer.use-case';
 import { IMessageQueuePort } from '@shared/gateways/message-queue.port';
 import { Injections } from '@shared/types/injections';
+import { Logger } from '@shared/utils/logger';
 
 import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
@@ -59,9 +60,9 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       if (batch.length) {
         await this.transactionRepository.createMany(batch);
       }
-      console.log('Message processed successfully');
+      Logger.info('Message processed successfully');
     } catch (error) {
-      console.error('Erro ao processar ofx da fila:', error);
+      Logger.error('Erro ao processar ofx da fila:', error);
     }
   }
 }

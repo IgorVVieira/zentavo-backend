@@ -4,10 +4,12 @@ import 'module-alias/register';
 import 'reflect-metadata';
 
 import cors from 'cors';
+import PinoHttp from 'pino-http';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';
 import { errorHandler } from '@shared/middlewares/error-handler';
+import { Logger } from '@shared/utils/logger';
 
 import '@transactions/infra/container';
 import '@users/infra/container';
@@ -28,18 +30,18 @@ app.use(
 );
 app.use('/api', userRouter);
 app.use('/api', transactionRouter);
-
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorHandler);
+app.use(PinoHttp);
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  Logger.info(`Server is running on port: ${process.env.PORT}`);
 });
 
 startConsumers()
   .then(() => {
-    console.log('Consumers started');
+    Logger.info('Consumers started');
   })
   .catch(console.error);
 
