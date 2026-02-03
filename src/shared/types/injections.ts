@@ -28,4 +28,8 @@ export enum Injections {
   MESSAGE_QUEUE_PORT = 'MessageQueuePort',
   USER_CONTROLLER = 'UserController',
   AUTH_CONTROLLER = 'AuthController',
+
+  // Payments
+  PRODUCT_REPOSITORY = 'ProductRepository',
+  SUBSCRIPTION_REPOSITORY = 'SubscriptionRepository',
 }

@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import { RabbitMQQueueAdapter } from '@shared/adapters/rabbitmq-queue.adapter';
 import { Injections } from '@shared/types/injections';
 
-import { OfxStatementParserGateway } from '@transactions/adapters/gateways/ofx-statement-parser.gateway';
+import { OfxStatementParserGateway } from '@transactions/adapters/ofx-statement-parser.gateway';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
 import { TransactionRepositoryAdapter } from '@transactions/adapters/repositories/transaction.repository.adapter';
 import { CategoryController } from '@transactions/controllers/category.controller';
@@ -11,7 +11,7 @@ import { DashboardController } from '@transactions/controllers/dashboard.control
 import { TransactionController } from '@transactions/controllers/transaction.controller';
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
-import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
+import { IOfxStatementParser } from '@transactions/ports/ofx-statement-parser.interface';
 import { CreateCategoryUseCase } from '@transactions/use-cases/create-category/create-category.use-case';
 import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.use-case';
 import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';

@@ -12,6 +12,7 @@
       "@transactions/*": ["transactions/*"],
       "@shared/*": ["shared/*"],
       "@types/*": ["types/*"],
+      "@payments/*": ["payments/*"],
     },
     "outDir": "./dist" /* Specify an output folder for all emitted files. */,
     "resolveJsonModule": true /* Enable importing .json files. */,

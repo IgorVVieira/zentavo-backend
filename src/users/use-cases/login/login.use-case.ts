@@ -7,8 +7,8 @@ import { Injections } from '@shared/types/injections';
 
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { AuthUserResponseDto, LoginDto } from '@users/dtos';
-import { IEncryptPort } from '@users/gateways/encypt.port';
-import { IJwtPort } from '@users/gateways/jwt.port';
+import { IEncryptPort } from '@users/ports/encypt.port';
+import { IJwtPort } from '@users/ports/jwt.port';
 
 @injectable()
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {

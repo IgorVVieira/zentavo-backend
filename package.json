@@ -63,6 +63,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "6.19",
     "@prisma/client": "6.19",
+    "abacatepay-nodejs-sdk": "^1.6.0",
     "amqplib": "^0.10.9",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
@@ -90,6 +91,7 @@
     "@users": "dist/users",
     "@transactions": "dist/transactions",
     "@shared": "dist/shared",
-    "@types": "dist/types"
+    "@types": "dist/types",
+    "@payments": "dist/payments"
   }
 }
