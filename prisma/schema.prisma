@@ -21,6 +21,7 @@ model User {
   name               String
   password           String
   status             String              @default("PENDING_VERIFICATION")
+  externalCustomerId String?             @map("external_customerId") @db.Uuid
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   deletedAt          DateTime?           @map("deleted_at")
@@ -107,6 +108,7 @@ model Subscription {
   startAt   DateTime  @map("start_at")
   endAt     DateTime  @map("end_at")
   price     Float     @map("price")
+  status    String    @default("PENDING_PAYMENT") @map("status")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime? @map("deleted_at")

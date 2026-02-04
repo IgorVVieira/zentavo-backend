@@ -27,9 +27,9 @@ export class UserRepositoryAdapter extends BaseRepository<User> implements IUser
       return null;
     }
 
-    return new User({
+    return {
       ...user,
       status: user.status as UserStatus,
-    });
+    };
   }
 }

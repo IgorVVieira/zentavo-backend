@@ -40,6 +40,7 @@ export type SubscriptionMinAggregateOutputType = {
   startAt: Date | null
   endAt: Date | null
   price: number | null
+  status: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -52,6 +53,7 @@ export type SubscriptionMaxAggregateOutputType = {
   startAt: Date | null
   endAt: Date | null
   price: number | null
+  status: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -64,6 +66,7 @@ export type SubscriptionCountAggregateOutputType = {
   startAt: number
   endAt: number
   price: number
+  status: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -86,6 +89,7 @@ export type SubscriptionMinAggregateInputType = {
   startAt?: true
   endAt?: true
   price?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -98,6 +102,7 @@ export type SubscriptionMaxAggregateInputType = {
   startAt?: true
   endAt?: true
   price?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -110,6 +115,7 @@ export type SubscriptionCountAggregateInputType = {
   startAt?: true
   endAt?: true
   price?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -209,6 +215,7 @@ export type SubscriptionGroupByOutputType = {
   startAt: Date
   endAt: Date
   price: number
+  status: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -244,6 +251,7 @@ export type SubscriptionWhereInput = {
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
+  status?: Prisma.StringFilter<"Subscription"> | string
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
@@ -258,6 +266,7 @@ export type SubscriptionOrderByWithRelationInput = {
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -275,6 +284,7 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
+  status?: Prisma.StringFilter<"Subscription"> | string
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
@@ -289,6 +299,7 @@ export type SubscriptionOrderByWithAggregationInput = {
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -309,6 +320,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   startAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   price?: Prisma.FloatWithAggregatesFilter<"Subscription"> | number
+  status?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
@@ -319,6 +331,7 @@ export type SubscriptionCreateInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -333,6 +346,7 @@ export type SubscriptionUncheckedCreateInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -343,6 +357,7 @@ export type SubscriptionUpdateInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -357,6 +372,7 @@ export type SubscriptionUncheckedUpdateInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -369,6 +385,7 @@ export type SubscriptionCreateManyInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -379,6 +396,7 @@ export type SubscriptionUpdateManyMutationInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -391,6 +409,7 @@ export type SubscriptionUncheckedUpdateManyInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -413,6 +432,7 @@ export type SubscriptionCountOrderByAggregateInput = {
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -429,6 +449,7 @@ export type SubscriptionMaxOrderByAggregateInput = {
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -441,6 +462,7 @@ export type SubscriptionMinOrderByAggregateInput = {
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -539,6 +561,7 @@ export type SubscriptionCreateWithoutUserInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -551,6 +574,7 @@ export type SubscriptionUncheckedCreateWithoutUserInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -592,6 +616,7 @@ export type SubscriptionScalarWhereInput = {
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
+  status?: Prisma.StringFilter<"Subscription"> | string
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
@@ -602,6 +627,7 @@ export type SubscriptionCreateWithoutProductInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -614,6 +640,7 @@ export type SubscriptionUncheckedCreateWithoutProductInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -651,6 +678,7 @@ export type SubscriptionCreateManyUserInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -661,6 +689,7 @@ export type SubscriptionUpdateWithoutUserInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -673,6 +702,7 @@ export type SubscriptionUncheckedUpdateWithoutUserInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -684,6 +714,7 @@ export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -695,6 +726,7 @@ export type SubscriptionCreateManyProductInput = {
   startAt: Date | string
   endAt: Date | string
   price: number
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -705,6 +737,7 @@ export type SubscriptionUpdateWithoutProductInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -717,6 +750,7 @@ export type SubscriptionUncheckedUpdateWithoutProductInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -728,6 +762,7 @@ export type SubscriptionUncheckedUpdateManyWithoutProductInput = {
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -742,6 +777,7 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   startAt?: boolean
   endAt?: boolean
   price?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -756,6 +792,7 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   startAt?: boolean
   endAt?: boolean
   price?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -770,6 +807,7 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   startAt?: boolean
   endAt?: boolean
   price?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -784,12 +822,13 @@ export type SubscriptionSelectScalar = {
   startAt?: boolean
   endAt?: boolean
   price?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "startAt" | "endAt" | "price" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "startAt" | "endAt" | "price" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -816,6 +855,7 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     startAt: Date
     endAt: Date
     price: number
+    status: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1250,6 +1290,7 @@ export interface SubscriptionFieldRefs {
   readonly startAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly endAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly price: Prisma.FieldRef<"Subscription", 'Float'>
+  readonly status: Prisma.FieldRef<"Subscription", 'String'>
   readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Subscription", 'DateTime'>

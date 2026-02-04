@@ -903,6 +903,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   password: 'password',
   status: 'status',
+  externalCustomerId: 'externalCustomerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -981,6 +982,7 @@ export const SubscriptionScalarFieldEnum = {
   startAt: 'startAt',
   endAt: 'endAt',
   price: 'price',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
