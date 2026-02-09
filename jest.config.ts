@@ -13,6 +13,7 @@ const config = {
     '^@users/(.*)$': '<rootDir>/src/users/$1',
     '^@transactions/(.*)$': '<rootDir>/src/transactions/$1',
     '^@shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^@payments/(.*)$': '<rootDir>/src/payments/$1',
   },
 };
 

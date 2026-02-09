@@ -11,7 +11,7 @@ import {
   OfxStatementType,
   Statement,
 } from '@transactions/domain/types/statement.type';
-import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
+import { IOfxStatementParser } from '@transactions/ports/ofx-statement-parser.interface';
 import { parse as parseOFX } from 'ofx-js';
 
 @injectable()

@@ -5,10 +5,11 @@ import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { UnauthorizedError } from '@shared/errors/unauthorized.error';
 import { Injections } from '@shared/types/injections';
 
+import { User } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { AuthUserResponseDto, LoginDto } from '@users/dtos';
-import { IEncryptPort } from '@users/gateways/encypt.port';
-import { IJwtPort } from '@users/gateways/jwt.port';
+import { IEncryptPort } from '@users/ports/encypt.port';
+import { IJwtPort } from '@users/ports/jwt.port';
 
 @injectable()
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {
@@ -35,7 +36,7 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
       throw new UnauthorizedError('Invalid password');
     }
 
-    if (!user.isActive?.()) {
+    if (!User.isActive(user)) {
       throw new UnauthorizedError('User is not active');
     }
 
