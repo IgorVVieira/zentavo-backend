@@ -20,7 +20,7 @@ import {
 import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
-export class TransactionRepositoryAdapter
+export default class TransactionRepositoryAdapter
   extends BaseRepository<TransactionEntity>
   implements ITransactionRepositoryPort
 {
@@ -54,6 +54,27 @@ export class TransactionRepositoryAdapter
       type: transaction.type as TransactionType,
       method: transaction.method as TransactionMethod,
     };
+  }
+
+  async findByExternalIdListAndUserId(
+    externalIds: string[],
+    userId: string,
+  ): Promise<TransactionEntity[]> {
+    const transactions = await this.prisma.transaction.findMany({
+      where: {
+        externalId: {
+          in: externalIds,
+        },
+        userId,
+        deletedAt: null,
+      },
+    });
+
+    return transactions.map(transaction => ({
+      ...transaction,
+      type: transaction.type as TransactionType,
+      method: transaction.method as TransactionMethod,
+    }));
   }
 
   async findByDate(params: FindByDateParams): Promise<TransactionEntity[]> {

@@ -19,6 +19,10 @@ export type FindByDateParams = {
 
 export interface ITransactionRepositoryPort extends IBaseRepository<TransactionEntity> {
   findByExternalIdAndUserId(externalId: string, userId: string): Promise<TransactionEntity | null>;
+  findByExternalIdListAndUserId(
+    externalIds: string[],
+    userId: string,
+  ): Promise<TransactionEntity[]>;
   findByDate(params: FindByDateParams): Promise<TransactionEntity[]>;
   listByPaymentMethod(params: FindByDateParams): Promise<TransactionsByMethod[]>;
   listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]>;

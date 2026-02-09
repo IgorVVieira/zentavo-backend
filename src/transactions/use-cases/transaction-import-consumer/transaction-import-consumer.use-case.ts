@@ -5,7 +5,6 @@ import { IMessageQueuePort } from '@shared/gateways/message-queue.port';
 import { Injections } from '@shared/types/injections';
 import { Logger } from '@shared/utils/logger';
 
-import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ImportTransactionDto } from '@transactions/dtos';
 import { IOfxStatementParser } from '@transactions/ports/ofx-statement-parser.interface';
@@ -32,7 +31,7 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       const { userId, file } = data;
       const serialized = file.buffer as unknown as { data: number[] };
       const buffer = Buffer.from(serialized.data);
-      const content = buffer.toString('utf8') || buffer.toString('latin1');
+      const content = buffer.toString('utf8');
       const transactions = await this.ofxStatementParser.parse(content ?? '');
 
       const transactionsToCreate = transactions.map(transaction => ({
@@ -40,26 +39,28 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
         userId,
       }));
 
-      const batchSize = 10;
-      const batch: TransactionEntity[] = [];
+      const externalIds = transactionsToCreate.map(transaction => transaction.externalId);
+      const existingTransactions = await this.transactionRepository.findByExternalIdListAndUserId(
+        externalIds,
+        userId,
+      );
 
-      for (const transaction of transactionsToCreate) {
-        const transactionExists = await this.transactionRepository.findByExternalIdAndUserId(
-          transaction.externalId,
-          transaction.userId,
-        );
+      const existingExternalIds =
+        existingTransactions?.map(transaction => transaction.externalId) || [];
+      const newExternalIds = externalIds.filter(id => !existingExternalIds.includes(id));
 
-        if (!transactionExists) {
-          batch.push(transaction);
-        }
-        if (batch.length === batchSize) {
-          await this.transactionRepository.createMany(batch);
-          batch.length = 0;
-        }
+      const newTransactions = transactionsToCreate.filter(transaction =>
+        newExternalIds.includes(transaction.externalId),
+      );
+
+      Logger.debug(`New transactions count: ${newTransactions.length}`);
+      if (!newTransactions.length) {
+        Logger.info('No new transactions found to import');
+
+        return;
       }
-      if (batch.length) {
-        await this.transactionRepository.createMany(batch);
-      }
+
+      await this.transactionRepository.createMany(newTransactions);
       Logger.info('Message processed successfully');
     } catch (error) {
       Logger.error('Erro ao processar ofx da fila:', error);
