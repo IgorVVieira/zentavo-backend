@@ -13,7 +13,7 @@ export class User extends BaseEntity {
   status: UserStatus;
   externalCustomerId?: string | null;
 
-  isActive?(): boolean {
-    return this.status === UserStatus.ACTIVE;
+  static isActive(user: User): boolean {
+    return user.status === UserStatus.ACTIVE;
   }
 }

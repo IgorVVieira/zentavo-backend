@@ -4,7 +4,7 @@ import 'module-alias/register';
 import 'reflect-metadata';
 
 import cors from 'cors';
-import PinoHttp from 'pino-http';
+import { pinoHttp } from 'pino-http';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';
@@ -22,18 +22,18 @@ import { startConsumers } from './workers';
 
 const app = express();
 
+app.use(pinoHttp());
 app.use(express.json());
 app.use(
   cors({
     origin: '*',
   }),
 );
-app.use('/api', userRouter);
-app.use('/api', transactionRouter);
+
+app.use('/api', userRouter, transactionRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorHandler);
-app.use(PinoHttp);
 
 app.listen(process.env.PORT, () => {
   Logger.info(`Server is running on port: ${process.env.PORT}`);

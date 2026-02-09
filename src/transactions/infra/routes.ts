@@ -21,6 +21,12 @@ transactionRouter.post(
   multer().single('statement'),
   (req, res) => transactionController.importOfx(req, res),
 );
+
+// Dashboard routes with specific paths must come before parameterized routes
+transactionRouter.get('/transactions/dashboard/last-six-months', authMiddleware, (req, res) =>
+  dashboardController.listByLastSixMonths(req, res),
+);
+
 transactionRouter.put('/transactions/:id', authMiddleware, (req, res) =>
   transactionController.update(req, res),
 );
@@ -50,9 +56,6 @@ transactionRouter.put(
   '/transactions/dashboard/categories/:month/:year/:transactionType',
   authMiddleware,
   (req, res) => dashboardController.listByCategory(req, res),
-);
-transactionRouter.get('/transactions/dashboard/last-six-months', authMiddleware, (req, res) =>
-  dashboardController.listByLastSixMonths(req, res),
 );
 transactionRouter.delete('/transactions/dashboard/:id', authMiddleware, (req, res) =>
   categoryController.delete(req, res),
