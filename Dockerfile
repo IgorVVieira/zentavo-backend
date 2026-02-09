@@ -44,6 +44,9 @@ COPY --from=builder /app/prisma ./prisma
 # Copiar build do TypeScript
 COPY --from=builder /app/dist ./dist
 
+# Copiar swagger.json para a raiz do app
+COPY --from=builder /app/swagger.json ./swagger.json
+
 # Mudar ownership para usuário nodejs
 RUN chown -R nodejs:nodejs /app
 
