@@ -5,7 +5,7 @@ import { Injections } from '@shared/types/injections';
 
 import { OfxStatementParserGateway } from '@transactions/adapters/ofx-statement-parser.gateway';
 import { CategoryRepositoryAdapter } from '@transactions/adapters/repositories/category.repository.adapter';
-import TransactionRepositoryAdapter from '@transactions/adapters/repositories/transaction.repository.adapter';
+import { TransactionRepositoryAdapter } from '@transactions/adapters/repositories/transaction.repository.adapter';
 import { CategoryController } from '@transactions/controllers/category.controller';
 import { DashboardController } from '@transactions/controllers/dashboard.controller';
 import { TransactionController } from '@transactions/controllers/transaction.controller';

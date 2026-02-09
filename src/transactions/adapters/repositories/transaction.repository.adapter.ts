@@ -20,7 +20,7 @@ import {
 import { PrismaClientSingleton } from '../../../prisma-client';
 
 @injectable()
-export default class TransactionRepositoryAdapter
+export class TransactionRepositoryAdapter
   extends BaseRepository<TransactionEntity>
   implements ITransactionRepositoryPort
 {

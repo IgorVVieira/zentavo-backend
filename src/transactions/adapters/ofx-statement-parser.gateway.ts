@@ -29,7 +29,7 @@ export class OfxStatementParserGateway implements IOfxStatementParser {
       return ofxParsed.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN.filter(
         (statement: OfxStatement) => !this.skipedDescriptions.includes(statement.MEMO),
       ).map((statement: OfxStatement) => ({
-        externalId: statement.FITID,
+        externalId: statement.FITID?.split(':')[0],
         date: this.parseOfxDate(statement.DTPOSTED),
         description: statement.MEMO,
         amount: +Number(statement.TRNAMT).toFixed(2),
