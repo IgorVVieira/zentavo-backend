@@ -38,7 +38,6 @@
     "@types/pg": "^8.16.0",
     "@types/react": "^19.1.2",
     "@types/supertest": "^6.0.3",
-    "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^8.51.0",
     "@typescript-eslint/parser": "^8.51.0",
@@ -64,11 +63,11 @@
   "dependencies": {
     "@prisma/adapter-pg": "6.19",
     "@prisma/client": "6.19",
+    "abacatepay-nodejs-sdk": "^1.6.0",
     "amqplib": "^0.10.9",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-    "class-validator-jsonschema": "^5.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -84,8 +83,6 @@
     "prisma": "6.19",
     "reflect-metadata": "^0.2.2",
     "resend": "^4.3.0",
-    "routing-controllers": "^0.11.2",
-    "routing-controllers-openapi": "^5.0.0",
     "swagger-ui-express": "^5.0.1",
     "tsyringe": "^4.10.0"
   },
@@ -94,6 +91,7 @@
     "@users": "dist/users",
     "@transactions": "dist/transactions",
     "@shared": "dist/shared",
-    "@types": "dist/types"
+    "@types": "dist/types",
+    "@payments": "dist/payments"
   }
 }

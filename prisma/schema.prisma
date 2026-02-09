@@ -21,12 +21,14 @@ model User {
   name               String
   password           String
   status             String              @default("PENDING_VERIFICATION")
+  externalCustomerId String?             @map("external_customerId") @db.Uuid
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   deletedAt          DateTime?           @map("deleted_at")
   categories         Category[]
   transactions       Transaction[]
   verificationTokens VerificationToken[]
+  subscriptions      Subscription[]
 
   @@map("users")
 }
@@ -82,6 +84,39 @@ model VerificationToken {
   user User @relation(fields: [userId], references: [id])
 
   @@map("verification_tokens")
+}
+
+model Product {
+  id               String @id @default(uuid()) @db.Uuid
+  gatewayProductId String @map("gateway_product_id") @db.Uuid
+  name             String @map("name")
+  description      String @map("description")
+  price            Float  @map("price")
+  features         Json   @map("features")
+  durationInDays   Int    @map("duration_in_days")
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deletedAt     DateTime?      @map("deleted_at")
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  productId String    @map("product_id") @db.Uuid
+  startAt   DateTime  @map("start_at")
+  endAt     DateTime  @map("end_at")
+  price     Float     @map("price")
+  status    String    @default("PENDING_PAYMENT") @map("status")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? @map("deleted_at")
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("subscriptions")
 }
 
 // npx prisma migrate dev --name init

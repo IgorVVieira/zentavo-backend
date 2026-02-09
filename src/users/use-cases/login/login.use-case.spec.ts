@@ -1,6 +1,6 @@
 import { baseRepository, BaseRepositoryMock } from '@shared/test/mocks/base-repository';
 
-import { User, UserStatus } from '@users/domain/entities/user.entity';
+import { UserStatus } from '@users/domain/entities/user.entity';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
 
 describe('LoginUseCase', () => {
@@ -45,15 +45,13 @@ describe('LoginUseCase', () => {
     const { sut, userRepository, encypterMock, jwtMock } = makeSut();
 
     encypterMock.compare.mockResolvedValue(true);
-    userRepository.findByEmail.mockResolvedValue(
-      new User({
-        id: 'any_id',
-        email: 'any_email',
-        password: 'any_password',
-        name: 'any_name',
-        status: UserStatus.ACTIVE,
-      }),
-    );
+    userRepository.findByEmail.mockResolvedValue({
+      id: 'any_id',
+      email: 'any_email',
+      password: 'any_password',
+      name: 'any_name',
+      status: UserStatus.ACTIVE,
+    });
     jwtMock.sign.mockReturnValue('any_token');
     const user = await sut.execute({
       email: 'any_email',

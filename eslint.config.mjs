@@ -27,6 +27,7 @@ export default [
       'jest.setup.ts',
       'setup-test.ts',
       'eslint.config.mjs',
+      'src/shared/config/swagger.config.ts',
     ],
   },
 

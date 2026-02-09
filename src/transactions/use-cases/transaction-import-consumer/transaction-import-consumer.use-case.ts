@@ -8,7 +8,7 @@ import { Logger } from '@shared/utils/logger';
 import { TransactionEntity } from '@transactions/domain/entities/transaction.entity';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ImportTransactionDto } from '@transactions/dtos';
-import { IOfxStatementParser } from '@transactions/gateways/ofx-statement-parser.interface';
+import { IOfxStatementParser } from '@transactions/ports/ofx-statement-parser.interface';
 
 @injectable()
 export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase {

@@ -7,7 +7,7 @@ import { Injections } from '@shared/types/injections';
 import { UserStatus } from '@users/domain/entities/user.entity';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { CreateUserDto, UserDto } from '@users/dtos';
-import { IEncryptPort } from '@users/gateways/encypt.port';
+import { IEncryptPort } from '@users/ports/encypt.port';
 
 @injectable()
 export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
