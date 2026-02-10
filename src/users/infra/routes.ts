@@ -1,6 +1,7 @@
 import { container } from 'tsyringe';
 
 import { authMiddleware } from '@shared/middlewares/auth';
+import { hasSubscriptionMiddleware } from '@shared/middlewares/has-subscription';
 
 import { UserController } from '@users/controllers/user.controller';
 
@@ -18,7 +19,9 @@ userRouter.post('/auth/forgot-password', (req, res) =>
   authController.sendRecoveryPasswordToken(req, res),
 );
 
-userRouter.get('/users/me', authMiddleware, (req, res) => userController.getMe(req, res));
+userRouter.get('/users/me', authMiddleware, hasSubscriptionMiddleware, (req, res) =>
+  userController.getMe(req, res),
+);
 userRouter.post('/users/create', (req, res) => userController.create(req, res));
 
 export { userRouter };
