@@ -3,7 +3,6 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityNotFoundError } from '@shared/errors/entity-not-found.error';
 import { Injections } from '@shared/types/injections';
-import { Logger } from '@shared/utils/logger';
 
 import { IUserServicePort } from '@users/services/user.port.service';
 
@@ -48,8 +47,6 @@ export class CreatePaymentLinkUseCase implements IBaseUseCase<
 
     /*eslint-disable @typescript-eslint/no-magic-numbers */
     const endAt = new Date(Date.now() + product.durationInDays * 24 * 60 * 60 * 1000);
-
-    Logger.info(JSON.stringify(paymentLink));
 
     await this.subscriptionRepository.create({
       userId,
