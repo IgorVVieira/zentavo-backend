@@ -26,11 +26,28 @@ export class SubscriptionReposotoryAdapter
         userId,
         status: SubscriptionStatus.ACTIVE,
         endAt: {
-          lte: new Date(),
+          gte: new Date(),
         },
       },
     });
 
     return !!subscription;
+  }
+
+  async findByPaymentId(paymentId: string): Promise<SubscriptionEntity | null> {
+    const subscription = await this.prisma.subscription.findFirst({
+      where: {
+        paymentId,
+      },
+    });
+
+    if (!subscription) {
+      return null;
+    }
+
+    return {
+      ...subscription,
+      status: subscription.status as SubscriptionStatus,
+    };
   }
 }

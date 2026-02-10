@@ -1,6 +1,5 @@
 export class CreatePaymentLinkRequestDto {
   userId: string;
-  productId: string;
 }
 
 export class CreatePaymentLinkDtoResponse {

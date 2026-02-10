@@ -1,9 +1,6 @@
 import { container } from 'tsyringe';
 
-import { ForbiddenError } from '@shared/errors/forbidden.error';
-import { UnauthorizedError } from '@shared/errors/unauthorized.error';
-
-import { SubscriptionReposotoryAdapter } from '@payments/adapters/repositories/subscription.repositoy.adapter';
+import { CheckSubscriptionUseCase } from '@payments/use-cases/check-subscrition.use-case';
 import { NextFunction, Request, Response } from 'express';
 
 export const hasSubscriptionMiddleware = async (
@@ -11,18 +8,10 @@ export const hasSubscriptionMiddleware = async (
   _res: Response,
   next: NextFunction,
 ): Promise<void> => {
-  const subscriptionRepository = container.resolve(SubscriptionReposotoryAdapter);
+  const checkSubscriptionUseCase = container.resolve(CheckSubscriptionUseCase);
   const { userId } = req;
 
-  if (!userId) {
-    throw new UnauthorizedError('User not found');
-  }
-
-  const hasSubscription = await subscriptionRepository.hasSubscriptionActive(userId);
-
-  if (!hasSubscription) {
-    throw new ForbiddenError('User does not have an active subscription');
-  }
+  await checkSubscriptionUseCase.execute(userId);
 
   return next();
 };

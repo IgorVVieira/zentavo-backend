@@ -33,9 +33,10 @@ export class CreatePaymentLinkUseCase implements IBaseUseCase<
   ) {}
 
   async execute(data: CreatePaymentLinkRequestDto): Promise<PaymentLinkDto> {
-    const { userId, productId } = data;
+    const { userId } = data;
 
-    const product = await this.productRepository.findOne(productId);
+    const products = await this.productRepository.findAll();
+    const product = products[0];
 
     if (!product) {
       throw new EntityNotFoundError('Product');
@@ -45,17 +46,18 @@ export class CreatePaymentLinkUseCase implements IBaseUseCase<
 
     const paymentLink = await this.paymentGateway.createPaymentLink(user, product);
 
-    /*eslint-disable @typescript-eslint/no-magic-numbers */
-    const endAt = new Date(Date.now() + product.durationInDays * 24 * 60 * 60 * 1000);
+    const endAt = new Date();
+
+    endAt.setDate(endAt.getDate() + product.durationInDays);
 
     await this.subscriptionRepository.create({
       userId,
-      productId,
+      productId: product.id as string,
       paymentId: paymentLink.paymentId,
       status: SubscriptionStatus.PENDING_PAYMENT,
       price: product.price,
       startAt: new Date(),
-      endAt,
+      endAt: endAt.toISOString(),
     });
 
     return {

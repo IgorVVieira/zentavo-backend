@@ -34,5 +34,7 @@ export enum Injections {
   SUBSCRIPTION_REPOSITORY = 'SubscriptionRepository',
   CREATE_PAYMENT_LINK_USE_CASE = 'CreatePaymentLinkUseCase',
   LIST_PRODUCTS_USE_CASE = 'ListProductsUseCase',
+  BILLING_PAID_EVENT_USE_CASE = 'BillingPaidEventUseCase',
+  CHECK_SUBSCRIPTION_USE_CASE = 'CheckSubscriptionUseCase',
   PAYMENT_GATEWAY = 'PAYMENT_GATEWAY',
 }

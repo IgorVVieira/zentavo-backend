@@ -15,6 +15,10 @@ paymentRouter.post('/payments/link', authMiddleware, (req, res) =>
   paymentController.create(req, res),
 );
 
+paymentRouter.post('/payments/billing-paid', (req, res) =>
+  paymentController.billingPaidReceived(req, res),
+);
+
 paymentRouter.get('/products', (req, res) => productsController.listProducts(req, res));
 
 export { paymentRouter };
