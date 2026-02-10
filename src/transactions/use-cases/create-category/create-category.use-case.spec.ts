@@ -10,8 +10,9 @@ describe('CreateCategoryUseCase', () => {
       findByNameAndUserId: jest.Mock;
       findByUserId: jest.Mock;
     };
-    userValidatorMock: {
+    userServiceMock: {
       validateUserExists: jest.Mock;
+      getUserById: jest.Mock;
     };
   };
 
@@ -22,13 +23,14 @@ describe('CreateCategoryUseCase', () => {
       findByUserId: jest.fn(),
     };
 
-    const userValidatorMock = {
+    const userServiceMock = {
       validateUserExists: jest.fn(),
+      getUserById: jest.fn(),
     };
 
-    const sut = new CreateCategoryUseCase(categoryRepositoryMock, userValidatorMock);
+    const sut = new CreateCategoryUseCase(categoryRepositoryMock, userServiceMock);
 
-    return { sut, categoryRepositoryMock, userValidatorMock };
+    return { sut, categoryRepositoryMock, userServiceMock };
   };
 
   it('should create a category', async () => {

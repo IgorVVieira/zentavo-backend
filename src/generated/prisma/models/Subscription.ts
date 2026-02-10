@@ -37,6 +37,7 @@ export type SubscriptionMinAggregateOutputType = {
   id: string | null
   userId: string | null
   productId: string | null
+  paymentId: string | null
   startAt: Date | null
   endAt: Date | null
   price: number | null
@@ -50,6 +51,7 @@ export type SubscriptionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   productId: string | null
+  paymentId: string | null
   startAt: Date | null
   endAt: Date | null
   price: number | null
@@ -63,6 +65,7 @@ export type SubscriptionCountAggregateOutputType = {
   id: number
   userId: number
   productId: number
+  paymentId: number
   startAt: number
   endAt: number
   price: number
@@ -86,6 +89,7 @@ export type SubscriptionMinAggregateInputType = {
   id?: true
   userId?: true
   productId?: true
+  paymentId?: true
   startAt?: true
   endAt?: true
   price?: true
@@ -99,6 +103,7 @@ export type SubscriptionMaxAggregateInputType = {
   id?: true
   userId?: true
   productId?: true
+  paymentId?: true
   startAt?: true
   endAt?: true
   price?: true
@@ -112,6 +117,7 @@ export type SubscriptionCountAggregateInputType = {
   id?: true
   userId?: true
   productId?: true
+  paymentId?: true
   startAt?: true
   endAt?: true
   price?: true
@@ -212,6 +218,7 @@ export type SubscriptionGroupByOutputType = {
   id: string
   userId: string
   productId: string
+  paymentId: string
   startAt: Date
   endAt: Date
   price: number
@@ -248,6 +255,7 @@ export type SubscriptionWhereInput = {
   id?: Prisma.UuidFilter<"Subscription"> | string
   userId?: Prisma.UuidFilter<"Subscription"> | string
   productId?: Prisma.UuidFilter<"Subscription"> | string
+  paymentId?: Prisma.StringFilter<"Subscription"> | string
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
@@ -263,6 +271,7 @@ export type SubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -281,6 +290,7 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   userId?: Prisma.UuidFilter<"Subscription"> | string
   productId?: Prisma.UuidFilter<"Subscription"> | string
+  paymentId?: Prisma.StringFilter<"Subscription"> | string
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
@@ -296,6 +306,7 @@ export type SubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -317,6 +328,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
   productId?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
+  paymentId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   startAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   price?: Prisma.FloatWithAggregatesFilter<"Subscription"> | number
@@ -328,6 +340,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
 
 export type SubscriptionCreateInput = {
   id?: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -343,6 +356,7 @@ export type SubscriptionUncheckedCreateInput = {
   id?: string
   userId: string
   productId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -354,6 +368,7 @@ export type SubscriptionUncheckedCreateInput = {
 
 export type SubscriptionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -369,6 +384,7 @@ export type SubscriptionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -382,6 +398,7 @@ export type SubscriptionCreateManyInput = {
   id?: string
   userId: string
   productId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -393,6 +410,7 @@ export type SubscriptionCreateManyInput = {
 
 export type SubscriptionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -406,6 +424,7 @@ export type SubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -429,6 +448,7 @@ export type SubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -446,6 +466,7 @@ export type SubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -459,6 +480,7 @@ export type SubscriptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
+  paymentId?: Prisma.SortOrder
   startAt?: Prisma.SortOrder
   endAt?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -558,6 +580,7 @@ export type SubscriptionUncheckedUpdateManyWithoutProductNestedInput = {
 
 export type SubscriptionCreateWithoutUserInput = {
   id?: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -571,6 +594,7 @@ export type SubscriptionCreateWithoutUserInput = {
 export type SubscriptionUncheckedCreateWithoutUserInput = {
   id?: string
   productId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -613,6 +637,7 @@ export type SubscriptionScalarWhereInput = {
   id?: Prisma.UuidFilter<"Subscription"> | string
   userId?: Prisma.UuidFilter<"Subscription"> | string
   productId?: Prisma.UuidFilter<"Subscription"> | string
+  paymentId?: Prisma.StringFilter<"Subscription"> | string
   startAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   endAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   price?: Prisma.FloatFilter<"Subscription"> | number
@@ -624,6 +649,7 @@ export type SubscriptionScalarWhereInput = {
 
 export type SubscriptionCreateWithoutProductInput = {
   id?: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -637,6 +663,7 @@ export type SubscriptionCreateWithoutProductInput = {
 export type SubscriptionUncheckedCreateWithoutProductInput = {
   id?: string
   userId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -675,6 +702,7 @@ export type SubscriptionUpdateManyWithWhereWithoutProductInput = {
 export type SubscriptionCreateManyUserInput = {
   id?: string
   productId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -686,6 +714,7 @@ export type SubscriptionCreateManyUserInput = {
 
 export type SubscriptionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -699,6 +728,7 @@ export type SubscriptionUpdateWithoutUserInput = {
 export type SubscriptionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -711,6 +741,7 @@ export type SubscriptionUncheckedUpdateWithoutUserInput = {
 export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -723,6 +754,7 @@ export type SubscriptionUncheckedUpdateManyWithoutUserInput = {
 export type SubscriptionCreateManyProductInput = {
   id?: string
   userId: string
+  paymentId: string
   startAt: Date | string
   endAt: Date | string
   price: number
@@ -734,6 +766,7 @@ export type SubscriptionCreateManyProductInput = {
 
 export type SubscriptionUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -747,6 +780,7 @@ export type SubscriptionUpdateWithoutProductInput = {
 export type SubscriptionUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -759,6 +793,7 @@ export type SubscriptionUncheckedUpdateWithoutProductInput = {
 export type SubscriptionUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentId?: Prisma.StringFieldUpdateOperationsInput | string
   startAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -774,6 +809,7 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   userId?: boolean
   productId?: boolean
+  paymentId?: boolean
   startAt?: boolean
   endAt?: boolean
   price?: boolean
@@ -789,6 +825,7 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   userId?: boolean
   productId?: boolean
+  paymentId?: boolean
   startAt?: boolean
   endAt?: boolean
   price?: boolean
@@ -804,6 +841,7 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   userId?: boolean
   productId?: boolean
+  paymentId?: boolean
   startAt?: boolean
   endAt?: boolean
   price?: boolean
@@ -819,6 +857,7 @@ export type SubscriptionSelectScalar = {
   id?: boolean
   userId?: boolean
   productId?: boolean
+  paymentId?: boolean
   startAt?: boolean
   endAt?: boolean
   price?: boolean
@@ -828,7 +867,7 @@ export type SubscriptionSelectScalar = {
   deletedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "startAt" | "endAt" | "price" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "productId" | "paymentId" | "startAt" | "endAt" | "price" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -852,6 +891,7 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     id: string
     userId: string
     productId: string
+    paymentId: string
     startAt: Date
     endAt: Date
     price: number
@@ -1287,6 +1327,7 @@ export interface SubscriptionFieldRefs {
   readonly id: Prisma.FieldRef<"Subscription", 'String'>
   readonly userId: Prisma.FieldRef<"Subscription", 'String'>
   readonly productId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly paymentId: Prisma.FieldRef<"Subscription", 'String'>
   readonly startAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly endAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly price: Prisma.FieldRef<"Subscription", 'Float'>

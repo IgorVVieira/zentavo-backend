@@ -154,6 +154,7 @@ export const SubscriptionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   productId: 'productId',
+  paymentId: 'paymentId',
   startAt: 'startAt',
   endAt: 'endAt',
   price: 'price',

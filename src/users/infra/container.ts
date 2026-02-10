@@ -8,14 +8,14 @@ import { EncptyAdapter } from '@users/adapters/encypt.adapter';
 import { JwtAdapter } from '@users/adapters/jwt.adapter';
 import { UserRepositoryAdapter } from '@users/adapters/repositories/user.repository.adapter';
 import { VerificationTokenRepositoryAdapter } from '@users/adapters/repositories/verification-token.adapter';
-import { UserValidatorAdapterService } from '@users/adapters/services/user-validator.adapter.service';
+import { UserService } from '@users/adapters/services/user.service';
 import { AuthController } from '@users/controllers/auth.controller';
 import { UserController } from '@users/controllers/user.controller';
 import { IUserRepositoryPort } from '@users/domain/repositories/user.repository.port';
 import { IVerificationTokenRepositoryPort } from '@users/domain/repositories/verification-token.repository.port';
 import { IEncryptPort } from '@users/ports/encypt.port';
 import { IJwtPort } from '@users/ports/jwt.port';
-import { IUserValidatorPort } from '@users/services/user-validator.port';
+import { IUserServicePort } from '@users/services/user.port.service';
 import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
@@ -31,10 +31,7 @@ container.registerSingleton<IEncryptPort>(Injections.ENCRYPT_PORT, EncptyAdapter
 container.registerSingleton<IJwtPort>(Injections.JWT_PORT, JwtAdapter);
 container.registerSingleton<IEmailProviderPort>(Injections.EMAIL_PROVIDER, NodemailerEmailProvider);
 
-container.registerSingleton<IUserValidatorPort>(
-  Injections.USER_VALIDATOR,
-  UserValidatorAdapterService,
-);
+container.registerSingleton<IUserServicePort>(Injections.USER_SERVICE, UserService);
 
 container.registerSingleton(Injections.CREATE_USER_USE_CASE, CreateUserUseCase);
 container.registerSingleton(Injections.LOGIN_USE_CASE, LoginUseCase);

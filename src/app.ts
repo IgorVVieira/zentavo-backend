@@ -11,10 +11,12 @@ import { swaggerSpec } from '@shared/config/swagger.config';
 import { errorHandler } from '@shared/middlewares/error-handler';
 import { Logger } from '@shared/utils/logger';
 
+import '@payments/infra/container';
 import '@transactions/infra/container';
 import '@users/infra/container';
 import { userRouter } from '@users/infra/routes';
 
+import { paymentRouter } from '@payments/infra/routes';
 import { transactionRouter } from '@transactions/infra/routes';
 import express from 'express';
 
@@ -30,7 +32,7 @@ app.use(
   }),
 );
 
-app.use('/api', userRouter, transactionRouter);
+app.use('/api', userRouter, transactionRouter, paymentRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorHandler);

@@ -4,7 +4,7 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { EntityAlreadyExistsError } from '@shared/errors/entity-already-exists.error';
 import { Injections } from '@shared/types/injections';
 
-import { IUserValidatorPort } from '@users/services/user-validator.port';
+import { IUserServicePort } from '@users/services/user.port.service';
 
 import { ICategoryRepositoryPort } from '@transactions/domain/repositories/category.repository.port';
 import { CategoryDto, CreateCategoryDto } from '@transactions/dtos';
@@ -14,8 +14,8 @@ export class CreateCategoryUseCase implements IBaseUseCase<CreateCategoryDto, Ca
   constructor(
     @inject(Injections.CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepositoryPort,
-    @inject(Injections.USER_VALIDATOR)
-    private readonly userValidator: IUserValidatorPort,
+    @inject(Injections.USER_SERVICE)
+    private readonly userValidator: IUserServicePort,
   ) {}
 
   async execute(data: CreateCategoryDto): Promise<CategoryDto> {

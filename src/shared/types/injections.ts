@@ -4,7 +4,7 @@ export enum Injections {
   ENCRYPT_PORT = 'EncryptPort',
   JWT_PORT = 'JwtPort',
   EMAIL_PROVIDER = 'EmailProvider',
-  USER_VALIDATOR = 'UserValidator',
+  USER_SERVICE = 'USER_SERVICE',
   CATEGORY_REPOSITORY = 'CategoryRepository',
   TRANSACTION_REPOSITORY = 'TransactionRepository',
   OFX_STATEMENT_PARSER = 'OfxStatementParser',
@@ -32,4 +32,7 @@ export enum Injections {
   // Payments
   PRODUCT_REPOSITORY = 'ProductRepository',
   SUBSCRIPTION_REPOSITORY = 'SubscriptionRepository',
+  CREATE_PAYMENT_LINK_USE_CASE = 'CreatePaymentLinkUseCase',
+  LIST_PRODUCTS_USE_CASE = 'ListProductsUseCase',
+  PAYMENT_GATEWAY = 'PAYMENT_GATEWAY',
 }
