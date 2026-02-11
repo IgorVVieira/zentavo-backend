@@ -11,6 +11,8 @@ export class User extends BaseEntity {
   email: string;
   password: string;
   status: UserStatus;
+  taxIdentifier: string;
+  cellphone: string;
   externalCustomerId?: string | null;
 
   static isActive(user: User): boolean {

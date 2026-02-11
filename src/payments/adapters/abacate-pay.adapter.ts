@@ -41,8 +41,8 @@ export class AbacatePayAdapter implements IPaymentGatewayPort {
       customer: {
         name: user.name,
         email: user.email,
-        taxId: '71995021091',
-        cellphone: '31999999999',
+        taxId: user.taxIdentifier,
+        cellphone: user.cellphone,
       },
       // ...(user.id && { customerId: user.id }),
       allowCoupons: true,

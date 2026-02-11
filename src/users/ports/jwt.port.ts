@@ -1,4 +1,6 @@
+import { JwtDto } from '@users/dtos/jwt.dto';
+
 export interface IJwtPort {
-  sign(id: string, name: string, email: string): string;
+  sign(data: JwtDto): string;
   verify(token: string): Promise<unknown>;
 }

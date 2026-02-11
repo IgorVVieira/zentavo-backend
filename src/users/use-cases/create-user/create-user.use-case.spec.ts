@@ -44,6 +44,8 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password',
       name: 'any_name',
+      taxIdentifier: 'any_tax_identifier',
+      cellphone: 'any_cellphone',
       createdAt: new Date(),
       updatedAt: new Date(),
       status: UserStatus.ACTIVE,
@@ -52,6 +54,8 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password',
       name: 'any_name',
+      taxIdentifier: 'any_tax_identifier',
+      cellphone: 'any_cellphone',
     });
 
     expect(encypterMock.encrypt).toHaveBeenCalledWith('any_password');
@@ -60,6 +64,8 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password_encrypted',
       name: 'any_name',
+      taxIdentifier: 'any_tax_identifier',
+      cellphone: 'any_cellphone',
       status: UserStatus.ACTIVE,
     });
 
@@ -67,6 +73,8 @@ describe('CreateUserUseCase', () => {
       id: 'any_id',
       email: 'any_email',
       name: 'any_name',
+      taxIdentifier: 'any_tax_identifier',
+      cellphone: 'any_cellphone',
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
     });
@@ -80,6 +88,8 @@ describe('CreateUserUseCase', () => {
       email: 'any_email',
       password: 'any_password',
       name: 'any_name',
+      taxIdentifier: 'any_tax_identifier',
+      cellphone: 'any_cellphone',
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -88,6 +98,8 @@ describe('CreateUserUseCase', () => {
         email: 'any_email',
         password: 'any_password',
         name: 'any_name',
+        taxIdentifier: 'any_tax_identifier',
+        cellphone: 'any_cellphone',
       });
 
       expect(encypterMock.encrypt).not.toHaveBeenCalled();
