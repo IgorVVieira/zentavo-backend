@@ -25,6 +25,8 @@ export class GetMeUseCase implements IBaseUseCase<string, UserDto> {
       id: user.id as string,
       name: user.name,
       email: user.email,
+      taxIdentifier: user.taxIdentifier,
+      cellphone: user.cellphone,
       createdAt: user.createdAt as Date,
       updatedAt: user.updatedAt as Date,
     };

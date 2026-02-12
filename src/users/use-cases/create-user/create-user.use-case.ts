@@ -19,7 +19,7 @@ export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
   ) {}
 
   async execute(createUserData: CreateUserDto): Promise<UserDto> {
-    const { email, password, name } = createUserData;
+    const { email, password, name, taxIdentifier, cellphone } = createUserData;
     const user = await this.userRepository.findByEmail(email);
 
     if (user) {
@@ -32,6 +32,8 @@ export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
       email,
       password: encryptedPassword,
       name,
+      taxIdentifier,
+      cellphone,
       status: UserStatus.ACTIVE,
     });
 
@@ -39,6 +41,8 @@ export class CreateUserUseCase implements IBaseUseCase<CreateUserDto, UserDto> {
       id: userCreated.id as string,
       name: userCreated.name,
       email: userCreated.email,
+      taxIdentifier: userCreated.taxIdentifier,
+      cellphone: userCreated.cellphone,
       createdAt: userCreated.createdAt as Date,
       updatedAt: userCreated.updatedAt as Date,
     };

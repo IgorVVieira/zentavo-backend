@@ -37,7 +37,6 @@ export type ProductSumAggregateOutputType = {
 
 export type ProductMinAggregateOutputType = {
   id: string | null
-  gatewayProductId: string | null
   name: string | null
   description: string | null
   price: number | null
@@ -49,7 +48,6 @@ export type ProductMinAggregateOutputType = {
 
 export type ProductMaxAggregateOutputType = {
   id: string | null
-  gatewayProductId: string | null
   name: string | null
   description: string | null
   price: number | null
@@ -61,7 +59,6 @@ export type ProductMaxAggregateOutputType = {
 
 export type ProductCountAggregateOutputType = {
   id: number
-  gatewayProductId: number
   name: number
   description: number
   price: number
@@ -86,7 +83,6 @@ export type ProductSumAggregateInputType = {
 
 export type ProductMinAggregateInputType = {
   id?: true
-  gatewayProductId?: true
   name?: true
   description?: true
   price?: true
@@ -98,7 +94,6 @@ export type ProductMinAggregateInputType = {
 
 export type ProductMaxAggregateInputType = {
   id?: true
-  gatewayProductId?: true
   name?: true
   description?: true
   price?: true
@@ -110,7 +105,6 @@ export type ProductMaxAggregateInputType = {
 
 export type ProductCountAggregateInputType = {
   id?: true
-  gatewayProductId?: true
   name?: true
   description?: true
   price?: true
@@ -210,7 +204,6 @@ export type ProductGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ProductGroupByOutputType = {
   id: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -246,7 +239,6 @@ export type ProductWhereInput = {
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   id?: Prisma.UuidFilter<"Product"> | string
-  gatewayProductId?: Prisma.UuidFilter<"Product"> | string
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.FloatFilter<"Product"> | number
@@ -260,7 +252,6 @@ export type ProductWhereInput = {
 
 export type ProductOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  gatewayProductId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -277,7 +268,6 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
-  gatewayProductId?: Prisma.UuidFilter<"Product"> | string
   name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringFilter<"Product"> | string
   price?: Prisma.FloatFilter<"Product"> | number
@@ -291,7 +281,6 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
 
 export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  gatewayProductId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -312,7 +301,6 @@ export type ProductScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProductScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductScalarWhereWithAggregatesInput | Prisma.ProductScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Product"> | string
-  gatewayProductId?: Prisma.UuidWithAggregatesFilter<"Product"> | string
   name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   description?: Prisma.StringWithAggregatesFilter<"Product"> | string
   price?: Prisma.FloatWithAggregatesFilter<"Product"> | number
@@ -325,7 +313,6 @@ export type ProductScalarWhereWithAggregatesInput = {
 
 export type ProductCreateInput = {
   id?: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -339,7 +326,6 @@ export type ProductCreateInput = {
 
 export type ProductUncheckedCreateInput = {
   id?: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -353,7 +339,6 @@ export type ProductUncheckedCreateInput = {
 
 export type ProductUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -367,7 +352,6 @@ export type ProductUpdateInput = {
 
 export type ProductUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -381,7 +365,6 @@ export type ProductUncheckedUpdateInput = {
 
 export type ProductCreateManyInput = {
   id?: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -394,7 +377,6 @@ export type ProductCreateManyInput = {
 
 export type ProductUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -407,7 +389,6 @@ export type ProductUpdateManyMutationInput = {
 
 export type ProductUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -420,7 +401,6 @@ export type ProductUncheckedUpdateManyInput = {
 
 export type ProductCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  gatewayProductId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -438,7 +418,6 @@ export type ProductAvgOrderByAggregateInput = {
 
 export type ProductMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  gatewayProductId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -450,7 +429,6 @@ export type ProductMaxOrderByAggregateInput = {
 
 export type ProductMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  gatewayProductId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -494,7 +472,6 @@ export type ProductUpdateOneRequiredWithoutSubscriptionsNestedInput = {
 
 export type ProductCreateWithoutSubscriptionsInput = {
   id?: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -507,7 +484,6 @@ export type ProductCreateWithoutSubscriptionsInput = {
 
 export type ProductUncheckedCreateWithoutSubscriptionsInput = {
   id?: string
-  gatewayProductId: string
   name: string
   description: string
   price: number
@@ -536,7 +512,6 @@ export type ProductUpdateToOneWithWhereWithoutSubscriptionsInput = {
 
 export type ProductUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -549,7 +524,6 @@ export type ProductUpdateWithoutSubscriptionsInput = {
 
 export type ProductUncheckedUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  gatewayProductId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -593,7 +567,6 @@ export type ProductCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  gatewayProductId?: boolean
   name?: boolean
   description?: boolean
   price?: boolean
@@ -608,7 +581,6 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 
 export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  gatewayProductId?: boolean
   name?: boolean
   description?: boolean
   price?: boolean
@@ -621,7 +593,6 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  gatewayProductId?: boolean
   name?: boolean
   description?: boolean
   price?: boolean
@@ -634,7 +605,6 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ProductSelectScalar = {
   id?: boolean
-  gatewayProductId?: boolean
   name?: boolean
   description?: boolean
   price?: boolean
@@ -645,7 +615,7 @@ export type ProductSelectScalar = {
   deletedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "gatewayProductId" | "name" | "description" | "price" | "features" | "durationInDays" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "price" | "features" | "durationInDays" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptions?: boolean | Prisma.Product$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -660,7 +630,6 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    gatewayProductId: string
     name: string
     description: string
     price: number
@@ -1094,7 +1063,6 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ProductFieldRefs {
   readonly id: Prisma.FieldRef<"Product", 'String'>
-  readonly gatewayProductId: Prisma.FieldRef<"Product", 'String'>
   readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
   readonly price: Prisma.FieldRef<"Product", 'Float'>

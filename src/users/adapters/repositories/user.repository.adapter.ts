@@ -29,6 +29,8 @@ export class UserRepositoryAdapter extends BaseRepository<User> implements IUser
 
     return {
       ...user,
+      taxIdentifier: user.taxIdentifier as string,
+      cellphone: user.cellphone as string,
       status: user.status as UserStatus,
     };
   }

@@ -810,7 +810,7 @@ users/
 │   └── services/           # UserValidator
 ```
 
-`UserValidatorAdapterService` é realmente um serviço de domínio, mas está em `adapters/services` ao invés de `domain/services`.
+`USER_SERVICE` é realmente um serviço de domínio, mas está em `adapters/services` ao invés de `domain/services`.
 
 **Sugestão:** Padronizar nomenclatura:
 - Gateways: Integrações externas (APIs, bibliotecas)

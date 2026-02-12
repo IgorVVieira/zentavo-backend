@@ -1,32 +1,39 @@
-import AbacatePay from 'abacatepay-nodejs-sdk';
+import { injectable } from 'tsyringe';
 
-import { User } from '@users/domain/entities/user.entity';
+import { UserDto } from '@users/dtos';
 
+import { abacatePayInstance } from '@payments/abacate-pay/abacate-pay-instance';
+import {
+  AbacatePayBillingFrequency,
+  AbacatePayPaymentMethod,
+  AbacatePayRoutes,
+} from '@payments/abacate-pay/enums';
+import {
+  IAbacatePayBaseResponse,
+  IAbacatePayCreateBillingRequest,
+  IAbacatePayCreateBillingResponse,
+} from '@payments/abacate-pay/types';
 import { CreatePaymentLinkDtoResponse } from '@payments/dtos/create-payment-link.dto';
 import { IPaymentGatewayPort } from '@payments/ports/payment-gateway.port';
 
 import { ProductEntity } from '../domain/entities/product.entity';
 
+@injectable()
 export class AbacatePayAdapter implements IPaymentGatewayPort {
-  private readonly abacatePay;
-
-  constructor() {
-    this.abacatePay = AbacatePay(process.env.ABA_PAY_API_KEY as string);
-  }
-
   async createPaymentLink(
-    user: User,
+    user: UserDto,
     product: ProductEntity,
   ): Promise<CreatePaymentLinkDtoResponse> {
-    const { data } = await this.abacatePay.billing.create({
-      frequency: 'ONE_TIME',
-      methods: ['PIX'],
+    const body: IAbacatePayCreateBillingRequest = {
+      frequency: AbacatePayBillingFrequency.ONE_TIME,
+      methods: [AbacatePayPaymentMethod.PIX],
       products: [
         {
-          externalId: product.gatewayProductId,
+          externalId: product.id as string,
           name: product.name,
           quantity: 1,
-          price: product.price, // Amount in cents
+          description: product.description,
+          price: product.price,
         },
       ],
       returnUrl: process.env.FRONTEND_URL as string,
@@ -34,8 +41,19 @@ export class AbacatePayAdapter implements IPaymentGatewayPort {
       customer: {
         name: user.name,
         email: user.email,
+        taxId: user.taxIdentifier,
+        cellphone: user.cellphone,
       },
-    });
+      // ...(user.id && { customerId: user.id }),
+      allowCoupons: true,
+    };
+
+    const {
+      data: { data },
+    } = await abacatePayInstance.post<IAbacatePayBaseResponse<IAbacatePayCreateBillingResponse>>(
+      AbacatePayRoutes.CREATE_PAYMENT_LINK,
+      body,
+    );
 
     if (!data?.id) {
       throw new Error('Failed to create payment link');
@@ -44,7 +62,7 @@ export class AbacatePayAdapter implements IPaymentGatewayPort {
     return {
       url: data?.url,
       paymentId: data?.id,
-      customerId: data.customer.id,
+      customerId: data?.customer?.id as string,
     };
   }
 }

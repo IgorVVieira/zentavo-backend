@@ -1,5 +1,13 @@
 import { Expose } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  IsTaxId,
+  IsUUID,
+} from 'class-validator';
 
 export class UserDto {
   @IsUUID()
@@ -17,6 +25,18 @@ export class UserDto {
   @IsEmail()
   @Expose()
   email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Expose()
+  @IsTaxId()
+  taxIdentifier: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Expose()
+  @IsPhoneNumber()
+  cellphone: string;
 
   @IsDate()
   @Expose()

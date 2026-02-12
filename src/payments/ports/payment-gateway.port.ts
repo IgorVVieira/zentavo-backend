@@ -1,9 +1,9 @@
-import { User } from '@users/domain/entities/user.entity';
+import { UserDto } from '@users/dtos';
 
 import { CreatePaymentLinkDtoResponse } from '@payments/dtos/create-payment-link.dto';
 
 import { ProductEntity } from '../domain/entities/product.entity';
 
 export interface IPaymentGatewayPort {
-  createPaymentLink(user: User, product: ProductEntity): Promise<CreatePaymentLinkDtoResponse>;
+  createPaymentLink(user: UserDto, product: ProductEntity): Promise<CreatePaymentLinkDtoResponse>;
 }

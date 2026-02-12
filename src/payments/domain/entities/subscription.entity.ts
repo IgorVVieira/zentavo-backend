@@ -13,6 +13,7 @@ export enum SubscriptionStatus {
 export class SubscriptionEntity extends BaseEntity {
   userId: string;
   productId: string;
+  paymentId: string;
   startAt: Date | string;
   endAt: Date | string;
   price: number; // In cents

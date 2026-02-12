@@ -79,6 +79,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   status: 'status',
   externalCustomerId: 'externalCustomerId',
+  taxIdentifier: 'taxIdentifier',
+  cellphone: 'cellphone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -136,7 +138,6 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  gatewayProductId: 'gatewayProductId',
   name: 'name',
   description: 'description',
   price: 'price',
@@ -154,6 +155,7 @@ export const SubscriptionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   productId: 'productId',
+  paymentId: 'paymentId',
   startAt: 'startAt',
   endAt: 'endAt',
   price: 'price',
