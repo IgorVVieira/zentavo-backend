@@ -5,7 +5,8 @@ import {
   SubscriptionStatus,
 } from '@payments/domain/entities/subscription.entity';
 import { ISubscriptionRepositoryPort } from '@payments/domain/repositories/subscription.repository.port';
-import { PrismaClientSingleton } from 'prisma-client';
+
+import { PrismaClientSingleton } from '../../../prisma-client';
 
 export class SubscriptionReposotoryAdapter
   extends BaseRepository<SubscriptionEntity>
