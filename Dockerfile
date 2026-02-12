@@ -53,4 +53,7 @@ USER nodejs
 
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "start:prod"]
+
+# docker build -t zentavo-backend .
+# docker start -i zentavo-backend
