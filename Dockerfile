@@ -1,64 +1,56 @@
 FROM node:24.12.0-alpine3.23 AS builder
 
-# Instalar dependências necessárias para build (OpenSSL para Prisma)
+# Necessário para Prisma
 RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Copiar arquivos de dependências primeiro (melhor cache)
-COPY package.json ./
-COPY package-lock.json ./
-COPY prisma ./prisma/
-COPY prisma.config.ts ./
-COPY swagger.json ./
+# Melhor uso de cache
+COPY package.json package-lock.json ./
+COPY prisma ./prisma
 
-RUN npm install
+# Instala todas dependências (incluindo dev)
+RUN npm ci
 
-# Copiar código fonte
+# Gera Prisma Client
+RUN npx prisma generate
+
+# Copia restante do código
 COPY . .
 
+# Build do TypeScript
 RUN npm run build
 
-FROM node:24.12.0-alpine3.23 as prod
+FROM node:24.12.0-alpine3.23 AS prod
 
 RUN apk add --no-cache openssl
 
-# Criar usuário não-root para segurança
+# Criar usuário não-root
 RUN addgroup -g 1001 -S nodejs && \
-  adduser -S nodejs -u 1001
+  adduser -S nodejs -u 1001 -G nodejs
 
 WORKDIR /app
 
-ENV HUSKY=0
 ENV NODE_ENV=production
+ENV HUSKY=0
 
-# Copiar package files e instalar apenas dependências de produção
-COPY package.json ./
-COPY package-lock.json ./
-# --omit=dev
-RUN npm ci --omit=dev && npm cache clean --force
+# Copiar node_modules já instalado
+COPY --from=builder /app/node_modules ./node_modules
 
-# Copiar schema do Prisma para migrations
-COPY --from=builder /app/prisma ./prisma
+# Remover devDependencies
+RUN npm prune --omit=dev
 
-# Copiar build do TypeScript
+# Copiar build e prisma
 COPY --from=builder /app/dist ./dist
-
-# Copiar swagger.json para a raiz do app
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/swagger.json ./swagger.json
 
-# Mudar ownership para usuário nodejs
+# Ajustar permissões
 RUN chown -R nodejs:nodejs /app
 
-# Usar usuário não-root
 USER nodejs
 
 EXPOSE 3000
-# Health check (ajuste a rota se sua API tiver um endpoint de health)
-# HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-#   CMD node -e "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
 
-CMD ["npm", "run", "start:prod"]
-
-# docker build -t zentavo-backend .
-# docker start -i zentavo-backend
+CMD ["node", "dist/main.js"]
