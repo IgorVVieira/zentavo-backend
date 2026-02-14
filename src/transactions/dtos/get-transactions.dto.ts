@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsUUID, IsNumberString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsUUID } from 'class-validator';
 
 import { TransactionType } from '@transactions/domain/entities/transaction.entity';
 

@@ -16,6 +16,7 @@ import {
   TransactionsByMethod,
   TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
+import { GetTransactionsDto } from '@transactions/dtos';
 
 import { PrismaClientSingleton } from '../../../prisma-client';
 
@@ -191,7 +192,12 @@ export class TransactionRepositoryAdapter
     }));
   }
 
-  async listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonths[]> {
+  async listByLastSixMonths(params: GetTransactionsDto): Promise<TransactionsLastSixMonths[]> {
+    const { userId, year, month } = params;
+    const startDate = new Date(year, month - 1, 1);
+    const fiveMonths = 5;
+    const endDate = new Date(year, month + fiveMonths, 1);
+
     return this.prisma.$queryRaw<TransactionsLastSixMonths[]>`
       SELECT
         EXTRACT(MONTH FROM t.date)::int AS month,
@@ -200,11 +206,13 @@ export class TransactionRepositoryAdapter
         SUM(CASE WHEN t.type = 'CASH_OUT' THEN t.amount ELSE 0 END)::float AS "totalCashOut"
       FROM transactions t
       WHERE t.user_id = ${userId}::uuid
-        AND t.deleted_at IS NULL
-        AND t.date >= date_trunc('month', CURRENT_DATE) - INTERVAL '5 months'
-        AND t.date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
+        AND t.deleted_at IS NUL
+        AND "date" >= ${startDate}
+        AND "date" < ${endDate}
       GROUP BY year, month
       ORDER BY year, month;
     `;
+    // AND t.date >= date_trunc('month', CURRENT_DATE) - INTERVAL '5 months'
+    // AND t.date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
   }
 }

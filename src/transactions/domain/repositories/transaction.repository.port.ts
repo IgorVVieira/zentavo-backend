@@ -9,6 +9,7 @@ import {
   TransactionsByMethod,
   TransactionsLastSixMonths,
 } from '@transactions/domain/types/dashboard.type';
+import { GetTransactionsDto } from '@transactions/dtos';
 
 export type FindByDateParams = {
   userId: string;
@@ -26,6 +27,6 @@ export interface ITransactionRepositoryPort extends IBaseRepository<TransactionE
   findByDate(params: FindByDateParams): Promise<TransactionEntity[]>;
   listByPaymentMethod(params: FindByDateParams): Promise<TransactionsByMethod[]>;
   listByCategory(params: FindByDateParams): Promise<TransactionsByCategory[]>;
-  listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonths[]>;
+  listByLastSixMonths(params: GetTransactionsDto): Promise<TransactionsLastSixMonths[]>;
   deleteCategoryId(categoryId: string): Promise<void>;
 }

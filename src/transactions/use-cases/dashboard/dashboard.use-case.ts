@@ -25,7 +25,7 @@ export class DashboardUseCase {
     return this.transactionRepository.listByCategory(data);
   }
 
-  async listByLastSixMonths(userId: string): Promise<TransactionsLastSixMonthsDto[]> {
-    return this.transactionRepository.listByLastSixMonths(userId);
+  async listByLastSixMonths(data: GetTransactionsDto): Promise<TransactionsLastSixMonthsDto[]> {
+    return this.transactionRepository.listByLastSixMonths(data);
   }
 }

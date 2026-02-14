@@ -24,8 +24,10 @@ transactionRouter.post(
   (req, res) => transactionController.importOfx(req, res),
 );
 
-transactionRouter.get('/transactions/dashboard/last-six-months', authMiddleware, (req, res) =>
-  dashboardController.listByLastSixMonths(req, res),
+transactionRouter.get(
+  '/transactions/dashboard/last-six-months/:month/:year',
+  authMiddleware,
+  (req, res) => dashboardController.listByLastSixMonths(req, res),
 );
 
 transactionRouter.put('/transactions/:id', authMiddleware, hasSubscriptionMiddleware, (req, res) =>
