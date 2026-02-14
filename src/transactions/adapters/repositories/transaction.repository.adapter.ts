@@ -206,9 +206,9 @@ export class TransactionRepositoryAdapter
         SUM(CASE WHEN t.type = 'CASH_OUT' THEN t.amount ELSE 0 END)::float AS "totalCashOut"
       FROM transactions t
       WHERE t.user_id = ${userId}::uuid
-        AND t.deleted_at IS NUL
-        AND "date" >= ${startDate}
-        AND "date" < ${endDate}
+        AND t.deleted_at IS NULL
+        AND t."date" >= ${startDate}
+        AND t."date" < ${endDate}
       GROUP BY year, month
       ORDER BY year, month;
     `;

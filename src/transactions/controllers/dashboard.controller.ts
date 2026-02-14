@@ -39,8 +39,8 @@ export class DashboardController {
   async listByLastSixMonths(request: Request, response: Response): Promise<Response> {
     const data = await this.dashboardUseCase.listByLastSixMonths({
       userId: request.userId,
-      month: +request.body.month,
-      year: +request.body.year,
+      month: +request.params.month,
+      year: +request.params.year,
     });
 
     return response.status(HttpStatus.OK).json(data);
