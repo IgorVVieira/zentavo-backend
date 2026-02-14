@@ -207,8 +207,8 @@ export class TransactionRepositoryAdapter
       FROM transactions t
       WHERE t.user_id = ${userId}::uuid
         AND t.deleted_at IS NULL
-        AND t."date" >= ${startDate}
-        AND t."date" < ${endDate}
+        AND t."date" >= ${endDate}
+        AND t."date" < ${startDate}
       GROUP BY year, month
       ORDER BY year, month;
     `;
