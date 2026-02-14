@@ -196,7 +196,7 @@ export class TransactionRepositoryAdapter
     const { userId, year, month } = params;
     const startDate = new Date(year, month - 1, 1);
     const fiveMonths = 5;
-    const endDate = new Date(year, month + fiveMonths, 1);
+    const endDate = new Date(year, month - fiveMonths, 1);
 
     return this.prisma.$queryRaw<TransactionsLastSixMonths[]>`
       SELECT
