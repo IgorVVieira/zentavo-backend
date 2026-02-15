@@ -13,6 +13,7 @@ import { IPaymentGatewayPort } from '@payments/ports/payment-gateway.port';
 import { BillingPaidEventUseCase } from '@payments/use-cases/billing-paid-event.use-case';
 import { CheckSubscriptionUseCase } from '@payments/use-cases/check-subscrition.use-case';
 import { CreatePaymentLinkUseCase } from '@payments/use-cases/create-payment-link.use-case';
+import { ListUserSubscriptionsUseCase } from '@payments/use-cases/list-user-subscriptions.use-case';
 import { ListProductsUseCase } from '@payments/use-cases/products/list-products.use-case';
 
 container.registerSingleton<IProductRepositoryPort>(
@@ -31,6 +32,10 @@ container.registerSingleton(Injections.CREATE_PAYMENT_LINK_USE_CASE, CreatePayme
 container.registerSingleton(Injections.LIST_PRODUCTS_USE_CASE, ListProductsUseCase);
 container.registerSingleton(Injections.CHECK_SUBSCRIPTION_USE_CASE, CheckSubscriptionUseCase);
 container.registerSingleton(Injections.BILLING_PAID_EVENT_USE_CASE, BillingPaidEventUseCase);
+container.registerSingleton(
+  Injections.LIST_USER_SUBSCRIPTIONS_USE_CASE,
+  ListUserSubscriptionsUseCase,
+);
 
 container.registerSingleton(PaymentController);
 container.registerSingleton(ProductsController);

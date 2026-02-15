@@ -21,4 +21,8 @@ paymentRouter.post('/payments/billing-paid', (req, res) =>
 
 paymentRouter.get('/products', (req, res) => productsController.listProducts(req, res));
 
+paymentRouter.get('/subscriptions', authMiddleware, (req, res) =>
+  paymentController.listUserSubscriptions(req, res),
+);
+
 export { paymentRouter };

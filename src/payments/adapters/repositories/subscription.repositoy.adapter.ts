@@ -51,4 +51,27 @@ export class SubscriptionReposotoryAdapter
       status: subscription.status as SubscriptionStatus,
     };
   }
+
+  async listUserSubscriptions(userId: string): Promise<SubscriptionEntity[]> {
+    const subscriptions = await this.prisma.subscription.findMany({
+      where: {
+        userId,
+        status: {
+          not: SubscriptionStatus.PENDING_PAYMENT,
+        },
+      },
+      include: {
+        product: true,
+      },
+    });
+
+    return subscriptions.map(subscription => ({
+      ...subscription,
+      status: subscription.status as SubscriptionStatus,
+      product: {
+        ...subscription.product,
+        features: subscription.product.features as Record<string, boolean>,
+      },
+    }));
+  }
 }

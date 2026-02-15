@@ -36,5 +36,6 @@ export enum Injections {
   LIST_PRODUCTS_USE_CASE = 'ListProductsUseCase',
   BILLING_PAID_EVENT_USE_CASE = 'BillingPaidEventUseCase',
   CHECK_SUBSCRIPTION_USE_CASE = 'CheckSubscriptionUseCase',
+  LIST_USER_SUBSCRIPTIONS_USE_CASE = 'ListUserSubscriptionsUseCase',
   PAYMENT_GATEWAY = 'PAYMENT_GATEWAY',
 }

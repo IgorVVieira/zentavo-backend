@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { Injections } from '@shared/types/injections';
+import { centsToReal } from '@shared/utils/number.utils';
 
 import { IProductRepositoryPort } from '@payments/domain/repositories/product.repository.port';
 import { ProductDto } from '@payments/dtos/product.dto';
@@ -19,8 +20,7 @@ export class ListProductsUseCase implements IBaseUseCase<void, ProductDto[]> {
     return products.map(product => ({
       id: product.id as string,
       name: product.name,
-      /*eslint-disable @typescript-eslint/no-magic-numbers */
-      price: product.price / 100,
+      price: centsToReal(product.price),
       description: product.description,
     }));
   }

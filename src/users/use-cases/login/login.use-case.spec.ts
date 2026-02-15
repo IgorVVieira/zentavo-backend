@@ -41,6 +41,7 @@ describe('LoginUseCase', () => {
       ...baseRepository,
       hasSubscriptionActive: jest.fn(),
       findByPaymentId: jest.fn(),
+      listUserSubscriptions: jest.fn(),
     };
 
     const sut = new LoginUseCase(userRepository, encypterMock, jwtMock, subscriptionRepository);
