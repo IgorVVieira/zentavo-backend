@@ -55,5 +55,5 @@ EXPOSE 3000
 
 CMD ["npm", "run", "start:prod"]
 
-# docker build -t zentavo-backend .
-# docker start -i zentavo-backend
+# docker build -t zencash-backend .
+# docker start -i zencash-backend

@@ -14,7 +14,7 @@
     "start": "node dist/app.js",
     "start:prod": "npx prisma migrate deploy && node dist/app.js",
     "migrate:prod": "npx prisma migrate deploy",
-    "dev": "ts-node-dev --respawn --transpile-only --clear --files -r tsconfig-paths/register src/app.ts",
+    "dev": "tsx --watch src/app.ts",
     "debug-controller": "node scripts/debug-controllers.js",
     "prepare": "husky || true"
   },
@@ -86,6 +86,7 @@
     "reflect-metadata": "^0.2.2",
     "resend": "^4.3.0",
     "swagger-ui-express": "^5.0.1",
+    "tsx": "^4.21.0",
     "tsyringe": "^4.10.0"
   },
   "_moduleAliases": {
