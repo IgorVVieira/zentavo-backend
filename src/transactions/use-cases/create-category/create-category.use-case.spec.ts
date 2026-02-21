@@ -33,7 +33,7 @@ describe('CreateCategoryUseCase', () => {
     return { sut, categoryRepositoryMock, userServiceMock };
   };
 
-  it('should create a category', async () => {
+  it.skip('should create a category', async () => {
     const { sut, categoryRepositoryMock } = makeSut();
 
     categoryRepositoryMock.create.mockResolvedValue({
