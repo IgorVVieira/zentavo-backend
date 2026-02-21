@@ -49,7 +49,7 @@ export class CategoryController {
   }
 
   async delete(request: Request, response: Response): Promise<Response> {
-    await this.deleteCategoryUseCase.execute(request.params.id);
+    await this.deleteCategoryUseCase.execute(request.params.id as string);
 
     return response
       .status(HttpStatus.NO_CONTENT)
