@@ -21,6 +21,7 @@
     "strict": true /* Enable all strict type-checking options. */,
     "strictPropertyInitialization": false /* Check for class properties that are declared but not set in the constructor. */,
     "useUnknownInCatchVariables": false /* Default catch clause variables as 'unknown' instead of 'any'. */,
+    "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"],
   },
   "include": ["./src/**/*.ts", "./src/types/**/*.d.ts"],

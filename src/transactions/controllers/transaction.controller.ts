@@ -20,7 +20,7 @@ export class TransactionController {
   ) {}
 
   async importOfx(request: Request, response: Response): Promise<Response> {
-    const { userId, file } = request;
+    const { userId, file, body } = request;
 
     if (!file) {
       return response.status(HttpStatus.BAD_REQUEST).json({ message: 'No file uploaded' });
@@ -29,6 +29,7 @@ export class TransactionController {
     await this.transactionImportProducerUseCase.execute({
       userId,
       file,
+      useLlm: Boolean(body.useLlm),
     });
 
     return response.status(HttpStatus.OK).json({ message: 'File imported successfully' });

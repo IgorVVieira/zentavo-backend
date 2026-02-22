@@ -1,6 +1,8 @@
 import { container } from 'tsyringe';
 
+import { GeminiProvider } from '@shared/adapters/gemini-provider.adapter';
 import { RabbitMQQueueAdapter } from '@shared/adapters/rabbitmq-queue.adapter';
+import { ILlmProvider } from '@shared/gateways/llm-provider.port';
 import { Injections } from '@shared/types/injections';
 
 import { OfxStatementParserGateway } from '@transactions/adapters/ofx-statement-parser.gateway';
@@ -17,6 +19,7 @@ import { DashboardUseCase } from '@transactions/use-cases/dashboard/dashboard.us
 import { DeleteCategoryUseCase } from '@transactions/use-cases/delete-category/delete-category';
 import { GetTransactionsByDateUseCase } from '@transactions/use-cases/get-transactions/get-transactions-by-date.use-case';
 import { ListCategoriesUseCase } from '@transactions/use-cases/list-categories/list-categories.use-case';
+import { LlmCategorizeUseCase } from '@transactions/use-cases/llm-categorize/llm-categorize.use-case';
 import { TransactionImportConsumerUseCase } from '@transactions/use-cases/transaction-import-consumer/transaction-import-consumer.use-case';
 import { TransactionImportProducerUseCase } from '@transactions/use-cases/transaction-import-producer/transaction-import-producer.use-case';
 import { UpdateCategoryUseCase } from '@transactions/use-cases/update-category/update-category.use-case';
@@ -36,10 +39,13 @@ container.registerSingleton<IOfxStatementParser>(
   OfxStatementParserGateway,
 );
 
+container.registerSingleton<ILlmProvider>(Injections.LLM_PROVIDER, GeminiProvider);
+
 container.registerSingleton(Injections.CREATE_CATEGORY_USE_CASE, CreateCategoryUseCase);
 container.registerSingleton(Injections.LIST_CATEGORIES_USE_CASE, ListCategoriesUseCase);
 container.registerSingleton(Injections.DELETE_CATEGORY_USE_CASE, DeleteCategoryUseCase);
 container.registerSingleton(Injections.UPDATE_CATEGORY_USE_CASE, UpdateCategoryUseCase);
+container.registerSingleton(Injections.LLM_CATEGORY_USE_CASE, LlmCategorizeUseCase);
 
 container.registerSingleton(
   Injections.TRANSACTION_IMPORT_PRODUCER_USE_CASE,
