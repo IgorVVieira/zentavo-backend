@@ -64,30 +64,33 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
         newExternalIds.includes(transaction.externalId),
       );
 
-      if (data.useLlm && newTransactions?.length) {
-        const categorizedTransactions = await this.llmCategoryUseCase.execute({
-          userId,
-          transactions: newTransactions,
-        });
-
-        newTransactions?.map(transaction => {
-          const categorizedTransaction = categorizedTransactions.find(
-            category => category.externalId === transaction.externalId,
-          );
-
-          if (categorizedTransaction) {
-            transaction.categoryId = categorizedTransaction.categoryId;
-          }
-        });
-      }
-
-      if (!newTransactions.length) {
+      if (!newTransactions?.length) {
         Logger.info('No new transactions found to import');
 
         return;
       }
 
-      await this.transactionRepository.createMany(newTransactions);
+      let transactionsToSave = newTransactions;
+
+      if (data.useLlm) {
+        const categorizedTransactions = await this.llmCategoryUseCase.execute({
+          userId,
+          transactions: newTransactions,
+        });
+
+        transactionsToSave = newTransactions.map(transaction => {
+          const categorized = categorizedTransactions?.find(
+            c => c.externalId === transaction.externalId,
+          );
+
+          return {
+            ...transaction,
+            categoryId: categorized?.categoryId ?? transaction.categoryId,
+          };
+        });
+      }
+
+      await this.transactionRepository.createMany(transactionsToSave);
       Logger.info('Message processed successfully');
     } catch (error) {
       Logger.error('Erro ao processar ofx da fila:', error);

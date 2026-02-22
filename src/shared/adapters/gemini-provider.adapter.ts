@@ -15,14 +15,12 @@ export class GeminiProvider implements ILlmProvider {
 
   async execute<T>(prompt: string): Promise<T> {
     const response = await this.ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
       },
     });
-
-    console.log(response.text);
 
     return JSON.parse(response.text as string) as T;
   }
