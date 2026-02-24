@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsObject, IsUUID } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsObject, IsUUID } from 'class-validator';
 
 export class ImportTransactionDto {
   @IsUUID()
@@ -8,4 +8,7 @@ export class ImportTransactionDto {
   @IsObject()
   @IsNotEmpty()
   file: Express.Multer.File;
+
+  @IsBoolean()
+  useLlm: boolean;
 }

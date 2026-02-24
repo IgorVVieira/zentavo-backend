@@ -7,6 +7,7 @@ export type Statement = {
   description: string;
   type: TransactionType;
   method: TransactionMethod;
+  categoryId?: string;
 };
 
 export enum OfxStatementType {

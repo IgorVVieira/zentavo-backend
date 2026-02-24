@@ -25,6 +25,7 @@ export enum Injections {
   CREATE_USER_USE_CASE = 'CreateUserUseCase',
   GET_ME_USE_CASE = 'GetMeUseCase',
   VALIDATE_TOKEN_USE_CASE = 'ValidateTokenUseCase',
+  LLM_CATEGORY_USE_CASE = 'LlmCategoryUseCase',
   MESSAGE_QUEUE_PORT = 'MessageQueuePort',
   USER_CONTROLLER = 'UserController',
   AUTH_CONTROLLER = 'AuthController',
@@ -38,4 +39,6 @@ export enum Injections {
   CHECK_SUBSCRIPTION_USE_CASE = 'CheckSubscriptionUseCase',
   LIST_USER_SUBSCRIPTIONS_USE_CASE = 'ListUserSubscriptionsUseCase',
   PAYMENT_GATEWAY = 'PAYMENT_GATEWAY',
+
+  LLM_PROVIDER = 'LLM_PROVIDER',
 }
