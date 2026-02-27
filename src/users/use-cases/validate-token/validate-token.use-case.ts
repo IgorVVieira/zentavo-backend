@@ -9,14 +9,16 @@ import { ValidateTokenDto } from '@users/dtos';
 @injectable()
 export class ValidateTokenUseCase implements IBaseUseCase<
   ValidateTokenDto,
-  { isValid: boolean; userId?: string }
+  { isValid: boolean; userId?: string; tokenId?: string }
 > {
   constructor(
     @inject(Injections.VERIFICATION_TOKEN_REPOSITORY)
     private readonly verificationTokenRepository: IVerificationTokenRepositoryPort,
   ) {}
 
-  async execute(data: ValidateTokenDto): Promise<{ isValid: boolean; userId?: string }> {
+  async execute(
+    data: ValidateTokenDto,
+  ): Promise<{ isValid: boolean; userId?: string; tokenId?: string }> {
     const verificationToken = await this.verificationTokenRepository.findByToken(data.token);
 
     const isInvalidToken =
@@ -32,15 +34,13 @@ export class ValidateTokenUseCase implements IBaseUseCase<
     const isExpired = verificationToken.expirationDate < new Date();
 
     if (isExpired) {
-      // TODO: isso vai ser feito no job
-      // await this.verificationTokenRepository.updateUsedStatus(verificationToken.id as string);
-
       return { isValid: false };
     }
 
-    // TODO: invalidar o token na alteracao de senha
-    // await this.verificationTokenRepository.updateUsedStatus(verificationToken.id as string);
-
-    return { isValid: true, userId: verificationToken.userId };
+    return {
+      isValid: true,
+      userId: verificationToken.userId,
+      tokenId: verificationToken.id as string,
+    };
   }
 }

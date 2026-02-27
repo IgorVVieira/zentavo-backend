@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 
-import { NodemailerEmailProvider } from '@shared/adapters/nodemailer-provider.adapter';
+import { ResendEmailProviderAdapter } from '@shared/adapters/resend-email-provider.adapter';
 import { IEmailProviderPort } from '@shared/gateways/email-provider.port';
 import { Injections } from '@shared/types/injections';
 
@@ -19,6 +19,7 @@ import { IUserServicePort } from '@users/services/user.port.service';
 import { CreateUserUseCase } from '@users/use-cases/create-user/create-user.use-case';
 import { GetMeUseCase } from '@users/use-cases/get-me/get-me.use-case';
 import { LoginUseCase } from '@users/use-cases/login/login.use-case';
+import { ResetPasswordUseCase } from '@users/use-cases/reset-password/reset-password.use-case';
 import { SendRecoveryPasswordTokenUseCase } from '@users/use-cases/send-recovery-password-token/send-recovery-password.use-case';
 import { ValidateTokenUseCase } from '@users/use-cases/validate-token/validate-token.use-case';
 
@@ -29,7 +30,10 @@ container.registerSingleton<IVerificationTokenRepositoryPort>(
 );
 container.registerSingleton<IEncryptPort>(Injections.ENCRYPT_PORT, EncptyAdapter);
 container.registerSingleton<IJwtPort>(Injections.JWT_PORT, JwtAdapter);
-container.registerSingleton<IEmailProviderPort>(Injections.EMAIL_PROVIDER, NodemailerEmailProvider);
+container.registerSingleton<IEmailProviderPort>(
+  Injections.EMAIL_PROVIDER,
+  ResendEmailProviderAdapter,
+);
 
 container.registerSingleton<IUserServicePort>(Injections.USER_SERVICE, UserService);
 
@@ -41,6 +45,7 @@ container.registerSingleton(
   SendRecoveryPasswordTokenUseCase,
 );
 container.registerSingleton(Injections.VALIDATE_TOKEN_USE_CASE, ValidateTokenUseCase);
+container.registerSingleton(Injections.RESET_PASSWORD_USE_CASE, ResetPasswordUseCase);
 
 container.registerSingleton(Injections.USER_CONTROLLER, UserController);
 container.registerSingleton(Injections.AUTH_CONTROLLER, AuthController);

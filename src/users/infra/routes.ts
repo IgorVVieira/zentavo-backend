@@ -17,6 +17,8 @@ userRouter.post('/auth/login', (req, res) => authController.login(req, res));
 userRouter.post('/auth/forgot-password', (req, res) =>
   authController.sendRecoveryPasswordToken(req, res),
 );
+userRouter.post('/auth/validate-token', (req, res) => authController.validateToken(req, res));
+userRouter.post('/auth/reset-password', (req, res) => authController.resetPassword(req, res));
 
 userRouter.get('/users/me', authMiddleware, (req, res) => userController.getMe(req, res));
 userRouter.post('/users/create', (req, res) => userController.create(req, res));

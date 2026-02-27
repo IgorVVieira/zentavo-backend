@@ -4,13 +4,11 @@ import 'module-alias/register';
 import 'reflect-metadata';
 
 import cors from 'cors';
-import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import { pinoHttp } from 'pino-http';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';
-import { HttpStatus } from '@shared/http-status.enum';
 import { errorHandler } from '@shared/middlewares/error-handler';
 import { Logger } from '@shared/utils/logger';
 
@@ -22,24 +20,9 @@ import { userRouter } from '@users/infra/routes';
 import { paymentRouter } from '@payments/infra/routes';
 import { transactionRouter } from '@transactions/infra/routes';
 import express from 'express';
+import { limiter } from 'rate-limit';
 
 import { startConsumers } from './workers';
-
-// +- 33 per second
-const limiter = rateLimit({
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  windowMs: 15 * 60 * 1000,
-  limit: 500,
-  standardHeaders: 'draft-8',
-  legacyHeaders: false,
-  handler: (req, res) => {
-    res.status(HttpStatus.TOO_MANY_REQUESTS).json({
-      error: 'Too Many Requests',
-      message: 'Você excedeu o limite de requisições.',
-      retryAfter: res.getHeader('Retry-After'),
-    });
-  },
-});
 
 const app = express();
 

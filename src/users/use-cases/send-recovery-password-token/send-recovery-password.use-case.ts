@@ -67,7 +67,7 @@ export class SendRecoveryPasswordTokenUseCase implements IBaseUseCase<
         <p>O link expira em 1 hora.</p>
         <p>Se você não solicitou esta redefinição, por favor ignore este e-mail.</p>
         <p>Atenciosamente,</p>
-        <p>Zentavo Team</p>
+        <p>Zencash Team</p>
       `,
     });
   }
