@@ -1,6 +1,6 @@
 import { injectable } from 'tsyringe';
 
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import {
   TransactionMethod,
@@ -40,7 +40,7 @@ export class OfxStatementParserGateway implements IOfxStatementParser {
         method: this.getMethod(statement.MEMO),
       }));
     } catch (error) {
-      Logger.error('Error parsing OFX file:', error);
+      logger.error('Error parsing OFX file:', error);
       throw new Error('Error parsing OFX file');
     }
   }

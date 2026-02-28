@@ -1,7 +1,7 @@
 import client, { Channel, ChannelModel } from 'amqplib';
 import { injectable } from 'tsyringe';
 
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import { IMessageQueuePort } from '../gateways/message-queue.port';
 
@@ -20,9 +20,9 @@ export class RabbitMQQueueAdapter implements IMessageQueuePort {
 
       this.channel = await this.connection.createChannel();
       RabbitMQQueueAdapter.connected = true;
-      Logger.info('Connected to RabbitMQ');
+      logger.info('Connected to RabbitMQ');
     } catch (error) {
-      Logger.error('Failed to connect to RabbitMQ:', error);
+      logger.error('Failed to connect to RabbitMQ:', error);
       RabbitMQQueueAdapter.connected = false;
       throw error;
     }
@@ -37,7 +37,7 @@ export class RabbitMQQueueAdapter implements IMessageQueuePort {
       await this.channel.assertQueue(queue, { durable: true });
       this.channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
     } catch (error) {
-      Logger.error('Failed to publish message to RabbitMQ:', error);
+      logger.error('Failed to publish message to RabbitMQ:', error);
       throw error;
     }
   }
@@ -58,7 +58,7 @@ export class RabbitMQQueueAdapter implements IMessageQueuePort {
         }
       });
     } catch (error) {
-      Logger.error('Failed to subscribe to RabbitMQ:', error);
+      logger.error('Failed to subscribe to RabbitMQ:', error);
       throw error;
     }
   }

@@ -10,7 +10,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';
 import { errorHandler } from '@shared/middlewares/error-handler';
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import '@payments/infra/container';
 import '@transactions/infra/container';
@@ -26,7 +26,11 @@ import { startConsumers } from './workers';
 
 const app = express();
 
-app.use(pinoHttp());
+app.use(
+  pinoHttp({
+    logger,
+  }),
+);
 app.use(
   cors({
     origin: process.env.NODE_ENV === 'dev' ? '*' : process.env.FRONTEND_URL,
@@ -47,15 +51,15 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
-  Logger.info(`Server is running on port: ${process.env.PORT}`);
+  logger.info(`Server is running on port: ${process.env.PORT}`);
 });
 
 startConsumers()
   .then(() => {
-    Logger.info('Consumers started');
+    logger.info('Consumers started');
   })
   .catch(error => {
-    Logger.error('Error starting consumers:', error);
+    logger.error('Error starting consumers:', error);
   });
 
 export { app };
