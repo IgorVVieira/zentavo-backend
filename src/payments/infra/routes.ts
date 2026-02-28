@@ -2,12 +2,14 @@ import { authMiddleware } from '@shared/middlewares/auth';
 
 import { PaymentController } from '@payments/controllers/payment.controller';
 import { ProductsController } from '@payments/controllers/products.controller';
+import { SubscriptionController } from '@payments/controllers/subscription.controller';
 import { Router } from 'express';
 
 import { container } from './container';
 
 const paymentController = container.resolve(PaymentController);
 const productsController = container.resolve(ProductsController);
+const subscriptionController = container.resolve(SubscriptionController);
 
 const paymentRouter = Router();
 
@@ -23,6 +25,10 @@ paymentRouter.get('/products', (req, res) => productsController.listProducts(req
 
 paymentRouter.get('/subscriptions', authMiddleware, (req, res) =>
   paymentController.listUserSubscriptions(req, res),
+);
+
+paymentRouter.get('/subscriptions/active', authMiddleware, (req, res) =>
+  subscriptionController.hasSubscription(req, res),
 );
 
 export { paymentRouter };

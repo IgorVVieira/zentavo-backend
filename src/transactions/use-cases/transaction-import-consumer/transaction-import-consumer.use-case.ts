@@ -4,7 +4,7 @@ import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { IMessageConsumerUseCase } from '@shared/domain/use-cases/message-consumer.use-case';
 import { IMessageQueuePort } from '@shared/gateways/message-queue.port';
 import { Injections } from '@shared/types/injections';
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ImportTransactionDto } from '@transactions/dtos';
@@ -65,7 +65,7 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       );
 
       if (!newTransactions?.length) {
-        Logger.info('No new transactions found to import');
+        logger.info('No new transactions found to import');
 
         return;
       }
@@ -91,9 +91,9 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       }
 
       await this.transactionRepository.createMany(transactionsToSave);
-      Logger.info('Message processed successfully');
+      logger.info('Message processed successfully');
     } catch (error) {
-      Logger.error('Erro ao processar ofx da fila:', error);
+      logger.error('Erro ao processar ofx da fila:', error);
     }
   }
 }

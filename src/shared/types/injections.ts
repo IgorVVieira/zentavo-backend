@@ -25,6 +25,7 @@ export enum Injections {
   CREATE_USER_USE_CASE = 'CreateUserUseCase',
   GET_ME_USE_CASE = 'GetMeUseCase',
   VALIDATE_TOKEN_USE_CASE = 'ValidateTokenUseCase',
+  RESET_PASSWORD_USE_CASE = 'ResetPasswordUseCase',
   LLM_CATEGORY_USE_CASE = 'LlmCategoryUseCase',
   MESSAGE_QUEUE_PORT = 'MessageQueuePort',
   USER_CONTROLLER = 'UserController',

@@ -1,7 +1,4 @@
-export const generateSixDigitToken = (): string => {
-  const initial = 100000;
-  const final = 900000;
-  const token = Math.floor(initial + Math.random() * final);
+import { randomInt } from 'crypto';
 
-  return token.toString();
-};
+/*eslint-disable @typescript-eslint/no-magic-numbers */
+export const generateSixDigitToken = (): string => randomInt(100000, 1000000).toString();

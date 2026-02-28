@@ -2,7 +2,7 @@
 
 import { CustomApplicationError } from '@shared/errors/custom-application.error';
 import { InternalServerError } from '@shared/errors/internal-server-error.error';
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import { NextFunction, Request, Response } from 'express';
 
@@ -22,13 +22,12 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   const { statusCode } = error;
   // const body = error.getBody();
 
-  const errorString = JSON.stringify({
+  logger.error({
     statusCode,
     message: error.message,
     stack: error?.stack,
   });
-
-  Logger.error(errorString);
+  logger.error({ igu: error });
 
   res.status(statusCode).json({
     statusCode,

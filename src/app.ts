@@ -4,15 +4,13 @@ import 'module-alias/register';
 import 'reflect-metadata';
 
 import cors from 'cors';
-import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import { pinoHttp } from 'pino-http';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerSpec } from '@shared/config/swagger.config';
-import { HttpStatus } from '@shared/http-status.enum';
 import { errorHandler } from '@shared/middlewares/error-handler';
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import '@payments/infra/container';
 import '@transactions/infra/container';
@@ -22,28 +20,17 @@ import { userRouter } from '@users/infra/routes';
 import { paymentRouter } from '@payments/infra/routes';
 import { transactionRouter } from '@transactions/infra/routes';
 import express from 'express';
+import { limiter } from 'rate-limit';
 
 import { startConsumers } from './workers';
 
-// +- 33 per second
-const limiter = rateLimit({
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  windowMs: 15 * 60 * 1000,
-  limit: 500,
-  standardHeaders: 'draft-8',
-  legacyHeaders: false,
-  handler: (req, res) => {
-    res.status(HttpStatus.TOO_MANY_REQUESTS).json({
-      error: 'Too Many Requests',
-      message: 'Você excedeu o limite de requisições.',
-      retryAfter: res.getHeader('Retry-After'),
-    });
-  },
-});
-
 const app = express();
 
-app.use(pinoHttp());
+app.use(
+  pinoHttp({
+    logger,
+  }),
+);
 app.use(
   cors({
     origin: process.env.NODE_ENV === 'dev' ? '*' : process.env.FRONTEND_URL,
@@ -64,15 +51,15 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
-  Logger.info(`Server is running on port: ${process.env.PORT}`);
+  logger.info(`Server is running on port: ${process.env.PORT}`);
 });
 
 startConsumers()
   .then(() => {
-    Logger.info('Consumers started');
+    logger.info('Consumers started');
   })
   .catch(error => {
-    Logger.error('Error starting consumers:', error);
+    logger.error('Error starting consumers:', error);
   });
 
 export { app };

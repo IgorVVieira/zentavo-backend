@@ -11,11 +11,8 @@ import { AuthUserResponseDto, LoginDto } from '@users/dtos';
 import { IEncryptPort } from '@users/ports/encypt.port';
 import { IJwtPort } from '@users/ports/jwt.port';
 
-import { ISubscriptionRepositoryPort } from '@payments/domain/repositories/subscription.repository.port';
-
 @injectable()
 export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto> {
-  /* eslint-disable max-params */
   constructor(
     @inject(Injections.USER_REPOSITORY)
     private readonly userRepository: IUserRepositoryPort,
@@ -23,8 +20,6 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
     private readonly encrypter: IEncryptPort,
     @inject(Injections.JWT_PORT)
     private readonly jwt: IJwtPort,
-    @inject(Injections.SUBSCRIPTION_REPOSITORY)
-    private readonly subscriptionRepository: ISubscriptionRepositoryPort,
   ) {}
 
   async execute(data: LoginDto): Promise<AuthUserResponseDto> {
@@ -45,15 +40,10 @@ export class LoginUseCase implements IBaseUseCase<LoginDto, AuthUserResponseDto>
       throw new UnauthorizedError('User is not active');
     }
 
-    const hasSubscription = await this.subscriptionRepository.hasSubscriptionActive(
-      user.id as string,
-    );
-
     const token = this.jwt.sign({
       id: user.id as string,
       name: user.name,
       email: user.email,
-      hasSubscription,
     });
 
     return {

@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IBaseUseCase } from '@shared/domain/use-cases/base.use-case';
 import { ILlmProvider } from '@shared/gateways/llm-provider.port';
 import { Injections } from '@shared/types/injections';
-import { Logger } from '@shared/utils/logger';
+import { logger } from '@shared/utils/logger';
 
 import { CategoryDto } from '@transactions/dtos';
 import {
@@ -64,7 +64,7 @@ export class LlmCategorizeUseCase implements IBaseUseCase<
 
       return await this.llmProvider.execute<LlmCategorizeDtoResponseDto[]>(prompt);
     } catch (error) {
-      Logger.error('Error in LlmCategorizeUseCase', error);
+      logger.error('Error in LlmCategorizeUseCase', error);
 
       return [];
     }

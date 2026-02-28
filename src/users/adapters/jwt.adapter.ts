@@ -7,9 +7,9 @@ import { IJwtPort } from '@users/ports/jwt.port';
 @injectable()
 export class JwtAdapter implements IJwtPort {
   sign(data: JwtDto): string {
-    const { id, name, email, hasSubscription } = data;
+    const { id, name, email } = data;
 
-    return jwt.sign({ id, name, email, hasSubscription }, process.env.JWT_SECRET as string, {
+    return jwt.sign({ id, name, email }, process.env.JWT_SECRET as string, {
       expiresIn: '1d',
     });
   }
