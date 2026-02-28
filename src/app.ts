@@ -20,8 +20,8 @@ import { userRouter } from '@users/infra/routes';
 import { paymentRouter } from '@payments/infra/routes';
 import { transactionRouter } from '@transactions/infra/routes';
 import express from 'express';
-import { limiter } from 'rate-limit';
 
+import { limiter } from './rate-limit';
 import { startConsumers } from './workers';
 
 const app = express();
