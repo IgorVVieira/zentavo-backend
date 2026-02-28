@@ -7,6 +7,7 @@ import { ProductRepositoryAdapter } from '@payments/adapters/repositories/produc
 import { SubscriptionReposotoryAdapter } from '@payments/adapters/repositories/subscription.repositoy.adapter';
 import { PaymentController } from '@payments/controllers/payment.controller';
 import { ProductsController } from '@payments/controllers/products.controller';
+import { SubscriptionController } from '@payments/controllers/subscription.controller';
 import { IProductRepositoryPort } from '@payments/domain/repositories/product.repository.port';
 import { ISubscriptionRepositoryPort } from '@payments/domain/repositories/subscription.repository.port';
 import { IPaymentGatewayPort } from '@payments/ports/payment-gateway.port';
@@ -39,5 +40,6 @@ container.registerSingleton(
 
 container.registerSingleton(PaymentController);
 container.registerSingleton(ProductsController);
+container.registerSingleton(SubscriptionController);
 
 export { container };

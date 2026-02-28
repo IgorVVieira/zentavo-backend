@@ -168,17 +168,12 @@
       },
       "ValidateTokenRequest": {
         "type": "object",
-        "required": ["token", "userId", "type"],
+        "required": ["token", "type"],
         "properties": {
           "token": {
             "type": "string",
             "description": "6-digit numeric token sent to the user's email",
             "example": "482910"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
           },
           "type": {
             "type": "string",
@@ -210,17 +205,12 @@
       },
       "ResetPasswordRequest": {
         "type": "object",
-        "required": ["token", "userId", "newPassword"],
+        "required": ["token", "newPassword"],
         "properties": {
           "token": {
             "type": "string",
             "description": "6-digit numeric token sent to the user's email",
             "example": "482910"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
           },
           "newPassword": {
             "type": "string",
@@ -380,25 +370,9 @@
             "format": "uuid",
             "nullable": true
           },
-          "amount": {
-            "type": "number",
-            "example": 49.99
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
           "description": {
             "type": "string",
             "example": "Restaurant payment"
-          },
-          "type": {
-            "type": "string",
-            "enum": ["CASH_IN", "CASH_OUT"]
-          },
-          "method": {
-            "type": "string",
-            "enum": ["PIX", "DEBIT", "TRANSFER", "CARD_PAYMENT", "CASH_BACK"]
           }
         }
       },
@@ -1313,14 +1287,11 @@
         },
         "responses": {
           "200": {
-            "description": "Transactions imported successfully",
+            "description": "File imported successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TransactionResponse"
-                  }
+                  "$ref": "#/components/schemas/MessageResponse"
                 }
               }
             }
@@ -1928,6 +1899,50 @@
                   "items": {
                     "$ref": "#/components/schemas/UserSubscriptionResponse"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid or missing JWT token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/subscriptions/active": {
+      "get": {
+        "tags": ["Payments"],
+        "summary": "Check active subscription",
+        "description": "Verify if the authenticated user has an active subscription",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User has an active subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponse"
                 }
               }
             }
