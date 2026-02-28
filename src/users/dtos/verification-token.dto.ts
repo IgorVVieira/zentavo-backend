@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, IsUUID, Matches, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, Matches, MinLength } from 'class-validator';
 
 import { VerificationTokenType } from '@users/domain/entities/verification-token.entity';
 
@@ -12,9 +12,6 @@ export class ValidateTokenDto {
   @IsNotEmpty()
   token: string;
 
-  @IsUUID()
-  userId: string;
-
   @IsEnum(VerificationTokenType)
   @IsNotEmpty()
   type: VerificationTokenType;
@@ -23,9 +20,6 @@ export class ValidateTokenDto {
 export class ResetPasswordDto {
   @IsNotEmpty()
   token: string;
-
-  @IsUUID()
-  userId: string;
 
   /*eslint-disable @typescript-eslint/no-magic-numbers */
   @IsString()

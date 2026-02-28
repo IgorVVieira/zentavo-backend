@@ -22,10 +22,7 @@ export class ValidateTokenUseCase implements IBaseUseCase<
     const verificationToken = await this.verificationTokenRepository.findByToken(data.token);
 
     const isInvalidToken =
-      !verificationToken ||
-      verificationToken.isUsed ||
-      verificationToken.userId !== data.userId ||
-      verificationToken.type !== data.type;
+      !verificationToken || verificationToken.isUsed || verificationToken.type !== data.type;
 
     if (isInvalidToken) {
       return { isValid: false };

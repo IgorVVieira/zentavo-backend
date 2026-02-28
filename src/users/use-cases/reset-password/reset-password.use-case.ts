@@ -26,19 +26,18 @@ export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDto, void
   ) {}
 
   async execute(data: ResetPasswordDto): Promise<void> {
-    const { isValid, tokenId } = await this.validateTokenUseCase.execute({
+    const { isValid, tokenId, userId } = await this.validateTokenUseCase.execute({
       token: data.token,
-      userId: data.userId,
       type: VerificationTokenType.PASSWORD_RESET,
     });
 
-    if (!isValid || !tokenId) {
+    if (!isValid || !tokenId || !userId) {
       throw new UnauthorizedError('Invalid or expired token');
     }
 
     const hashedPassword = await this.encryptPort.encrypt(data.newPassword);
 
-    await this.userRepository.update(data.userId, { password: hashedPassword });
+    await this.userRepository.update(userId, { password: hashedPassword });
     await this.verificationTokenRepository.updateUsedStatus(tokenId);
   }
 }
