@@ -46,3 +46,8 @@ export type Product = Prisma.ProductModel
  * 
  */
 export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model TransactionImport
+ * 
+ */
+export type TransactionImport = Prisma.TransactionImportModel

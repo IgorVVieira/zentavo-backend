@@ -6,6 +6,8 @@ import { IMessageQueuePort } from '@shared/gateways/message-queue.port';
 import { Injections } from '@shared/types/injections';
 import { logger } from '@shared/utils/logger';
 
+import { TransactionImportStatus } from '@transactions/domain/entities/transaction-import.entity';
+import { ITransactionImportRepositoryPort } from '@transactions/domain/repositories/transaction-import.repository.port';
 import { ITransactionRepositoryPort } from '@transactions/domain/repositories/transaction.repository.port';
 import { ImportTransactionDto } from '@transactions/dtos';
 import {
@@ -28,6 +30,8 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       LlmCategorizeDto,
       LlmCategorizeDtoResponseDto[]
     >,
+    @inject(Injections.TRANSACTION_IMPORT_REPOSITORY)
+    private readonly transactionImportRepository: ITransactionImportRepositoryPort,
   ) {}
 
   async start(): Promise<void> {
@@ -38,8 +42,13 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
   }
 
   private async processOfxStatementMessage(data: ImportTransactionDto): Promise<void> {
+    const { userId, file, transactionImportId } = data;
+
     try {
-      const { userId, file } = data;
+      await this.transactionImportRepository.update(transactionImportId as string, {
+        status: TransactionImportStatus.PROCESSING,
+      });
+
       const serialized = file.buffer as unknown as { data: number[] };
       const buffer = Buffer.from(serialized.data);
       const content = buffer.toString('utf8');
@@ -65,7 +74,9 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       );
 
       if (!newTransactions?.length) {
-        logger.info('No new transactions found to import');
+        await this.transactionImportRepository.update(transactionImportId as string, {
+          status: TransactionImportStatus.COMPLETED,
+        });
 
         return;
       }
@@ -91,8 +102,15 @@ export class TransactionImportConsumerUseCase implements IMessageConsumerUseCase
       }
 
       await this.transactionRepository.createMany(transactionsToSave);
-      logger.info('Message processed successfully');
+
+      await this.transactionImportRepository.update(transactionImportId as string, {
+        status: TransactionImportStatus.COMPLETED,
+      });
     } catch (error) {
+      await this.transactionImportRepository.update(transactionImportId as string, {
+        status: TransactionImportStatus.FAILED,
+      });
+
       logger.error('Erro ao processar ofx da fila:', error);
     }
   }

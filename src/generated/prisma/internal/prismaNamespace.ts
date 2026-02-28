@@ -394,7 +394,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   VerificationToken: 'VerificationToken',
   Product: 'Product',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  TransactionImport: 'TransactionImport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "category" | "transaction" | "verificationToken" | "product" | "subscription"
+    modelProps: "user" | "category" | "transaction" | "verificationToken" | "product" | "subscription" | "transactionImport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -858,6 +859,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TransactionImport: {
+      payload: Prisma.$TransactionImportPayload<ExtArgs>
+      fields: Prisma.TransactionImportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TransactionImportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TransactionImportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        findFirst: {
+          args: Prisma.TransactionImportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TransactionImportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        findMany: {
+          args: Prisma.TransactionImportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>[]
+        }
+        create: {
+          args: Prisma.TransactionImportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        createMany: {
+          args: Prisma.TransactionImportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TransactionImportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>[]
+        }
+        delete: {
+          args: Prisma.TransactionImportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        update: {
+          args: Prisma.TransactionImportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        deleteMany: {
+          args: Prisma.TransactionImportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TransactionImportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TransactionImportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>[]
+        }
+        upsert: {
+          args: Prisma.TransactionImportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionImportPayload>
+        }
+        aggregate: {
+          args: Prisma.TransactionImportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransactionImport>
+        }
+        groupBy: {
+          args: Prisma.TransactionImportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionImportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TransactionImportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionImportCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -991,6 +1066,19 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const TransactionImportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fileName: 'fileName',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TransactionImportScalarFieldEnum = (typeof TransactionImportScalarFieldEnum)[keyof typeof TransactionImportScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1208,6 +1296,7 @@ export type GlobalOmitConfig = {
   verificationToken?: Prisma.VerificationTokenOmit
   product?: Prisma.ProductOmit
   subscription?: Prisma.SubscriptionOmit
+  transactionImport?: Prisma.TransactionImportOmit
 }
 
 /* Types for Logging */

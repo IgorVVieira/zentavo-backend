@@ -11,4 +11,6 @@ export class ImportTransactionDto {
 
   @IsBoolean()
   useLlm: boolean;
+
+  transactionImportId?: string;
 }
