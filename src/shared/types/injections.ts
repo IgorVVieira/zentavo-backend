@@ -31,6 +31,9 @@ export enum Injections {
   USER_CONTROLLER = 'UserController',
   AUTH_CONTROLLER = 'AuthController',
 
+  TRANSACTION_IMPORT_REPOSITORY = 'TransactionImportRepository',
+  GET_PENDING_TRANSACTION_IMPORT_USE_CASE = 'GetPendingTransactionImportUseCase',
+
   // Payments
   PRODUCT_REPOSITORY = 'ProductRepository',
   SUBSCRIPTION_REPOSITORY = 'SubscriptionRepository',

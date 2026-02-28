@@ -53,7 +53,8 @@ export const ModelName = {
   Transaction: 'Transaction',
   VerificationToken: 'VerificationToken',
   Product: 'Product',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  TransactionImport: 'TransactionImport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -166,6 +167,19 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const TransactionImportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fileName: 'fileName',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TransactionImportScalarFieldEnum = (typeof TransactionImportScalarFieldEnum)[keyof typeof TransactionImportScalarFieldEnum]
 
 
 export const SortOrder = {
