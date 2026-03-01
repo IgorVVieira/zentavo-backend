@@ -34,16 +34,18 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV HUSKY=0
 
-# Copiar node_modules já instalado
-COPY --from=builder /app/node_modules ./node_modules
-
-# Remover devDependencies
-RUN npm prune --omit=dev
-
-# Copiar build e prisma
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+
+# Instala somente prod deps (evita copiar e depois prunar tudo)
+RUN npm ci --omit=dev
+
+# Gera Prisma Client com binários corretos para Alpine
+COPY --from=builder /app/prisma ./prisma
+RUN npx prisma generate
+
+# Copiar build e swagger
+COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/swagger.json ./swagger.json
 
 # Ajustar permissões

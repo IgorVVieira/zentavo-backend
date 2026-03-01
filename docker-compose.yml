@@ -6,20 +6,26 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_SHARED_BUFFERS: 128MB
+      POSTGRES_MAX_CONNECTIONS: 50
     ports:
       - '127.0.0.1:5432:5432'
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.3'
 
   rabbitmq:
-    image: rabbitmq:4.2.2-management-alpine
+    image: rabbitmq:4.2.2-alpine
     container_name: rabbitmq
     restart: always
     ports:
       - '127.0.0.1:5672:5672'
-      - '127.0.0.1:15672:15672'
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
@@ -32,6 +38,11 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq/mnesia
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 192M
+          cpus: '0.2'
 
   api:
     build: .
@@ -41,6 +52,8 @@ services:
       - '127.0.0.1:3001:3001'
     env_file:
       - .env
+    environment:
+      NODE_OPTIONS: '--max-old-space-size=512'
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -48,6 +61,11 @@ services:
         condition: service_started
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 600M
+          cpus: '0.5'
 
 volumes:
   postgres-data:
