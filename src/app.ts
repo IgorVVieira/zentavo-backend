@@ -31,6 +31,7 @@ app.use(
     logger,
   }),
 );
+app.set('trust proxy', 1);
 app.use(
   cors({
     origin: process.env.NODE_ENV === 'dev' ? '*' : process.env.FRONTEND_URL,
@@ -40,6 +41,7 @@ app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
   }),
 );
 app.use(express.json());
