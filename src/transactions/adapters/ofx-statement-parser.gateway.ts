@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { logger } from '@shared/utils/logger';
+import { realToCents } from '@shared/utils/number.utils';
 
 import {
   TransactionMethod,
@@ -32,7 +33,7 @@ export class OfxStatementParserGateway implements IOfxStatementParser {
         externalId: statement.FITID?.split(':')[0],
         date: this.parseOfxDate(statement.DTPOSTED),
         description: statement.MEMO,
-        amount: +Number(statement.TRNAMT).toFixed(2),
+        amount: realToCents(+Number(statement.TRNAMT)),
         type:
           statement.TRNTYPE === OfxStatementType.DEBIT
             ? TransactionType.CASH_OUT
