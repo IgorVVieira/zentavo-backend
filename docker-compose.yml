@@ -14,11 +14,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - backend
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-          cpus: '0.3'
 
   rabbitmq:
     image: rabbitmq:4.2.2-alpine
@@ -38,11 +33,6 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq/mnesia
     networks:
       - backend
-    deploy:
-      resources:
-        limits:
-          memory: 192M
-          cpus: '0.2'
 
   api:
     build: .
@@ -61,11 +51,6 @@ services:
         condition: service_started
     networks:
       - backend
-    deploy:
-      resources:
-        limits:
-          memory: 600M
-          cpus: '0.5'
 
 volumes:
   postgres-data:
