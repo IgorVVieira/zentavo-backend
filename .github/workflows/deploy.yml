@@ -47,6 +47,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            cd /root/projects/zencash-backend
+            cd projects/zencash-backend
             git pull origin master
-            docker compose up -d --build
+            docker compose up -d --build --remove-orphans
+            docker image prune -f
