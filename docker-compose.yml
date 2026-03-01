@@ -24,11 +24,23 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_VM_MEMORY_HIGH_WATERMARK: "256MiB"
+      RABBITMQ_COLLECT_STATISTICS_INTERVAL: "60000"
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+S 2:2 +A 2 +sbwt none +sbwtdcpu none +sbwtdio none"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.05'
+          memory: 128M
     healthcheck:
       test: ['CMD', 'rabbitmq-diagnostics', 'ping']
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 10s
       retries: 5
+      start_period: 30s
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq/mnesia
     networks:
@@ -42,8 +54,6 @@ services:
       - '127.0.0.1:3001:3001'
     env_file:
       - .env
-    environment:
-      NODE_OPTIONS: '--max-old-space-size=512'
     depends_on:
       rabbitmq:
         condition: service_healthy
